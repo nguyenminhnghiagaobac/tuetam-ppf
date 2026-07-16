@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tuệ Tâm PPF CNC Cần Thơ — Dán PPF điện thoại, tablet, laptop</title>
+<meta name="description" content="Dán PPF cắt máy CNC chính xác từng dòng máy tại Cần Thơ. Điện thoại, máy tính bảng, laptop. Dán tại chỗ lấy liền. Zalo 0778.968.738">
+<style>
+/* ============================================================
+   CẤU HÌNH NHANH — sửa thông tin tại khối :root và phần QR bên dưới
+   ============================================================ */
+:root{
+  --zalo:"0778.968.738";
+  --accent:#22d3ee;          /* màu nhấn (cyan) */
+  --accent2:#5eead4;
+  --bg:#070d16;              /* nền chính */
+  --panel:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.10);
+  --text:#e8f1f8;
+  --muted:#93aec2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:
+  radial-gradient(1200px 700px at 50% -10%, #10233a 0%, var(--bg) 60%);
+  color:var(--text);line-height:1.6;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* ---------- CHỮ TRÁNG GƯƠNG (chrome shimmer) ---------- */
+.chrome{
+  background:linear-gradient(110deg,
+    #6b7c8f 0%, #cfd9e4 18%, #ffffff 30%, #8fa3b5 42%,
+    #e8eef4 55%, #74879b 68%, #ffffff 82%, #93a7ba 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:shine 3.2s linear infinite;
+}
+.chrome-accent{
+  background:linear-gradient(110deg,
+    #0e7490 0%, #22d3ee 22%, #eafcff 38%, #22d3ee 52%,
+    #0e7490 68%, #a5f3fc 85%, #0e7490 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  animation:shine 2.8s linear infinite;
+}
+@keyframes shine{to{background-position:220% center}}
+
+/* ---------- CHỮ GLOSSY ĐA SẮC (giống beautyai-platform.vercel.app) ---------- */
+.glossy{
+  color:transparent;
+  background-image:linear-gradient(90deg,
+    rgb(236,8,104) 0%, rgb(124,31,224) 33%, rgb(14,203,94) 66%, rgb(236,8,104) 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+  font-weight:800;
+  animation:gradient-shine 4s linear infinite;
+}
+@keyframes gradient-shine{
+  0%{background-position:200% center}
+  100%{background-position:0% center}
+}
+
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(7,13,22,.82);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.logo{font-weight:800;font-size:20px;letter-spacing:.5px}
+.logo .dot{color:var(--accent)}
+nav .links{margin-left:auto;display:flex;gap:22px;font-size:15px;color:var(--muted)}
+nav .links a:hover{color:#fff}
+.btn{display:inline-block;padding:12px 22px;border-radius:12px;font-weight:700;
+  transition:.2s;text-align:center}
+.btn-primary{background:linear-gradient(90deg,#0ea5b7,#22d3ee);color:#06222b;
+  box-shadow:0 8px 30px rgba(34,211,238,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(34,211,238,.35)}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+nav .btn{padding:9px 18px;font-size:14px}
+
+/* ---------- HERO ---------- */
+.hero{padding:84px 0 60px;text-align:center;position:relative}
+.hero .glow{position:absolute;left:50%;top:-40px;transform:translateX(-50%);
+  width:720px;height:420px;background:radial-gradient(closest-side,rgba(34,211,238,.14),transparent);
+  pointer-events:none}
+.kicker{display:inline-block;font-size:14px;font-weight:700;letter-spacing:2px;
+  color:var(--accent);border:1px solid rgba(34,211,238,.35);padding:8px 18px;
+  border-radius:999px;background:rgba(34,211,238,.07)}
+.hero h1{font-size:clamp(44px,7vw,84px);font-weight:900;line-height:1.04;margin:26px 0 8px}
+.hero h2{font-size:clamp(20px,3vw,30px);font-weight:700;margin-bottom:18px}
+.hero p{color:var(--muted);max-width:640px;margin:0 auto 30px;font-size:18px}
+.hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.badge{font-size:14px;color:var(--muted);border:1px solid var(--line);
+  border-radius:999px;padding:8px 16px;background:var(--panel)}
+.badge b{color:var(--text)}
+
+/* ---------- SECTIONS ---------- */
+section{padding:64px 0}
+.sec-title{text-align:center;font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:10px}
+.sec-sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 44px}
+.grid{display:grid;gap:20px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+  padding:28px 22px;text-align:center;transition:.25s}
+.card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.45)}
+.card .ic{font-size:44px}
+.card h3{margin:12px 0 8px;font-size:20px}
+.card p{color:var(--muted);font-size:15px}
+
+/* ---------- PRICE ---------- */
+table{width:100%;border-collapse:collapse;background:var(--panel);
+  border:1px solid var(--line);border-radius:20px;overflow:hidden}
+th,td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:rgba(34,211,238,.08);color:var(--accent);font-size:15px;letter-spacing:.5px}
+tr:last-child td{border-bottom:none}
+td .price{font-weight:800;color:#fff}
+.note{font-size:14px;color:var(--muted);margin-top:14px;text-align:center}
+
+/* ---------- STEPS ---------- */
+.step{position:relative;padding-left:0}
+.step .n{display:inline-block;width:46px;height:46px;line-height:46px;border-radius:50%;
+  background:linear-gradient(135deg,#0ea5b7,#22d3ee);color:#06222b;font-weight:900;font-size:20px}
+
+/* ---------- QR / PAYMENT ---------- */
+.pay{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:wrap}
+.qr-box{background:#fff;border-radius:20px;padding:18px;width:280px;text-align:center}
+.qr-box img{border-radius:10px}
+.qr-box .bank{color:#0f2233;font-weight:800;margin-top:10px;font-size:15px}
+.pay-info{max-width:420px}
+.pay-info li{list-style:none;padding:10px 0 10px 34px;position:relative;color:var(--muted)}
+.pay-info li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--line);padding:48px 0 90px;background:rgba(0,0,0,.25)}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
+footer h4{margin-bottom:14px;font-size:17px}
+footer p,footer a{color:var(--muted);font-size:15px}
+footer a:hover{color:var(--accent)}
+.zalo-float{position:fixed;right:18px;bottom:18px;z-index:60;
+  background:linear-gradient(90deg,#0068ff,#2f88ff);color:#fff;font-weight:800;
+  padding:14px 22px;border-radius:999px;box-shadow:0 10px 34px rgba(0,104,255,.4)}
+.zalo-float:hover{transform:translateY(-2px)}
+
+@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}.hero{padding-top:56px}nav .links{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">TUỆ TÂM <span class="dot">PPF CNC</span></div>
+    <div class="links">
+      <a href="#dichvu">Dịch vụ</a><a href="#vi-sao">Vì sao CNC</a>
+      <a href="#gia">Bảng giá</a><a href="#thanhtoan">Thanh toán</a><a href="#lienhe">Liên hệ</a>
+    </div>
+    <a class="btn btn-primary" href="https://zalo.me/0778968738">Nhắn Zalo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="glow"></div>
+  <div class="wrap">
+    <span class="kicker">📍 CẦN THƠ · DÁN TẠI CHỖ LẤY LIỀN</span>
+    <h1><span class="glossy">TUỆ TÂM PPF</span><br><span class="glossy">CẮT MÁY CNC</span></h1>
+    <h2 class="chrome">Bảo vệ thiết bị — chuẩn từng milimet</h2>
+    <p>PPF cắt bằng máy CNC rập khuôn chính xác theo từng dòng máy: ôm khít viền, không hở mép,
+      không bọt khí. Điện thoại · Máy tính bảng · Laptop.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://zalo.me/0778968738">💬 Tư vấn Zalo ngay</a>
+      <a class="btn btn-ghost" href="#gia">Xem bảng giá</a>
+    </div>
+    <div class="badges">
+      <span class="badge">🛠️ Cắt <b>máy CNC</b> chuẩn model</span>
+      <span class="badge">⏱️ Dán <b>15–30 phút</b>, chờ lấy liền</span>
+      <span class="badge">🕗 Mở cửa <b>8h–21h</b> mỗi ngày</span>
+    </div>
+  </div>
+</header>
+
+<section id="dichvu">
+  <div class="wrap">
+    <h2 class="sec-title">Dán PPF <span class="chrome-accent">đa thiết bị</span></h2>
+    <p class="sec-sub">Một nơi lo trọn — máy nào cũng có khuôn cắt CNC chuẩn riêng.</p>
+    <div class="grid g4">
+      <div class="card"><div class="ic">📱</div><h3>Điện thoại</h3><p>iPhone, Samsung, Xiaomi... full mặt lưng, viền, màn hình</p></div>
+      <div class="card"><div class="ic">📲</div><h3>Máy tính bảng</h3><p>iPad & tablet — chống trầy mặt lưng, bảo vệ camera</p></div>
+      <div class="card"><div class="ic">💻</div><h3>Laptop</h3><p>Macbook & laptop — phủ nắp máy, chiếu nghỉ tay, trackpad</p></div>
+      <div class="card"><div class="ic">⌚</div><h3>Đồng hồ</h3><p>Smartwatch — màn hình cong cũng ôm khít</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="vi-sao" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2 class="sec-title">Vì sao chọn <span class="chrome-accent">cắt máy CNC?</span></h2>
+    <p class="sec-sub">Khác biệt lớn nhất giữa dán đẹp và dán "tạm được" nằm ở đường cắt.</p>
+    <div class="grid g3">
+      <div class="card"><div class="ic">🎯</div><h3>Chuẩn từng model</h3><p>Khuôn cắt theo đúng dòng máy — không rọc dao trực tiếp lên máy của bạn, không lẹm viền.</p></div>
+      <div class="card"><div class="ic">🪞</div><h3>Ôm khít – không bọt khí</h3><p>Mép film sát viền, phẳng mịn như chưa dán. Giữ nguyên cảm giác vuốt chạm.</p></div>
+      <div class="card"><div class="ic">💰</div><h3>Giữ giá máy</h3><p>Máy không trầy = bán lại được giá. Một lần dán, đỡ tiếc cả đời máy.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gia">
+  <div class="wrap">
+    <h2 class="sec-title">Bảng giá <span class="chrome-accent">tham khảo</span></h2>
+    <p class="sec-sub">Giá tuỳ dòng máy & loại film — nhắn Zalo báo model để có giá chính xác nhất.</p>
+    <table>
+      <tr><th>Thiết bị</th><th>Hạng mục</th><th>Giá</th></tr>
+      <!-- 🔲 SỬA GIÁ THẬT TẠI ĐÂY -->
+      <tr><td>Điện thoại</td><td>PPF mặt lưng + viền</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Điện thoại</td><td>PPF full thân máy</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Máy tính bảng</td><td>PPF mặt lưng</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Laptop / Macbook</td><td>PPF nắp máy + chiếu nghỉ tay</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Đồng hồ</td><td>PPF màn hình</td><td class="price">Liên hệ</td></tr>
+    </table>
+    <p class="note">💬 Nhắn Zalo <b>0778.968.738</b> kèm tên máy — báo giá trong vài phút.</p>
+  </div>
+</section>
+
+<section style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2 class="sec-title">Quy trình <span class="chrome-accent">4 bước</span></h2>
+    <p class="sec-sub">Minh bạch từng bước — bạn ngồi xem trực tiếp.</p>
+    <div class="grid g4">
+      <div class="card step"><span class="n">1</span><h3>Vệ sinh máy</h3><p>Làm sạch bụi & dầu trong phòng kín</p></div>
+      <div class="card step"><span class="n">2</span><h3>Cắt CNC</h3><p>Chọn đúng khuôn model, máy cắt chính xác</p></div>
+      <div class="card step"><span class="n">3</span><h3>Dán & gạt khí</h3><p>Kỹ thuật viên dán, gạt sạch bọt khí</p></div>
+      <div class="card step"><span class="n">4</span><h3>Kiểm tra giao máy</h3><p>Soi viền cùng khách — ưng mới nhận máy</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="thanhtoan">
+  <div class="wrap">
+    <h2 class="sec-title">Thanh toán <span class="chrome-accent">quét QR</span></h2>
+    <p class="sec-sub">Chuyển khoản nhanh qua mã VietQR — quét bằng app ngân hàng bất kỳ.</p>
+    <div class="pay">
+      <div class="qr-box">
+        <!-- 🔲 QR THANH TOÁN: thay 3 giá trị trong link ảnh bên dưới bằng thông tin thật:
+             BANK_ID  = mã ngân hàng (vd: VCB, MB, ACB, TCB, VPB...)
+             SO_TK    = số tài khoản
+             TEN_CHU_TK = tên chủ tài khoản (viết KHONG DAU, %20 thay khoảng trắng)
+             Ví dụ: https://img.vietqr.io/image/MB-0778968738-compact2.png?accountName=NGUYEN%20VAN%20A
+        -->
+        <img src="https://img.vietqr.io/image/BANK_ID-SO_TK-compact2.png?accountName=TEN_CHU_TK"
+             alt="Mã QR thanh toán" onerror="this.parentElement.innerHTML='<p style=color:#0f2233;padding:40px 10px;font-weight:700>🔲 Chưa cấu hình QR<br><small>Sửa BANK_ID / SO_TK / TEN_CHU_TK trong file HTML</small></p>'">
+        <div class="bank">🔲 Ngân hàng · STK · Chủ TK</div>
+      </div>
+      <ul class="pay-info">
+        <li>Quét mã bằng app ngân hàng bất kỳ (VietQR chuẩn Napas)</li>
+        <li>Nội dung chuyển khoản: <b style="color:#fff">Tên + SĐT của bạn</b></li>
+        <li>Thanh toán tại tiệm: tiền mặt hoặc chuyển khoản đều được</li>
+        <li>Cần hoá đơn/xác nhận — nhắn Zalo có ngay</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="lienhe">
+  <div class="wrap fgrid">
+    <div>
+      <h4 class="chrome" style="font-size:22px">TUỆ TÂM PPF CNC CẦN THƠ</h4>
+      <p>📍 71, đường số 2, khu CBGV, Tân An, Cần Thơ</p>
+      <p>📞 SĐT/Zalo: <a href="https://zalo.me/0778968738"><b>0778.968.738</b></a></p>
+      <p>🕗 Mở cửa: 8h–21h (cả tuần)</p>
+    </div>
+    <div>
+      <h4>Theo dõi</h4>
+      <p><a href="https://www.facebook.com/tuetamppfcnccantho">Facebook: Tuệ Tâm PPF CNC Cần Thơ</a></p>
+      <p><a href="https://www.tiktok.com/@tu.tm.ppf.cnc.cn">TikTok: @tu.tm.ppf.cnc.cn</a></p>
+    </div>
+    <div>
+      <h4>Dịch vụ</h4>
+      <p>Dán PPF điện thoại · tablet · laptop · đồng hồ</p>
+      <p>Tư vấn chọn loại film phù hợp miễn phí</p>
+    </div>
+  </div>
+</footer>
+
+<a class="zalo-float" href="https://zalo.me/0778968738">💬 Zalo 0778.968.738</a>
+
+</body>
+</html>
