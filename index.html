@@ -158,7 +158,7 @@ footer a:hover{color:var(--accent)}
     <div class="logo">TUỆ TÂM <span class="dot">PPF CNC</span></div>
     <div class="links">
       <a href="#dichvu">Dịch vụ</a><a href="#vi-sao">Vì sao CNC</a>
-      <a href="#gia">Bảng giá</a><a href="#thanhtoan">Thanh toán</a><a href="#lienhe">Liên hệ</a>
+      <a href="#gia">Bảng giá</a><a href="#thanhtoan">Thanh toán</a><a href="#vitri">Vị trí</a><a href="#lienhe">Liên hệ</a>
     </div>
     <a class="btn btn-primary" href="https://zalo.me/0778968738">Nhắn Zalo</a>
   </div>
@@ -245,15 +245,9 @@ footer a:hover{color:var(--accent)}
     <p class="sec-sub">Chuyển khoản nhanh qua mã VietQR — quét bằng app ngân hàng bất kỳ.</p>
     <div class="pay">
       <div class="qr-box">
-        <!-- 🔲 QR THANH TOÁN: thay 3 giá trị trong link ảnh bên dưới bằng thông tin thật:
-             BANK_ID  = mã ngân hàng (vd: VCB, MB, ACB, TCB, VPB...)
-             SO_TK    = số tài khoản
-             TEN_CHU_TK = tên chủ tài khoản (viết KHONG DAU, %20 thay khoảng trắng)
-             Ví dụ: https://img.vietqr.io/image/MB-0778968738-compact2.png?accountName=NGUYEN%20VAN%20A
-        -->
-        <img src="https://img.vietqr.io/image/BANK_ID-SO_TK-compact2.png?accountName=TEN_CHU_TK"
-             alt="Mã QR thanh toán" onerror="this.parentElement.innerHTML='<p style=color:#0f2233;padding:40px 10px;font-weight:700>🔲 Chưa cấu hình QR<br><small>Sửa BANK_ID / SO_TK / TEN_CHU_TK trong file HTML</small></p>'">
-        <div class="bank">🔲 Ngân hàng · STK · Chủ TK</div>
+        <img src="https://img.vietqr.io/image/TCB-19032213176013-compact2.png?accountName=PHAM%20THI%20MOC%20QUE%20ANH"
+             alt="Mã QR thanh toán Techcombank">
+        <div class="bank">Techcombank · 19032213176013<br>PHẠM THỊ MỘC QUẾ ANH</div>
       </div>
       <ul class="pay-info">
         <li>Quét mã bằng app ngân hàng bất kỳ (VietQR chuẩn Napas)</li>
@@ -265,11 +259,26 @@ footer a:hover{color:var(--accent)}
   </div>
 </section>
 
+<section id="vitri" style="background:rgba(255,255,255,.02)">
+  <div class="wrap">
+    <h2 class="sec-title">Tìm đường <span class="chrome-accent">đến tiệm</span></h2>
+    <p class="sec-sub">71, đường số 2, khu CBGV, Tân An, Cần Thơ — bấm "Chỉ đường" là Google Maps dẫn tới nơi.</p>
+    <div style="border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)">
+      <iframe src="https://maps.google.com/maps?q=10.027983,105.759543&z=17&output=embed"
+        width="100%" height="380" style="border:0;display:block" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Bản đồ Tuệ Tâm PPF CNC Cần Thơ"></iframe>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <a class="btn btn-primary" href="https://maps.google.com/?q=10.027983,105.759543" target="_blank" rel="noopener">🧭 Chỉ đường bằng Google Maps</a>
+    </div>
+  </div>
+</section>
+
 <footer id="lienhe">
   <div class="wrap fgrid">
     <div>
       <h4 class="chrome" style="font-size:22px">TUỆ TÂM PPF CNC CẦN THƠ</h4>
-      <p>📍 71, đường số 2, khu CBGV, Tân An, Cần Thơ</p>
+      <p>📍 <a href="https://maps.google.com/?q=10.027983,105.759543" target="_blank" rel="noopener">71, đường số 2, khu CBGV, Tân An, Cần Thơ — xem bản đồ</a></p>
       <p>📞 SĐT/Zalo: <a href="https://zalo.me/0778968738"><b>0778.968.738</b></a></p>
       <p>🕗 Mở cửa: 8h–21h (cả tuần)</p>
     </div>
