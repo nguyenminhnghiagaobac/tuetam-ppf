@@ -3,176 +3,196 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tuệ Tâm PPF CNC Cần Thơ — Dán PPF điện thoại, tablet, laptop</title>
-<meta name="description" content="Dán PPF cắt máy CNC chính xác từng dòng máy tại Cần Thơ. Điện thoại, máy tính bảng, laptop. Dán tại chỗ lấy liền. Zalo 0778.968.738">
+<title>Tuệ Tâm PPF CNC Cần Thơ — Dán PPF điện thoại, tablet, laptop, camera, đồng hồ</title>
+<meta name="description" content="Dán PPF cắt máy CNC chính xác từng dòng máy tại Cần Thơ. Điện thoại, máy tính bảng, laptop, camera, đồng hồ. Dán tại chỗ lấy liền. Zalo 0778.968.738">
 <style>
-/* ============================================================
-   CẤU HÌNH NHANH — sửa thông tin tại khối :root và phần QR bên dưới
-   ============================================================ */
 :root{
-  --zalo:"0778.968.738";
-  --accent:#22d3ee;          /* màu nhấn (cyan) */
-  --accent2:#5eead4;
-  --bg:#070d16;              /* nền chính */
-  --panel:rgba(255,255,255,.05);
-  --line:rgba(255,255,255,.10);
-  --text:#e8f1f8;
-  --muted:#93aec2;
+  --accent:#0ea5e9; --accent-d:#0369a1;
+  --ink:#0f172a; --muted:#64748b;
+  --bg:#ffffff; --soft:#f1f7fb; --line:#e2e8f0;
+  --card-shadow:0 10px 30px rgba(2,32,71,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:
-  radial-gradient(1200px 700px at 50% -10%, #10233a 0%, var(--bg) 60%);
-  color:var(--text);line-height:1.6;overflow-x:hidden}
+body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
-/* ---------- CHỮ TRÁNG GƯƠNG (chrome shimmer) ---------- */
-.chrome{
-  background:linear-gradient(110deg,
-    #6b7c8f 0%, #cfd9e4 18%, #ffffff 30%, #8fa3b5 42%,
-    #e8eef4 55%, #74879b 68%, #ffffff 82%, #93a7ba 100%);
-  background-size:220% auto;
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
-  animation:shine 3.2s linear infinite;
-}
-.chrome-accent{
-  background:linear-gradient(110deg,
-    #0e7490 0%, #22d3ee 22%, #eafcff 38%, #22d3ee 52%,
-    #0e7490 68%, #a5f3fc 85%, #0e7490 100%);
-  background-size:220% auto;
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
-  animation:shine 2.8s linear infinite;
-}
-@keyframes shine{to{background-position:220% center}}
-
-/* ---------- CHỮ GLOSSY ĐA SẮC (giống beautyai-platform.vercel.app) ---------- */
+/* ---- CHỮ CHẠY MÀU (glossy — giữ nguyên hiệu ứng bạn chọn) ---- */
 .glossy{
   color:transparent;
-  background-image:linear-gradient(90deg,
-    rgb(236,8,104) 0%, rgb(124,31,224) 33%, rgb(14,203,94) 66%, rgb(236,8,104) 100%);
+  background-image:linear-gradient(90deg, rgb(236,8,104) 0%, rgb(124,31,224) 33%, rgb(14,203,94) 66%, rgb(236,8,104) 100%);
   background-size:200% 100%;
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent;
-  font-weight:800;
-  animation:gradient-shine 4s linear infinite;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  font-weight:800;animation:gradient-shine 4s linear infinite;
 }
-@keyframes gradient-shine{
-  0%{background-position:200% center}
-  100%{background-position:0% center}
-}
+@keyframes gradient-shine{0%{background-position:200% center}100%{background-position:0% center}}
 
-/* ---------- NAV ---------- */
-nav{position:sticky;top:0;z-index:50;background:rgba(7,13,22,.82);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+/* ---- NAV ---- */
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:14px;height:64px}
-.logo{font-weight:800;font-size:20px;letter-spacing:.5px}
-.logo .dot{color:var(--accent)}
-nav .links{margin-left:auto;display:flex;gap:22px;font-size:15px;color:var(--muted)}
-nav .links a:hover{color:#fff}
-.btn{display:inline-block;padding:12px 22px;border-radius:12px;font-weight:700;
-  transition:.2s;text-align:center}
-.btn-primary{background:linear-gradient(90deg,#0ea5b7,#22d3ee);color:#06222b;
-  box-shadow:0 8px 30px rgba(34,211,238,.25)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(34,211,238,.35)}
-.btn-ghost{border:1px solid var(--line);color:var(--text)}
+.logo{font-weight:800;font-size:20px}
+.logo .glossy{font-size:20px}
+nav .links{margin-left:auto;display:flex;gap:20px;font-size:15px;color:var(--muted)}
+nav .links a:hover{color:var(--accent)}
+.btn{display:inline-block;padding:13px 24px;border-radius:12px;font-weight:700;transition:.2s;text-align:center}
+.btn-primary{background:linear-gradient(90deg,#0284c7,#0ea5e9);color:#fff;box-shadow:0 8px 24px rgba(14,165,233,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(14,165,233,.45)}
+.btn-ghost{border:2px solid var(--line);color:var(--ink)}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 nav .btn{padding:9px 18px;font-size:14px}
 
-/* ---------- HERO ---------- */
-.hero{padding:84px 0 60px;text-align:center;position:relative}
-.hero .glow{position:absolute;left:50%;top:-40px;transform:translateX(-50%);
-  width:720px;height:420px;background:radial-gradient(closest-side,rgba(34,211,238,.14),transparent);
-  pointer-events:none}
-.kicker{display:inline-block;font-size:14px;font-weight:700;letter-spacing:2px;
-  color:var(--accent);border:1px solid rgba(34,211,238,.35);padding:8px 18px;
-  border-radius:999px;background:rgba(34,211,238,.07)}
-.hero h1{font-size:clamp(44px,7vw,84px);font-weight:900;line-height:1.04;margin:26px 0 8px}
-.hero h2{font-size:clamp(20px,3vw,30px);font-weight:700;margin-bottom:18px}
-.hero p{color:var(--muted);max-width:640px;margin:0 auto 30px;font-size:18px}
+/* ---- HERO ---- */
+.hero{background:linear-gradient(180deg,#eff8ff 0%, #ffffff 90%);padding:72px 0 56px;text-align:center;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none}
+.hero::before{width:420px;height:420px;background:#bae6fd;top:-160px;left:-120px}
+.hero::after{width:420px;height:420px;background:#e9d5ff;bottom:-200px;right:-120px}
+.kicker{display:inline-block;font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--accent-d);
+  background:#e0f2fe;border:1px solid #bae6fd;padding:8px 18px;border-radius:999px}
+.hero h1{font-size:clamp(42px,6.6vw,78px);line-height:1.05;margin:24px 0 6px;font-weight:900}
+.hero h2{font-size:clamp(19px,2.6vw,27px);color:var(--muted);font-weight:600;margin-bottom:18px}
+.hero p{color:var(--muted);max-width:640px;margin:0 auto 28px;font-size:17px}
 .hero .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-.badge{font-size:14px;color:var(--muted);border:1px solid var(--line);
-  border-radius:999px;padding:8px 16px;background:var(--panel)}
-.badge b{color:var(--text)}
+.badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.badge{font-size:14px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 16px;background:#fff}
+.badge b{color:var(--ink)}
 
-/* ---------- SECTIONS ---------- */
-section{padding:64px 0}
-.sec-title{text-align:center;font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:10px}
-.sec-sub{text-align:center;color:var(--muted);max-width:620px;margin:0 auto 44px}
+/* ---- SECTIONS ---- */
+section{padding:60px 0}
+.sec-title{text-align:center;font-size:clamp(26px,3.8vw,38px);font-weight:800;margin-bottom:8px}
+.sec-title .glossy{font-size:inherit}
+.sec-sub{text-align:center;color:var(--muted);max-width:640px;margin:0 auto 40px}
 .grid{display:grid;gap:20px}
+.g5{grid-template-columns:repeat(5,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 .g3{grid-template-columns:repeat(3,1fr)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;
-  padding:28px 22px;text-align:center;transition:.25s}
-.card:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.45)}
-.card .ic{font-size:44px}
-.card h3{margin:12px 0 8px;font-size:20px}
-.card p{color:var(--muted);font-size:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 18px;text-align:center;
+  box-shadow:var(--card-shadow);transition:.25s}
+.card:hover{transform:translateY(-5px);border-color:#7dd3fc}
+.card h3{margin:12px 0 6px;font-size:18px}
+.card p{color:var(--muted);font-size:14px}
+.dev{width:96px;height:96px;margin:0 auto;display:block}
 
-/* ---------- PRICE ---------- */
-table{width:100%;border-collapse:collapse;background:var(--panel);
-  border:1px solid var(--line);border-radius:20px;overflow:hidden}
-th,td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line)}
-th{background:rgba(34,211,238,.08);color:var(--accent);font-size:15px;letter-spacing:.5px}
+/* ---- PRICE ---- */
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--card-shadow)}
+th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#f0f9ff;color:var(--accent-d);font-size:14px;letter-spacing:.5px;text-transform:uppercase}
 tr:last-child td{border-bottom:none}
-td .price{font-weight:800;color:#fff}
+td .price{font-weight:800;color:#e11d48}
 .note{font-size:14px;color:var(--muted);margin-top:14px;text-align:center}
 
-/* ---------- STEPS ---------- */
-.step{position:relative;padding-left:0}
-.step .n{display:inline-block;width:46px;height:46px;line-height:46px;border-radius:50%;
-  background:linear-gradient(135deg,#0ea5b7,#22d3ee);color:#06222b;font-weight:900;font-size:20px}
+/* ---- STEPS ---- */
+.step .n{display:inline-block;width:44px;height:44px;line-height:44px;border-radius:50%;
+  background:linear-gradient(135deg,#0284c7,#38bdf8);color:#fff;font-weight:900;font-size:19px}
 
-/* ---------- QR / PAYMENT ---------- */
+/* ---- WORLD CUP ---- */
+#sukien{background:linear-gradient(180deg,#f0fdf4,#ffffff)}
+.match{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;text-align:center;box-shadow:var(--card-shadow)}
+.match .lbl{font-size:13px;font-weight:700;letter-spacing:1px;color:var(--muted)}
+.match.final .lbl{color:#b45309}
+.match h3{font-size:24px;margin-top:8px}
+.wc-flex{display:grid;grid-template-columns:1fr 1.1fr;gap:26px;align-items:center;margin-top:26px}
+.prize{background:#fffbeb;border:1px solid #fde68a;border-radius:14px;padding:14px 18px;margin:12px 0;font-size:15px}
+
+/* ---- DINH DƯỠNG ---- */
+#dinhduong{background:linear-gradient(180deg,#f0fdf4,#ffffff)}
+.dd-note{background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:14px;padding:14px 18px;
+  font-size:14px;max-width:720px;margin:22px auto 0;text-align:center}
+
+/* ---- MEDIA ---- */
+.media-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
+.media-grid img,.media-grid video{width:100%;border-radius:16px;border:1px solid var(--line);box-shadow:var(--card-shadow);display:block}
+
+/* ---- PAY ---- */
 .pay{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:wrap}
-.qr-box{background:#fff;border-radius:20px;padding:18px;width:280px;text-align:center}
-.qr-box img{border-radius:10px}
-.qr-box .bank{color:#0f2233;font-weight:800;margin-top:10px;font-size:15px}
+.qr-box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;width:280px;text-align:center;box-shadow:var(--card-shadow)}
+.qr-box .bank{color:var(--ink);font-weight:800;margin-top:10px;font-size:15px}
 .pay-info{max-width:420px}
-.pay-info li{list-style:none;padding:10px 0 10px 34px;position:relative;color:var(--muted)}
-.pay-info li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
+.pay-info li{list-style:none;padding:9px 0 9px 32px;position:relative;color:var(--muted);font-size:15px}
+.pay-info li::before{content:"✓";position:absolute;left:0;color:#16a34a;font-weight:800}
+.pay-info b{color:var(--ink)}
 
-/* ---------- FOOTER ---------- */
-footer{border-top:1px solid var(--line);padding:48px 0 90px;background:rgba(0,0,0,.25)}
+/* ---- MAP + FOOTER ---- */
+.mapbox{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--card-shadow)}
+footer{background:#0f172a;color:#cbd5e1;padding:46px 0 92px;margin-top:20px}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px}
-footer h4{margin-bottom:14px;font-size:17px}
-footer p,footer a{color:var(--muted);font-size:15px}
-footer a:hover{color:var(--accent)}
-.zalo-float{position:fixed;right:18px;bottom:18px;z-index:60;
-  background:linear-gradient(90deg,#0068ff,#2f88ff);color:#fff;font-weight:800;
-  padding:14px 22px;border-radius:999px;box-shadow:0 10px 34px rgba(0,104,255,.4)}
-.zalo-float:hover{transform:translateY(-2px)}
+footer h4{margin-bottom:12px;font-size:16px;color:#fff}
+footer p,footer a{color:#94a3b8;font-size:14.5px}
+footer a:hover{color:#38bdf8}
+.zalo-float{position:fixed;right:18px;bottom:18px;z-index:60;background:linear-gradient(90deg,#0068ff,#2f88ff);
+  color:#fff;font-weight:800;padding:14px 22px;border-radius:999px;box-shadow:0 10px 30px rgba(0,104,255,.4)}
 
-@media(max-width:860px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}
-  .fgrid{grid-template-columns:1fr}.hero{padding-top:56px}nav .links{display:none}
-  #sukien .grid,#hinhanh .grid{grid-template-columns:1fr !important}}
+@media(max-width:920px){.g5{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(2,1fr)}
+ .g3{grid-template-columns:1fr}.wc-flex,.media-grid{grid-template-columns:1fr}
+ .fgrid{grid-template-columns:1fr}nav .links{display:none}}
+@media(max-width:560px){.g5{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
+<!-- Bộ hình thiết bị (SVG dùng chung) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gdev" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="gscr" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/><stop offset="1" stop-color="#ede9fe"/>
+    </linearGradient>
+
+    <g id="dev-phone">
+      <rect x="30" y="8" width="36" height="80" rx="8" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <rect x="41" y="12" width="14" height="4" rx="2" fill="url(#gdev)" opacity=".6"/>
+      <circle cx="48" cy="81" r="3" fill="url(#gdev)" opacity=".7"/>
+      <path d="M38 26 L58 46" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+    </g>
+    <g id="dev-tablet">
+      <rect x="18" y="10" width="60" height="76" rx="8" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <circle cx="48" cy="79" r="3" fill="url(#gdev)" opacity=".7"/>
+      <path d="M30 28 L58 56" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+    </g>
+    <g id="dev-laptop">
+      <rect x="18" y="14" width="60" height="42" rx="5" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <path d="M10 70 L86 70 L78 58 L18 58 Z" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3"/>
+      <rect x="40" y="61" width="16" height="4" rx="2" fill="url(#gdev)" opacity=".5"/>
+      <path d="M28 24 L50 46" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+    </g>
+    <g id="dev-camera">
+      <rect x="14" y="26" width="68" height="48" rx="9" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <rect x="34" y="17" width="24" height="12" rx="4" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3"/>
+      <circle cx="48" cy="50" r="15" fill="#fff" stroke="url(#gdev)" stroke-width="3.5"/>
+      <circle cx="48" cy="50" r="7" fill="url(#gdev)" opacity=".75"/>
+      <circle cx="70" cy="35" r="3" fill="url(#gdev)"/>
+    </g>
+    <g id="dev-watch">
+      <rect x="34" y="6" width="28" height="16" rx="5" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3"/>
+      <rect x="34" y="74" width="28" height="16" rx="5" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3"/>
+      <rect x="26" y="20" width="44" height="56" rx="14" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <path d="M48 36 L48 50 L57 55" stroke="url(#gdev)" stroke-width="4" stroke-linecap="round" fill="none"/>
+    </g>
+  </defs>
+</svg>
+
 <nav>
   <div class="wrap">
-    <div class="logo">TUỆ TÂM <span class="dot">PPF CNC</span></div>
+    <div class="logo">TUỆ TÂM <span class="glossy">PPF CNC</span></div>
     <div class="links">
-      <a href="#dichvu">Dịch vụ</a><a href="#vi-sao">Vì sao CNC</a>
-      <a href="#gia">Bảng giá</a><a href="#sukien">⚽ World Cup</a><a href="#dinhduong">Dinh dưỡng</a><a href="#vitri">Vị trí</a><a href="#lienhe">Liên hệ</a>
+      <a href="#dichvu">Dịch vụ</a><a href="#gia">Bảng giá</a><a href="#sukien">⚽ World Cup</a>
+      <a href="#dinhduong">Dinh dưỡng</a><a href="#hinhanh">Hình ảnh</a><a href="#vitri">Vị trí</a>
     </div>
     <a class="btn btn-primary" href="https://zalo.me/0778968738">Nhắn Zalo</a>
   </div>
 </nav>
 
 <header class="hero">
-  <div class="glow"></div>
-  <div class="wrap">
+  <div class="wrap" style="position:relative;z-index:1">
     <span class="kicker">📍 CẦN THƠ · DÁN TẠI CHỖ LẤY LIỀN</span>
     <h1><span class="glossy">TUỆ TÂM PPF</span><br><span class="glossy">CẮT MÁY CNC</span></h1>
-    <h2 class="chrome">Bảo vệ thiết bị — chuẩn từng milimet</h2>
+    <h2>Bảo vệ thiết bị — chuẩn từng milimet</h2>
     <p>PPF cắt bằng máy CNC rập khuôn chính xác theo từng dòng máy: ôm khít viền, không hở mép,
-      không bọt khí. Điện thoại · Máy tính bảng · Laptop.</p>
+      không bọt khí. Điện thoại · Tablet · Laptop · Camera · Đồng hồ.</p>
     <div class="cta">
       <a class="btn btn-primary" href="https://zalo.me/0778968738">💬 Tư vấn Zalo ngay</a>
       <a class="btn btn-ghost" href="#gia">Xem bảng giá</a>
@@ -187,32 +207,33 @@ footer a:hover{color:var(--accent)}
 
 <section id="dichvu">
   <div class="wrap">
-    <h2 class="sec-title">Dán PPF <span class="chrome-accent">đa thiết bị</span></h2>
-    <p class="sec-sub">Một nơi lo trọn — máy nào cũng có khuôn cắt CNC chuẩn riêng.</p>
-    <div class="grid g4">
-      <div class="card"><div class="ic">📱</div><h3>Điện thoại</h3><p>iPhone, Samsung, Xiaomi... full mặt lưng, viền, màn hình</p></div>
-      <div class="card"><div class="ic">📲</div><h3>Máy tính bảng</h3><p>iPad & tablet — chống trầy mặt lưng, bảo vệ camera</p></div>
-      <div class="card"><div class="ic">💻</div><h3>Laptop</h3><p>Macbook & laptop — phủ nắp máy, chiếu nghỉ tay, trackpad</p></div>
-      <div class="card"><div class="ic">⌚</div><h3>Đồng hồ</h3><p>Smartwatch — màn hình cong cũng ôm khít</p></div>
+    <h2 class="sec-title">Dán PPF <span class="glossy">đa thiết bị</span></h2>
+    <p class="sec-sub">Một nơi lo trọn — thiết bị nào cũng có khuôn cắt CNC chuẩn riêng.</p>
+    <div class="grid g5">
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-phone"/></svg><h3>Điện thoại</h3><p>iPhone, Samsung, Xiaomi... full lưng, viền, màn</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-tablet"/></svg><h3>Máy tính bảng</h3><p>iPad & tablet — mặt lưng, camera</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-laptop"/></svg><h3>Laptop</h3><p>Macbook & laptop — nắp máy, kê tay</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-camera"/></svg><h3>Camera</h3><p>Máy ảnh & lens — chống trầy body</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-watch"/></svg><h3>Đồng hồ</h3><p>Smartwatch — màn cong ôm khít</p></div>
     </div>
   </div>
 </section>
 
-<section id="vi-sao" style="background:rgba(255,255,255,.02)">
+<section style="background:var(--soft)">
   <div class="wrap">
-    <h2 class="sec-title">Vì sao chọn <span class="chrome-accent">cắt máy CNC?</span></h2>
-    <p class="sec-sub">Khác biệt lớn nhất giữa dán đẹp và dán "tạm được" nằm ở đường cắt.</p>
+    <h2 class="sec-title">Vì sao chọn <span class="glossy">cắt máy CNC?</span></h2>
+    <p class="sec-sub">Khác biệt giữa dán đẹp và dán "tạm được" nằm ở đường cắt.</p>
     <div class="grid g3">
-      <div class="card"><div class="ic">🎯</div><h3>Chuẩn từng model</h3><p>Khuôn cắt theo đúng dòng máy — không rọc dao trực tiếp lên máy của bạn, không lẹm viền.</p></div>
-      <div class="card"><div class="ic">🪞</div><h3>Ôm khít – không bọt khí</h3><p>Mép film sát viền, phẳng mịn như chưa dán. Giữ nguyên cảm giác vuốt chạm.</p></div>
-      <div class="card"><div class="ic">💰</div><h3>Giữ giá máy</h3><p>Máy không trầy = bán lại được giá. Một lần dán, đỡ tiếc cả đời máy.</p></div>
+      <div class="card"><div style="font-size:42px">🎯</div><h3>Chuẩn từng model</h3><p>Khuôn cắt đúng dòng máy — không rọc dao trực tiếp lên máy của bạn, không lẹm viền.</p></div>
+      <div class="card"><div style="font-size:42px">🪞</div><h3>Ôm khít – không bọt khí</h3><p>Mép film sát viền, phẳng mịn như chưa dán. Giữ nguyên cảm giác vuốt chạm.</p></div>
+      <div class="card"><div style="font-size:42px">💰</div><h3>Giữ giá máy</h3><p>Máy không trầy = bán lại được giá. Một lần dán, đỡ tiếc cả đời máy.</p></div>
     </div>
   </div>
 </section>
 
 <section id="gia">
   <div class="wrap">
-    <h2 class="sec-title">Bảng giá <span class="chrome-accent">tham khảo</span></h2>
+    <h2 class="sec-title">Bảng giá <span class="glossy">tham khảo</span></h2>
     <p class="sec-sub">Giá tuỳ dòng máy & loại film — nhắn Zalo báo model để có giá chính xác nhất.</p>
     <table>
       <tr><th>Thiết bị</th><th>Hạng mục</th><th>Giá</th></tr>
@@ -220,19 +241,19 @@ footer a:hover{color:var(--accent)}
       <tr><td>Điện thoại</td><td>PPF mặt lưng + viền</td><td class="price">Liên hệ</td></tr>
       <tr><td>Điện thoại</td><td>PPF full thân máy</td><td class="price">Liên hệ</td></tr>
       <tr><td>Máy tính bảng</td><td>PPF mặt lưng</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Laptop / Macbook</td><td>PPF nắp máy + chiếu nghỉ tay</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Đồng hồ</td><td>PPF màn hình</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Laptop / Macbook</td><td>PPF nắp máy + kê tay</td><td class="price">Liên hệ</td></tr>
+      <tr><td>Camera / Đồng hồ</td><td>PPF body / màn hình</td><td class="price">Liên hệ</td></tr>
     </table>
     <p class="note">💬 Nhắn Zalo <b>0778.968.738</b> kèm tên máy — báo giá trong vài phút.</p>
   </div>
 </section>
 
-<section style="background:rgba(255,255,255,.02)">
+<section style="background:var(--soft)">
   <div class="wrap">
-    <h2 class="sec-title">Quy trình <span class="chrome-accent">4 bước</span></h2>
+    <h2 class="sec-title">Quy trình <span class="glossy">4 bước</span></h2>
     <p class="sec-sub">Minh bạch từng bước — bạn ngồi xem trực tiếp.</p>
     <div class="grid g4">
-      <div class="card step"><span class="n">1</span><h3>Vệ sinh máy</h3><p>Làm sạch bụi & dầu trong phòng kín</p></div>
+      <div class="card step"><span class="n">1</span><h3>Vệ sinh máy</h3><p>Làm sạch bụi & dầu trong khu vực kín</p></div>
       <div class="card step"><span class="n">2</span><h3>Cắt CNC</h3><p>Chọn đúng khuôn model, máy cắt chính xác</p></div>
       <div class="card step"><span class="n">3</span><h3>Dán & gạt khí</h3><p>Kỹ thuật viên dán, gạt sạch bọt khí</p></div>
       <div class="card step"><span class="n">4</span><h3>Kiểm tra giao máy</h3><p>Soi viền cùng khách — ưng mới nhận máy</p></div>
@@ -240,63 +261,54 @@ footer a:hover{color:var(--accent)}
   </div>
 </section>
 
-<!-- ============ SỰ KIỆN WORLD CUP ============ -->
-<section id="sukien" style="background:linear-gradient(180deg, rgba(20,83,45,.25), rgba(255,255,255,.02))">
+<section id="sukien">
   <div class="wrap">
     <h2 class="sec-title">⚽ Mùa World Cup <span class="glossy">cùng Tuệ Tâm</span></h2>
     <p class="sec-sub">Hai trận cầu cuối cùng — xem đá hết mình, máy đã có PPF lo!</p>
-    <div class="grid" style="grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
-      <div class="card" style="text-align:center">
-        <div style="font-size:15px;color:var(--muted);letter-spacing:1px">🥉 TRANH HẠNG 3 · 19/7</div>
-        <h3 style="font-size:28px;margin-top:10px">🇫🇷 PHÁP — ANH 🏴󠁧󠁢󠁥󠁮󠁧󠁿</h3>
-      </div>
-      <div class="card" style="text-align:center;border-color:rgba(250,204,21,.5)">
-        <div style="font-size:15px;color:#fbbf24;letter-spacing:1px">🏆 CHUNG KẾT · 20/7</div>
-        <h3 style="font-size:28px;margin-top:10px">🇪🇸 TÂY BAN NHA — ARGENTINA 🇦🇷</h3>
-      </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="match"><div class="lbl">🥉 TRANH HẠNG 3 · 19/7</div><h3>🇫🇷 PHÁP — ANH 🏴󠁧󠁢󠁥󠁮󠁧󠁿</h3></div>
+      <div class="match final"><div class="lbl">🏆 CHUNG KẾT · 20/7</div><h3>🇪🇸 TÂY BAN NHA — ARGENTINA 🇦🇷</h3></div>
     </div>
-    <div class="grid" style="grid-template-columns:1fr 1.1fr;gap:26px;align-items:center">
-      <img src="media/minigame-worldcup.png" alt="Minigame dự đoán tỉ số chung kết World Cup" style="border-radius:20px;border:1px solid var(--line)">
+    <div class="wc-flex">
+      <img src="media/minigame-worldcup.png" alt="Minigame dự đoán tỉ số chung kết World Cup" style="border-radius:16px;box-shadow:var(--card-shadow)">
       <div>
-        <h3 style="font-size:26px;margin-bottom:12px">🎁 Minigame: Dự đoán tỉ số chung kết</h3>
-        <p style="color:var(--muted);margin-bottom:10px">Đoán đúng tỉ số trận Tây Ban Nha – Argentina &amp; comment sớm nhất trên Fanpage → nhận ngay <b style="color:#fde047">1 suất dán PPF màn hình MIỄN PHÍ</b>. Công bố kết quả sáng 21/7.</p>
-        <p style="color:var(--muted);margin-bottom:20px">Mẹo mùa bóng: hét "VÀOOO!" thì nhớ cầm chắc điện thoại 😅 — dán PPF trước giờ bóng lăn, ăn mừng thoải mái.</p>
+        <h3 style="font-size:24px;margin-bottom:10px">🎁 Minigame: Dự đoán tỉ số chung kết</h3>
+        <p style="color:var(--muted)">Đoán đúng tỉ số trận Tây Ban Nha – Argentina &amp; comment sớm nhất trên Fanpage:</p>
+        <div class="prize">🏆 Nhận ngay <b>1 suất dán PPF màn hình MIỄN PHÍ</b> — công bố sáng 21/7 trên Fanpage.</div>
+        <p style="color:var(--muted);margin-bottom:18px">Mẹo mùa bóng: hét "VÀOOO!" nhớ cầm chắc điện thoại 😅 — dán PPF trước giờ bóng lăn, ăn mừng thoải mái.</p>
         <a class="btn btn-primary" href="https://www.facebook.com/122108314809371614/posts/122108389629371614" target="_blank" rel="noopener">⚽ Tham gia minigame trên Fanpage</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ TƯ VẤN DINH DƯỠNG ============ -->
 <section id="dinhduong">
   <div class="wrap">
-    <h2 class="sec-title">🥗 Tuệ Tâm còn <span class="chrome-accent" style="background:linear-gradient(110deg,#166534 0%,#22c55e 22%,#ecfdf5 38%,#22c55e 52%,#166534 68%,#86efac 85%,#166534 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text">tư vấn dinh dưỡng cá nhân</span></h2>
+    <h2 class="sec-title">🥗 Tuệ Tâm còn <span class="glossy">tư vấn dinh dưỡng cá nhân</span></h2>
     <p class="sec-sub">Ăn đúng người — đúng bệnh — đúng mục tiêu. Thực đơn thiết kế riêng theo tình trạng của bạn.</p>
     <div class="grid g3">
-      <div class="card"><div class="ic">🎯</div><h3>Giảm cân</h3><p>Xuống cân khoa học, không nhịn đói cực đoan, giữ được lâu dài</p></div>
-      <div class="card"><div class="ic">💪</div><h3>Tăng cân</h3><p>Lên cân khoẻ mạnh, đủ chất, đúng cách cho người gầy khó hấp thu</p></div>
-      <div class="card"><div class="ic">❤️</div><h3>Theo bệnh lý</h3><p>Tim mạch, huyết áp, tiểu đường... — thực đơn an toàn, kết hợp chỉ định của bác sĩ</p></div>
+      <div class="card"><div style="font-size:42px">🎯</div><h3>Giảm cân</h3><p>Xuống cân khoa học, không nhịn đói cực đoan, giữ được lâu dài</p></div>
+      <div class="card"><div style="font-size:42px">💪</div><h3>Tăng cân</h3><p>Lên cân khoẻ mạnh, đủ chất, đúng cách cho người gầy khó hấp thu</p></div>
+      <div class="card"><div style="font-size:42px">❤️</div><h3>Theo bệnh lý</h3><p>Tim mạch, huyết áp, tiểu đường... — thực đơn an toàn, kết hợp chỉ định của bác sĩ</p></div>
     </div>
-    <p class="note" style="margin-top:20px">⚠️ Dịch vụ hỗ trợ dinh dưỡng — luôn đi cùng chỉ định của bác sĩ điều trị, không thay thế phác đồ y tế.</p>
-    <div style="text-align:center;margin-top:18px">
-      <a class="btn btn-primary" style="background:linear-gradient(90deg,#16a34a,#22c55e);color:#052e16" href="https://zalo.me/0778968738">🥗 Nhắn Zalo nhận tư vấn dinh dưỡng</a>
+    <div class="dd-note">⚠️ Dịch vụ hỗ trợ dinh dưỡng — luôn đi cùng chỉ định của bác sĩ điều trị, không thay thế phác đồ y tế.</div>
+    <div style="text-align:center;margin-top:22px">
+      <a class="btn btn-primary" style="background:linear-gradient(90deg,#16a34a,#22c55e)" href="https://zalo.me/0778968738">🥗 Nhắn Zalo nhận tư vấn dinh dưỡng</a>
     </div>
   </div>
 </section>
 
-<!-- ============ VIDEO & HÌNH ẢNH ============ -->
-<section id="hinhanh" style="background:rgba(255,255,255,.02)">
+<section id="hinhanh" style="background:var(--soft)">
   <div class="wrap">
-    <h2 class="sec-title">Video &amp; hình ảnh <span class="chrome-accent">thực tế</span></h2>
+    <h2 class="sec-title">Video &amp; hình ảnh <span class="glossy">thực tế</span></h2>
     <p class="sec-sub">Tiệm thật — việc thật, mời bạn xem.</p>
-    <div class="grid" style="grid-template-columns:1.2fr 1fr;gap:22px;align-items:start">
-      <video controls preload="metadata" playsinline style="width:100%;border-radius:20px;border:1px solid var(--line);background:#000">
-        <source src="media/video-tuetam.mp4" type="video/mp4">
-        Trình duyệt không hỗ trợ video.
+    <div class="media-grid">
+      <video controls preload="metadata" playsinline>
+        <source src="media/video-tuetam.mp4" type="video/mp4">Trình duyệt không hỗ trợ video.
       </video>
-      <div class="grid" style="grid-template-columns:1fr;gap:18px">
-        <img src="media/mat-tien.jpg" alt="Mặt tiền tiệm Tuệ Tâm PPF CNC — 71 đường số 2, Tân An, Cần Thơ" style="border-radius:18px;border:1px solid var(--line)">
-        <img src="media/ppf-vs-cuongluc.png" alt="So sánh PPF và cường lực" style="border-radius:18px;border:1px solid var(--line)">
+      <div class="grid" style="grid-template-columns:1fr;gap:16px">
+        <img src="media/mat-tien.jpg" alt="Mặt tiền tiệm Tuệ Tâm PPF CNC — 71 đường số 2, Tân An, Cần Thơ">
+        <img src="media/ppf-vs-cuongluc.png" alt="So sánh PPF và cường lực">
       </div>
     </div>
   </div>
@@ -304,17 +316,16 @@ footer a:hover{color:var(--accent)}
 
 <section id="thanhtoan">
   <div class="wrap">
-    <h2 class="sec-title">Thanh toán <span class="chrome-accent">quét QR</span></h2>
+    <h2 class="sec-title">Thanh toán <span class="glossy">quét QR</span></h2>
     <p class="sec-sub">Chuyển khoản nhanh qua mã VietQR — quét bằng app ngân hàng bất kỳ.</p>
     <div class="pay">
       <div class="qr-box">
-        <img src="https://img.vietqr.io/image/TCB-19032213176013-compact2.png?accountName=PHAM%20THI%20MOC%20QUE%20ANH"
-             alt="Mã QR thanh toán Techcombank">
+        <img src="https://img.vietqr.io/image/TCB-19032213176013-compact2.png?accountName=PHAM%20THI%20MOC%20QUE%20ANH" alt="Mã QR thanh toán Techcombank">
         <div class="bank">Techcombank · 19032213176013<br>PHẠM THỊ MỘC QUẾ ANH</div>
       </div>
       <ul class="pay-info">
         <li>Quét mã bằng app ngân hàng bất kỳ (VietQR chuẩn Napas)</li>
-        <li>Nội dung chuyển khoản: <b style="color:#fff">Tên + SĐT của bạn</b></li>
+        <li>Nội dung chuyển khoản: <b>Tên + SĐT của bạn</b></li>
         <li>Thanh toán tại tiệm: tiền mặt hoặc chuyển khoản đều được</li>
         <li>Cần hoá đơn/xác nhận — nhắn Zalo có ngay</li>
       </ul>
@@ -322,16 +333,16 @@ footer a:hover{color:var(--accent)}
   </div>
 </section>
 
-<section id="vitri" style="background:rgba(255,255,255,.02)">
+<section id="vitri" style="background:var(--soft)">
   <div class="wrap">
-    <h2 class="sec-title">Tìm đường <span class="chrome-accent">đến tiệm</span></h2>
+    <h2 class="sec-title">Tìm đường <span class="glossy">đến tiệm</span></h2>
     <p class="sec-sub">71, đường số 2, khu CBGV, Tân An, Cần Thơ — bấm "Chỉ đường" là Google Maps dẫn tới nơi.</p>
-    <div style="border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)">
+    <div class="mapbox">
       <iframe src="https://maps.google.com/maps?q=10.027983,105.759543&z=17&output=embed"
         width="100%" height="380" style="border:0;display:block" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade" title="Bản đồ Tuệ Tâm PPF CNC Cần Thơ"></iframe>
     </div>
-    <div style="text-align:center;margin-top:24px">
+    <div style="text-align:center;margin-top:22px">
       <a class="btn btn-primary" href="https://maps.google.com/?q=10.027983,105.759543" target="_blank" rel="noopener">🧭 Chỉ đường bằng Google Maps</a>
     </div>
   </div>
@@ -340,7 +351,7 @@ footer a:hover{color:var(--accent)}
 <footer id="lienhe">
   <div class="wrap fgrid">
     <div>
-      <h4 class="chrome" style="font-size:22px">TUỆ TÂM PPF CNC CẦN THƠ</h4>
+      <h4>TUỆ TÂM PPF CNC CẦN THƠ</h4>
       <p>📍 <a href="https://maps.google.com/?q=10.027983,105.759543" target="_blank" rel="noopener">71, đường số 2, khu CBGV, Tân An, Cần Thơ — xem bản đồ</a></p>
       <p>📞 SĐT/Zalo: <a href="https://zalo.me/0778968738"><b>0778.968.738</b></a></p>
       <p>🕗 Mở cửa: 8h–21h (cả tuần)</p>
@@ -352,8 +363,8 @@ footer a:hover{color:var(--accent)}
     </div>
     <div>
       <h4>Dịch vụ</h4>
-      <p>Dán PPF điện thoại · tablet · laptop · đồng hồ</p>
-      <p>Tư vấn chọn loại film phù hợp miễn phí</p>
+      <p>Dán PPF điện thoại · tablet · laptop · camera · đồng hồ</p>
+      <p>Tư vấn dinh dưỡng cá nhân</p>
     </div>
   </div>
 </footer>
