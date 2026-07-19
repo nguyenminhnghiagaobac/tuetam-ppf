@@ -557,7 +557,17 @@ footer a:hover{color:#38bdf8}
 
 <script>
 const ZALO="https://zalo.me/0778968738";
+/* 🔧 CHỦ TIỆM: dán link Google Apps Script (kết thúc /exec) vào đây để tự lưu đơn vào Sheet. Trống = chỉ gửi Zalo. */
+const BOOKING_ENDPOINT="";
 function val(id){return (document.getElementById(id).value||'').trim();}
+
+/* Mặc định ngày = hôm nay, giờ = làm tròn LÊN giờ tròn kế tiếp (vd 15:29 -> 16:00) */
+(function setBookingDefaults(){
+  var now=new Date();
+  var d=document.getElementById('bkDate'),t=document.getElementById('bkTime');
+  if(d){var m=String(now.getMonth()+1).padStart(2,'0'),day=String(now.getDate()).padStart(2,'0');d.value=now.getFullYear()+'-'+m+'-'+day;}
+  if(t){var h=now.getHours();if(now.getMinutes()>0||now.getSeconds()>0)h+=1;if(h>23)h=23;t.value=String(h).padStart(2,'0')+':00';}
+})();
 
 /* ====== BỘ CHỌN THIẾT BỊ → GỢI Ý GÓI ====== */
 const DEVDATA={
@@ -602,6 +612,14 @@ function submitBooking(){
   msgEl.style.background='';msgEl.style.color='';
   msgEl.className='form-msg ok';
   msgEl.innerHTML='✅ Đã sao chép nội dung! Cửa sổ Zalo đang mở — <b>dán (Ctrl+V) vào khung chat và gửi</b> giúp em nhé.';
+  if(BOOKING_ENDPOINT){
+    var p=new URLSearchParams();
+    p.append('ten',name);p.append('sdt',phone);
+    p.append('thietbi',val('bkDevice'));p.append('goi',val('bkPkg'));
+    p.append('thoigian',[val('bkDate'),val('bkTime')].filter(Boolean).join(' ')||'(linh hoạt)');
+    p.append('ghichu',val('bkNote')||'');
+    fetch(BOOKING_ENDPOINT,{method:'POST',mode:'no-cors',body:p}).catch(function(){});
+  }
   window.open(ZALO,'_blank');
 }
 
