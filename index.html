@@ -81,6 +81,9 @@ th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--line)}
 th{background:#f0f9ff;color:var(--accent-d);font-size:14px;letter-spacing:.5px;text-transform:uppercase}
 tr:last-child td{border-bottom:none}
 td .price{font-weight:800;color:#e11d48}
+a.price{display:inline-flex;align-items:center;gap:6px;transition:.18s}
+a.price::before{content:"💬";font-size:13px}
+a.price:hover{color:#be123c;text-decoration:underline;transform:translateX(2px)}
 .note{font-size:14px;color:var(--muted);margin-top:14px;text-align:center}
 
 /* ---- STEPS ---- */
@@ -128,6 +131,61 @@ footer a:hover{color:#38bdf8}
  .g3{grid-template-columns:1fr}.wc-flex,.media-grid{grid-template-columns:1fr}
  .fgrid{grid-template-columns:1fr}nav .links{display:none}}
 @media(max-width:560px){.g5{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- DEVICE PICKER ---- */
+.picker-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:26px}
+.pick{border:2px solid var(--line);background:#fff;border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s;color:var(--ink)}
+.pick:hover{border-color:#7dd3fc}
+.pick.active{background:linear-gradient(90deg,#0284c7,#0ea5e9);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(14,165,233,.35)}
+.pick-result{max-width:720px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--card-shadow);text-align:left}
+.pick-result h3{font-size:22px;margin-bottom:6px}
+.pick-result .rec{display:inline-block;background:#e0f2fe;color:var(--accent-d);font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px;margin:8px 0}
+.pick-result ul{list-style:none;margin:12px 0}
+.pick-result li{padding:6px 0 6px 28px;position:relative;color:var(--muted)}
+.pick-result li::before{content:"✓";position:absolute;left:0;color:#16a34a;font-weight:800}
+
+/* ---- PACKAGES ---- */
+.pkg{position:relative;display:flex;flex-direction:column;text-align:left}
+.pkg .tier{font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent-d)}
+.pkg h3{font-size:22px;margin:6px 0 4px}
+.pkg .desc{color:var(--muted);font-size:14px;margin-bottom:14px}
+.pkg ul{list-style:none;margin-bottom:18px;flex:1}
+.pkg li{padding:7px 0 7px 26px;position:relative;font-size:14.5px}
+.pkg li::before{content:"✓";position:absolute;left:0;color:#16a34a;font-weight:800}
+.pkg.popular{border:2px solid var(--accent);box-shadow:0 14px 40px rgba(14,165,233,.22)}
+.pkg .tag-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#0284c7,#0ea5e9);color:#fff;font-size:12px;font-weight:800;padding:5px 16px;border-radius:999px;white-space:nowrap}
+
+/* ---- BOOKING FORM ---- */
+#datlich{background:linear-gradient(180deg,#eff8ff,#fff)}
+.form-card{max-width:640px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:var(--card-shadow)}
+.form-row{margin-bottom:16px}
+.form-row.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-row label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-msg{margin-top:14px;padding:14px 16px;border-radius:12px;font-size:14.5px;display:none}
+.form-msg.ok{display:block;background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d}
+.compose-box{margin-top:12px;background:#f8fafc;border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:13.5px;white-space:pre-wrap;color:var(--ink);display:none}
+
+/* ---- WARRANTY ---- */
+#baohanh{background:var(--soft)}
+.wr-box{max-width:620px;margin:0 auto}
+.wr-search{display:flex;gap:10px;flex-wrap:wrap}
+.wr-search input{flex:1;min-width:200px;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;font-size:15px}
+.wr-search input:focus{outline:none;border-color:var(--accent)}
+.wr-result{margin-top:18px;display:none}
+.wr-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--card-shadow)}
+.wr-card .row2{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.wr-card .row2:last-child{border-bottom:none}
+.wr-card .row2 span:first-child{color:var(--muted)}
+.wr-card .row2 b{color:var(--ink);text-align:right}
+.wr-badge{display:inline-block;padding:7px 16px;border-radius:999px;font-weight:800;font-size:14px}
+.wr-badge.valid{background:#dcfce7;color:#15803d}
+.wr-badge.expired{background:#fee2e2;color:#b91c1c}
+.wr-note{font-size:13.5px;color:var(--muted);text-align:center;margin-top:14px}
+.wr-demo{background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:13px;padding:10px 14px;border-radius:10px;margin-bottom:14px;text-align:center}
+
+@media(max-width:560px){.form-row.two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -172,6 +230,27 @@ footer a:hover{color:#38bdf8}
       <rect x="26" y="20" width="44" height="56" rx="14" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
       <path d="M48 36 L48 50 L57 55" stroke="url(#gdev)" stroke-width="4" stroke-linecap="round" fill="none"/>
     </g>
+    <g id="dev-earbuds">
+      <rect x="22" y="18" width="20" height="30" rx="10" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <path d="M32 48 L32 74" stroke="url(#gdev)" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="32" cy="30" r="4" fill="url(#gdev)" opacity=".65"/>
+      <rect x="54" y="18" width="20" height="30" rx="10" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <path d="M64 48 L64 74" stroke="url(#gdev)" stroke-width="4.5" stroke-linecap="round"/>
+      <circle cx="64" cy="30" r="4" fill="url(#gdev)" opacity=".65"/>
+    </g>
+    <g id="dev-doc">
+      <rect x="14" y="24" width="68" height="48" rx="8" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5"/>
+      <circle cx="33" cy="43" r="8" fill="#fff" stroke="url(#gdev)" stroke-width="3"/>
+      <path d="M50 38 L74 38 M50 48 L74 48 M50 58 L66 58" stroke="url(#gdev)" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M22 60 L44 38" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+    </g>
+    <g id="dev-car">
+      <path d="M12 60 L20 40 Q22 34 30 34 L66 34 Q74 34 76 40 L84 60 L84 68 L12 68 Z" fill="url(#gscr)" stroke="url(#gdev)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M28 40 L40 40 L40 53 L20 53 Z" fill="#fff" opacity=".85"/>
+      <path d="M47 40 L66 40 L74 53 L47 53 Z" fill="#fff" opacity=".85"/>
+      <circle cx="29" cy="68" r="7" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3.5"/>
+      <circle cx="67" cy="68" r="7" fill="#e2e8f0" stroke="url(#gdev)" stroke-width="3.5"/>
+    </g>
   </defs>
 </svg>
 
@@ -179,8 +258,8 @@ footer a:hover{color:#38bdf8}
   <div class="wrap">
     <div class="logo">TUỆ TÂM <span class="glossy">PPF CNC</span></div>
     <div class="links">
-      <a href="#dichvu">Dịch vụ</a><a href="#gia">Bảng giá</a><a href="#sukien">⚽ World Cup</a>
-      <a href="#dinhduong">Dinh dưỡng</a><a href="#hinhanh">Hình ảnh</a><a href="#vitri">Vị trí</a>
+      <a href="#dichvu">Dịch vụ</a><a href="#goi">Gói dịch vụ</a><a href="#gia">Bảng giá</a>
+      <a href="#datlich">Đặt lịch</a><a href="#baohanh">Bảo hành</a><a href="#vitri">Vị trí</a>
     </div>
     <a class="btn btn-primary" href="https://zalo.me/0778968738">Nhắn Zalo</a>
   </div>
@@ -215,6 +294,9 @@ footer a:hover{color:#38bdf8}
       <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-laptop"/></svg><h3>Laptop</h3><p>Macbook & laptop — nắp máy, kê tay</p></div>
       <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-camera"/></svg><h3>Camera</h3><p>Máy ảnh & lens — chống trầy body</p></div>
       <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-watch"/></svg><h3>Đồng hồ</h3><p>Smartwatch — màn cong ôm khít</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-earbuds"/></svg><h3>Tai nghe</h3><p>Apple, Samsung, Redmi... — hộp &amp; tai</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-doc"/></svg><h3>Giấy tờ bản cứng</h3><p>CCCD, GPLX, thẻ ngân hàng — chống trầy, chống nước</p></div>
+      <div class="card"><svg class="dev" viewBox="0 0 96 96"><use href="#dev-car"/></svg><h3>Ô tô</h3><p>Màn hình hiển thị, kính hậu — chống lóa, chống bám nước</p></div>
     </div>
   </div>
 </section>
@@ -225,8 +307,73 @@ footer a:hover{color:#38bdf8}
     <p class="sec-sub">Khác biệt giữa dán đẹp và dán "tạm được" nằm ở đường cắt.</p>
     <div class="grid g3">
       <div class="card"><div style="font-size:42px">🎯</div><h3>Chuẩn từng model</h3><p>Khuôn cắt đúng dòng máy — không rọc dao trực tiếp lên máy của bạn, không lẹm viền.</p></div>
-      <div class="card"><div style="font-size:42px">🪞</div><h3>Ôm khít – không bọt khí</h3><p>Mép film sát viền, phẳng mịn như chưa dán. Giữ nguyên cảm giác vuốt chạm.</p></div>
+      <div class="card"><div style="font-size:42px">✨</div><h3>Ôm khít – không bọt khí</h3><p>Mép film sát viền, phẳng mịn như chưa dán. Giữ nguyên cảm giác vuốt chạm.</p></div>
       <div class="card"><div style="font-size:42px">💰</div><h3>Giữ giá máy</h3><p>Máy không trầy = bán lại được giá. Một lần dán, đỡ tiếc cả đời máy.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="chongoi">
+  <div class="wrap">
+    <h2 class="sec-title">Chọn thiết bị — <span class="glossy">gợi ý gói phù hợp</span></h2>
+    <p class="sec-sub">Bấm vào thiết bị của bạn, xem ngay nên dán gì và gói nào hợp nhất.</p>
+    <div class="picker-btns" id="pickerBtns">
+      <button class="pick" data-dev="phone">📱 Điện thoại</button>
+      <button class="pick" data-dev="tablet">📲 Máy tính bảng</button>
+      <button class="pick" data-dev="laptop">💻 Laptop / Macbook</button>
+      <button class="pick" data-dev="watch">⌚ Đồng hồ</button>
+      <button class="pick" data-dev="camera">📷 Camera</button>
+      <button class="pick" data-dev="car">🚗 Ô tô</button>
+      <button class="pick" data-dev="earbuds">🎧 Tai nghe</button>
+      <button class="pick" data-dev="doc">🆔 Giấy tờ</button>
+    </div>
+    <div class="pick-result" id="pickResult"></div>
+  </div>
+</section>
+
+<section id="goi" style="background:var(--soft)">
+  <div class="wrap">
+    <h2 class="sec-title">Gói <span class="glossy">dịch vụ</span></h2>
+    <p class="sec-sub">Chọn mức bảo vệ phù hợp — báo giá chính xác theo dòng máy qua Zalo.</p>
+    <!-- ⚙️ CHỦ TIỆM: CHỈNH NỘI DUNG & THỜI HẠN BẢO HÀNH TỪNG GÓI THEO THỰC TẾ -->
+    <div class="grid g3">
+      <div class="card pkg">
+        <div class="tier">🥉 Cơ bản</div>
+        <h3>Bảo vệ 1 mặt</h3>
+        <p class="desc">Hợp máy mới muốn chống trầy cơ bản, chi phí tiết kiệm.</p>
+        <ul>
+          <li>PPF 1 mặt (mặt lưng hoặc màn hình)</li>
+          <li>Chống trầy xước, chống bám vân tay</li>
+          <li>Cắt CNC ôm khít, dán lấy liền</li>
+          <li>Bảo hành 6 tháng</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://zalo.me/0778968738">Nhận báo giá gói Cơ bản</a>
+      </div>
+      <div class="card pkg popular">
+        <span class="tag-pop">⭐ PHỔ BIẾN NHẤT</span>
+        <div class="tier">🥈 Full</div>
+        <h3>Ôm trọn thân máy</h3>
+        <p class="desc">Lựa chọn được chọn nhiều nhất — bảo vệ toàn diện.</p>
+        <ul>
+          <li>PPF mặt lưng + viền + camera</li>
+          <li>Chống trầy, chống nước, tự lành vết xước nhẹ</li>
+          <li>Giữ nguyên cảm giác vuốt chạm</li>
+          <li>Bảo hành 12 tháng</li>
+        </ul>
+        <a class="btn btn-primary" href="https://zalo.me/0778968738">Nhận báo giá gói Full</a>
+      </div>
+      <div class="card pkg">
+        <div class="tier">🥇 Premium</div>
+        <h3>Cao cấp toàn diện</h3>
+        <p class="desc">Cho máy giá trị cao hoặc dán nhiều thiết bị cùng lúc.</p>
+        <ul>
+          <li>Full thân + màn hình / combo nhiều thiết bị</li>
+          <li>Film cao cấp, chống ố vàng, độ trong cao</li>
+          <li>Ưu tiên xử lý nhanh</li>
+          <li>Bảo hành 18–24 tháng, dán lại miễn phí nếu lỗi</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://zalo.me/0778968738">Nhận báo giá gói Premium</a>
+      </div>
     </div>
   </div>
 </section>
@@ -238,11 +385,15 @@ footer a:hover{color:#38bdf8}
     <table>
       <tr><th>Thiết bị</th><th>Hạng mục</th><th>Giá</th></tr>
       <!-- 🔲 SỬA GIÁ THẬT TẠI ĐÂY -->
-      <tr><td>Điện thoại</td><td>PPF mặt lưng + viền</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Điện thoại</td><td>PPF full thân máy</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Máy tính bảng</td><td>PPF mặt lưng</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Laptop / Macbook</td><td>PPF nắp máy + kê tay</td><td class="price">Liên hệ</td></tr>
-      <tr><td>Camera / Đồng hồ</td><td>PPF body / màn hình</td><td class="price">Liên hệ</td></tr>
+      <tr><td>📱 Điện thoại</td><td>PPF mặt lưng</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>📱 Điện thoại</td><td>PPF mặt lưng + viền</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>📲 Máy tính bảng</td><td>PPF lưng + viền</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>💻 Laptop / Macbook</td><td>Màn hình hiển thị</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>💻 Laptop / Macbook</td><td>Mặt sau màn hình / mặt bàn phím</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>📷 Camera / Đồng hồ</td><td>Màn hình hiển thị</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>🚗 Ô tô</td><td>Màn hình hiển thị / kính hậu</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>🆔 Giấy tờ</td><td>CCCD / GPLX / thẻ ngân hàng</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
+      <tr><td>🎧 Tai nghe</td><td>Apple / Samsung / Redmi...</td><td><a class="price" href="https://zalo.me/0778968738">Liên hệ</a></td></tr>
     </table>
     <p class="note">💬 Nhắn Zalo <b>0778.968.738</b> kèm tên máy — báo giá trong vài phút.</p>
   </div>
@@ -257,6 +408,55 @@ footer a:hover{color:#38bdf8}
       <div class="card step"><span class="n">2</span><h3>Cắt CNC</h3><p>Chọn đúng khuôn model, máy cắt chính xác</p></div>
       <div class="card step"><span class="n">3</span><h3>Dán & gạt khí</h3><p>Kỹ thuật viên dán, gạt sạch bọt khí</p></div>
       <div class="card step"><span class="n">4</span><h3>Kiểm tra giao máy</h3><p>Soi viền cùng khách — ưng mới nhận máy</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="datlich">
+  <div class="wrap">
+    <h2 class="sec-title">Đặt lịch <span class="glossy">dán PPF</span></h2>
+    <p class="sec-sub">Điền thông tin — bấm gửi là mở Zalo sẵn nội dung, bạn chỉ việc dán &amp; gửi.</p>
+    <div class="form-card">
+      <div class="form-row two">
+        <div><label>Họ tên *</label><input id="bkName" type="text" placeholder="Nguyễn Văn A"></div>
+        <div><label>Số điện thoại *</label><input id="bkPhone" type="tel" placeholder="09xx xxx xxx"></div>
+      </div>
+      <div class="form-row two">
+        <div><label>Thiết bị</label>
+          <select id="bkDevice">
+            <option>Điện thoại</option><option>Máy tính bảng</option><option>Laptop / Macbook</option>
+            <option>Đồng hồ</option><option>Camera</option><option>Ô tô</option>
+            <option>Tai nghe</option><option>Giấy tờ (CCCD/GPLX/thẻ)</option>
+          </select>
+        </div>
+        <div><label>Gói mong muốn</label>
+          <select id="bkPkg"><option>Chưa rõ, cần tư vấn</option><option>Cơ bản</option><option>Full</option><option>Premium</option></select>
+        </div>
+      </div>
+      <div class="form-row two">
+        <div><label>Ngày mong muốn</label><input id="bkDate" type="date"></div>
+        <div><label>Giờ mong muốn</label><input id="bkTime" type="time"></div>
+      </div>
+      <div class="form-row"><label>Ghi chú (tên máy, yêu cầu thêm...)</label><textarea id="bkNote" rows="2" placeholder="VD: iPhone 15 Pro Max, dán full thân"></textarea></div>
+      <button class="btn btn-primary" style="width:100%" onclick="submitBooking()">💬 Gửi đặt lịch qua Zalo</button>
+      <div class="form-msg" id="bkMsg"></div>
+      <div class="compose-box" id="bkCompose"></div>
+    </div>
+  </div>
+</section>
+
+<section id="baohanh">
+  <div class="wrap">
+    <h2 class="sec-title">Tra cứu <span class="glossy">bảo hành</span></h2>
+    <p class="sec-sub">Nhập số điện thoại hoặc mã bảo hành để xem hạn bảo hành thiết bị của bạn.</p>
+    <div class="wr-box">
+      <div class="wr-demo" id="wrDemo" style="display:none"></div>
+      <div class="wr-search">
+        <input id="wrInput" type="text" placeholder="Nhập SĐT hoặc mã bảo hành...">
+        <button class="btn btn-primary" onclick="lookupWarranty()">🔍 Tra cứu</button>
+      </div>
+      <div class="wr-result" id="wrResult"></div>
+      <p class="wr-note">Chưa có thông tin hoặc cần hỗ trợ? <a href="https://zalo.me/0778968738" style="color:var(--accent);font-weight:700">Nhắn Zalo 0778.968.738</a></p>
     </div>
   </div>
 </section>
@@ -282,22 +482,6 @@ footer a:hover{color:#38bdf8}
   </div>
 </section>
 
-<section id="dinhduong">
-  <div class="wrap">
-    <h2 class="sec-title">🥗 Tuệ Tâm còn <span class="glossy">tư vấn dinh dưỡng cá nhân</span></h2>
-    <p class="sec-sub">Ăn đúng người — đúng bệnh — đúng mục tiêu. Thực đơn thiết kế riêng theo tình trạng của bạn.</p>
-    <div class="grid g3">
-      <div class="card"><div style="font-size:42px">🎯</div><h3>Giảm cân</h3><p>Xuống cân khoa học, không nhịn đói cực đoan, giữ được lâu dài</p></div>
-      <div class="card"><div style="font-size:42px">💪</div><h3>Tăng cân</h3><p>Lên cân khoẻ mạnh, đủ chất, đúng cách cho người gầy khó hấp thu</p></div>
-      <div class="card"><div style="font-size:42px">❤️</div><h3>Theo bệnh lý</h3><p>Tim mạch, huyết áp, tiểu đường... — thực đơn an toàn, kết hợp chỉ định của bác sĩ</p></div>
-    </div>
-    <div class="dd-note">⚠️ Dịch vụ hỗ trợ dinh dưỡng — luôn đi cùng chỉ định của bác sĩ điều trị, không thay thế phác đồ y tế.</div>
-    <div style="text-align:center;margin-top:22px">
-      <a class="btn btn-primary" style="background:linear-gradient(90deg,#16a34a,#22c55e)" href="https://zalo.me/0778968738">🥗 Nhắn Zalo nhận tư vấn dinh dưỡng</a>
-    </div>
-  </div>
-</section>
-
 <section id="hinhanh" style="background:var(--soft)">
   <div class="wrap">
     <h2 class="sec-title">Video &amp; hình ảnh <span class="glossy">thực tế</span></h2>
@@ -307,7 +491,7 @@ footer a:hover{color:#38bdf8}
         <source src="media/video-tuetam.mp4" type="video/mp4">Trình duyệt không hỗ trợ video.
       </video>
       <div class="grid" style="grid-template-columns:1fr;gap:16px">
-        <img src="media/mat-tien.jpg" alt="Mặt tiền tiệm Tuệ Tâm PPF CNC — 71 đường số 2, Tân An, Cần Thơ">
+        <img src="media/mat-tien.jpg" alt="Mặt tiền tiệm Tuệ Tâm PPF CNC — 69-71 đường số 2, An Khánh, Ninh Kiều, Cần Thơ" style="aspect-ratio:4/3;object-fit:cover;object-position:center 28%">
         <img src="media/ppf-vs-cuongluc.png" alt="So sánh PPF và cường lực">
       </div>
     </div>
@@ -364,12 +548,109 @@ footer a:hover{color:#38bdf8}
     <div>
       <h4>Dịch vụ</h4>
       <p>Dán PPF điện thoại · tablet · laptop · camera · đồng hồ</p>
-      <p>Tư vấn dinh dưỡng cá nhân</p>
+      <p>Tai nghe · giấy tờ (CCCD/GPLX/thẻ) · ô tô (màn hình, kính hậu)</p>
     </div>
   </div>
 </footer>
 
 <a class="zalo-float" href="https://zalo.me/0778968738">💬 Zalo 0778.968.738</a>
+
+<script>
+const ZALO="https://zalo.me/0778968738";
+function val(id){return (document.getElementById(id).value||'').trim();}
+
+/* ====== BỘ CHỌN THIẾT BỊ → GỢI Ý GÓI ====== */
+const DEVDATA={
+  phone:{name:"Điện thoại",items:"PPF mặt lưng, hoặc mặt lưng + viền",benefits:["Chống trầy mặt lưng bóng","Chống bám vân tay","Ôm khít viền, không hở mép"],pkg:"Full"},
+  tablet:{name:"Máy tính bảng",items:"PPF lưng + viền",benefits:["Chống trầy mặt lưng & camera","Ôm cạnh mỏng, không cấn tay","Giữ máy như mới, bán lại được giá"],pkg:"Full"},
+  laptop:{name:"Laptop / Macbook",items:"Màn hình hiển thị, mặt sau màn hình / mặt bàn phím",benefits:["Chống trầy nắp máy & kê tay","Chống lóa cho màn hình","Chống mồ hôi tay ăn mòn"],pkg:"Premium"},
+  watch:{name:"Đồng hồ",items:"Màn hình hiển thị (mặt cong)",benefits:["Ôm khít mặt kính cong","Chống trầy va chạm hằng ngày","Tự lành vết xước nhẹ"],pkg:"Cơ bản"},
+  camera:{name:"Camera",items:"Màn hình hiển thị / body",benefits:["Chống trầy màn LCD","Chống bám nước khi đi tour","Giữ giá trị máy & lens"],pkg:"Full"},
+  car:{name:"Ô tô",items:"Màn hình điều khiển / kính hậu",benefits:["Chống lóa màn hình trung tâm","Kính hậu chống bám nước khi mưa","Chống bám vân tay khi vuốt chạm"],pkg:"Premium"},
+  earbuds:{name:"Tai nghe",items:"Vỏ hộp sạc (Apple/Samsung/Redmi...)",benefits:["Chống trầy vỏ bóng dễ xước","Ôm sát vỏ cong","Giữ hộp luôn như mới"],pkg:"Cơ bản"},
+  doc:{name:"Giấy tờ",items:"CCCD / GPLX / thẻ ngân hàng",benefits:["Chống trầy, chống nước","Chống phai mực, bong tróc","Bền đẹp, dùng lâu dài"],pkg:"Cơ bản"}
+};
+function pickDevice(dev,btn){
+  document.querySelectorAll('.pick').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const d=DEVDATA[dev];const box=document.getElementById('pickResult');
+  box.innerHTML='<h3>'+d.name+'</h3>'+
+    '<div class="rec">Nên dán: '+d.items+'</div>'+
+    '<ul>'+d.benefits.map(function(b){return '<li>'+b+'</li>';}).join('')+'</ul>'+
+    '<p style="margin:10px 0 16px;color:var(--muted)">👉 Gói đề xuất: <b style="color:var(--accent-d)">'+d.pkg+'</b></p>'+
+    '<a class="btn btn-primary" href="'+ZALO+'">💬 Tư vấn '+d.name+' qua Zalo</a>';
+  box.style.display='block';
+}
+document.getElementById('pickerBtns').addEventListener('click',function(e){
+  const btn=e.target.closest('.pick'); if(btn)pickDevice(btn.dataset.dev,btn);
+});
+pickDevice('phone',document.querySelector('.pick'));
+
+/* ====== FORM ĐẶT LỊCH → ZALO ====== */
+function submitBooking(){
+  const name=val('bkName'),phone=val('bkPhone');const msgEl=document.getElementById('bkMsg');
+  if(!name||!phone){msgEl.className='form-msg';msgEl.style.display='block';msgEl.style.background='#fef2f2';msgEl.style.color='#b91c1c';msgEl.textContent='⚠️ Vui lòng nhập Họ tên và Số điện thoại.';return;}
+  const text=[
+    '📌 ĐẶT LỊCH DÁN PPF — TUỆ TÂM',
+    'Tên: '+name,'SĐT: '+phone,
+    'Thiết bị: '+val('bkDevice'),'Gói: '+val('bkPkg'),
+    'Thời gian: '+([val('bkDate'),val('bkTime')].filter(Boolean).join(' ')||'(linh hoạt)'),
+    'Ghi chú: '+(val('bkNote')||'(không)')
+  ].join('\n');
+  const cb=document.getElementById('bkCompose');cb.textContent=text;cb.style.display='block';
+  if(navigator.clipboard)navigator.clipboard.writeText(text).catch(function(){});
+  msgEl.style.background='';msgEl.style.color='';
+  msgEl.className='form-msg ok';
+  msgEl.innerHTML='✅ Đã sao chép nội dung! Cửa sổ Zalo đang mở — <b>dán (Ctrl+V) vào khung chat và gửi</b> giúp em nhé.';
+  window.open(ZALO,'_blank');
+}
+
+/* ====== TRA CỨU BẢO HÀNH ====== */
+/* 🔧 CHỦ TIỆM: dán link Google Sheet (Publish → CSV) vào đây. Để trống = chạy dữ liệu demo. */
+const WARRANTY_CSV_URL="";
+/* Cột sheet cần đúng thứ tự: sdt,ma,ten,thietbi,hangmuc,ngaydan,hanbaohanh  (ngày dạng 2026-06-01) */
+const DEMO_WR=[
+  {sdt:"0900000001",ma:"tt001",ten:"Khách Demo A",thietbi:"iPhone 15 Pro Max",hangmuc:"PPF full thân",ngaydan:"2026-06-01",hanbaohanh:"2027-06-01"},
+  {sdt:"0900000002",ma:"tt002",ten:"Khách Demo B",thietbi:"Macbook Air M2",hangmuc:"Nắp máy + kê tay",ngaydan:"2025-01-15",hanbaohanh:"2026-01-15"}
+];
+let WR_DATA=null;
+function showDemo(on){const el=document.getElementById('wrDemo');if(on){el.style.display='block';el.textContent='⚠️ Đang chạy DỮ LIỆU DEMO. Thử: 0900000001 hoặc TT001. (Chủ tiệm: gắn Google Sheet để dùng dữ liệu thật.)';}else{el.style.display='none';}}
+function parseCSV(t){
+  const rows=t.trim().split(/\r?\n/).map(function(r){return r.split(',');});
+  const head=rows.shift().map(function(h){return h.trim().toLowerCase();});
+  return rows.map(function(r){var o={};head.forEach(function(h,i){o[h]=(r[i]||'').trim();});return o;});
+}
+async function loadWarranty(){
+  if(WR_DATA)return WR_DATA;
+  if(!WARRANTY_CSV_URL){WR_DATA=DEMO_WR;showDemo(true);return WR_DATA;}
+  try{const res=await fetch(WARRANTY_CSV_URL);WR_DATA=parseCSV(await res.text());showDemo(false);}
+  catch(e){WR_DATA=DEMO_WR;showDemo(true);}
+  return WR_DATA;
+}
+async function lookupWarranty(){
+  const raw=val('wrInput');const q=raw.toLowerCase().replace(/\s/g,'');const box=document.getElementById('wrResult');
+  if(!q){box.style.display='none';return;}
+  const data=await loadWarranty();
+  const rec=data.find(function(r){return (r.sdt||'').replace(/\s/g,'')===q||(r.ma||'').toLowerCase()===q;});
+  if(!rec){
+    box.innerHTML='<div class="wr-card"><p style="color:#b91c1c;font-weight:700">❌ Không tìm thấy bảo hành cho "<b>'+raw+'</b>".</p><p style="color:var(--muted);margin-top:8px">Kiểm tra lại SĐT/mã, hoặc <a href="'+ZALO+'" style="color:var(--accent);font-weight:700">nhắn Zalo</a> để được hỗ trợ.</p></div>';
+    box.style.display='block';return;
+  }
+  const days=Math.ceil((new Date(rec.hanbaohanh)-new Date())/86400000);const ok=days>=0;
+  const badge=ok?'<span class="wr-badge valid">✅ Còn hạn — '+days+' ngày</span>':'<span class="wr-badge expired">⛔ Đã hết hạn</span>';
+  box.innerHTML='<div class="wr-card">'+
+    '<div style="text-align:center;margin-bottom:14px">'+badge+'</div>'+
+    '<div class="row2"><span>Khách hàng</span><b>'+(rec.ten||'-')+'</b></div>'+
+    '<div class="row2"><span>Thiết bị</span><b>'+(rec.thietbi||'-')+'</b></div>'+
+    '<div class="row2"><span>Hạng mục</span><b>'+(rec.hangmuc||'-')+'</b></div>'+
+    '<div class="row2"><span>Ngày dán</span><b>'+fmt(rec.ngaydan)+'</b></div>'+
+    '<div class="row2"><span>Hạn bảo hành</span><b>'+fmt(rec.hanbaohanh)+'</b></div>'+
+  '</div>';
+  box.style.display='block';
+}
+function fmt(d){if(!d)return'-';var p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;}
+document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.key==='Enter')lookupWarranty();});
+</script>
 
 </body>
 </html>
