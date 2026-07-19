@@ -607,7 +607,7 @@ function submitBooking(){
 
 /* ====== TRA CỨU BẢO HÀNH ====== */
 /* 🔧 CHỦ TIỆM: dán link Google Sheet (Publish → CSV) vào đây. Để trống = chạy dữ liệu demo. */
-const WARRANTY_CSV_URL="";
+const WARRANTY_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vRL0E3qbDP-lTM4kMSeqLGVu7Q9YVTOOPPkZ3WyMq-yMluL5TaiXLLiOV6JhF8O_bsAwaqsPZ9-nMJ2/pub?output=csv";
 /* Cột sheet cần đúng thứ tự: sdt,ma,ten,thietbi,hangmuc,ngaydan,hanbaohanh  (ngày dạng 2026-06-01) */
 const DEMO_WR=[
   {sdt:"0900000001",ma:"tt001",ten:"Khách Demo A",thietbi:"iPhone 15 Pro Max",hangmuc:"PPF full thân",ngaydan:"2026-06-01",hanbaohanh:"2027-06-01"},
@@ -628,10 +628,15 @@ async function loadWarranty(){
   return WR_DATA;
 }
 async function lookupWarranty(){
-  const raw=val('wrInput');const q=raw.toLowerCase().replace(/\s/g,'');const box=document.getElementById('wrResult');
-  if(!q){box.style.display='none';return;}
+  const raw=val('wrInput');const box=document.getElementById('wrResult');
+  if(!raw){box.style.display='none';return;}
+  const qDigits=raw.replace(/\D/g,'').replace(/^0+/,'');
+  const qLower=raw.toLowerCase().replace(/\s/g,'');
   const data=await loadWarranty();
-  const rec=data.find(function(r){return (r.sdt||'').replace(/\s/g,'')===q||(r.ma||'').toLowerCase()===q;});
+  const rec=data.find(function(r){
+    var sd=(r.sdt||'').replace(/\D/g,'').replace(/^0+/,'');
+    return (qDigits&&sd===qDigits)||((r.ma||'').toLowerCase()===qLower);
+  });
   if(!rec){
     box.innerHTML='<div class="wr-card"><p style="color:#b91c1c;font-weight:700">❌ Không tìm thấy bảo hành cho "<b>'+raw+'</b>".</p><p style="color:var(--muted);margin-top:8px">Kiểm tra lại SĐT/mã, hoặc <a href="'+ZALO+'" style="color:var(--accent);font-weight:700">nhắn Zalo</a> để được hỗ trợ.</p></div>';
     box.style.display='block';return;
