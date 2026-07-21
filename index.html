@@ -193,6 +193,17 @@ footer a:hover{color:#38bdf8}
 .wr-demo{background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:13px;padding:10px 14px;border-radius:10px;margin-bottom:14px;text-align:center}
 
 @media(max-width:560px){.form-row.two{grid-template-columns:1fr}}
+
+/* ---- ACCESSIBILITY: tôn trọng "giảm chuyển động" của hệ điều hành ---- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  html{scroll-behavior:auto}
+  .glossy{animation:none;background-position:0 center}
+  .card:hover,.btn-primary:hover{transform:none}
+}
+/* ---- ACCESSIBILITY: viền focus rõ ràng khi điều hướng bằng bàn phím ---- */
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+.btn:focus-visible,.pick:focus-visible,a.price:focus-visible{outline-offset:3px}
 </style>
 </head>
 <body>
