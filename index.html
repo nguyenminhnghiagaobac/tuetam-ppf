@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tuệ Tâm PPF CNC Cần Thơ — Dán PPF điện thoại, tablet, laptop, camera, đồng hồ</title>
 <meta name="description" content="Dán PPF cắt máy CNC chính xác từng dòng máy tại Cần Thơ. Điện thoại, máy tính bảng, laptop, camera, đồng hồ. Dán tại chỗ lấy liền. Zalo 0778.968.738">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --accent:#0ea5e9; --accent-d:#0369a1;
@@ -14,7 +17,9 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+body{font-family:'Nunito Sans',"Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.sec-title,.hero h1,.hero h2,.logo,.glossy,.btn,nav .links a,.tier,.pkg h3,.wr-badge{font-family:'Rubik',"Segoe UI",system-ui,sans-serif}
+a,button,.btn,.pick{touch-action:manipulation}
 img{max-width:100%}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
@@ -194,12 +199,21 @@ footer a:hover{color:#38bdf8}
 
 @media(max-width:560px){.form-row.two{grid-template-columns:1fr}}
 
+/* ---- anchor không bị thanh nav che ---- */
+section{scroll-margin-top:80px}
+/* ---- micro-interaction: nhấn nút hơi lún xuống ---- */
+.btn:active,.pick:active{transform:scale(.97)}
+/* ---- scroll-reveal: section hiện dần khi cuộn tới (JS thêm class .in) ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .55s ease-out,transform .55s ease-out}
+.reveal.in{opacity:1;transform:none}
+
 /* ---- ACCESSIBILITY: tôn trọng "giảm chuyển động" của hệ điều hành ---- */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   html{scroll-behavior:auto}
   .glossy{animation:none;background-position:0 center}
   .card:hover,.btn-primary:hover{transform:none}
+  .reveal{opacity:1 !important;transform:none !important}
 }
 /* ---- ACCESSIBILITY: viền focus rõ ràng khi điều hướng bằng bàn phím ---- */
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
@@ -699,6 +713,18 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
   if(!navToggle||!navLinks)return;
   navToggle.addEventListener('click',function(){var o=navLinks.classList.toggle('open');navToggle.textContent=o?'✕':'☰';});
   navLinks.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){navLinks.classList.remove('open');navToggle.textContent='☰';});});
+})();
+
+/* ====== SCROLL-REVEAL: section hiện dần khi cuộn ====== */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !('IntersectionObserver' in window)) return;
+  var targets = document.querySelectorAll('section');
+  targets.forEach(function(s){ s.classList.add('reveal'); });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(s){ io.observe(s); });
 })();
 </script>
 
