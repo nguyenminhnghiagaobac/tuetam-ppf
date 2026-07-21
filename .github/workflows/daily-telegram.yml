@@ -1,0 +1,20 @@
+name: Bot Telegram nhắn động viên mỗi ngày
+
+on:
+  schedule:
+    # 00:00 UTC = 07:00 sáng giờ Việt Nam. Đổi giờ: sửa số đầu (giờ UTC = giờ VN - 7).
+    - cron: '0 0 * * *'
+  workflow_dispatch:   # cho phép bấm "Run workflow" để chạy thử bất cứ lúc nào
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Gửi tin động viên qua Telegram
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: python bot/send_daily.py
