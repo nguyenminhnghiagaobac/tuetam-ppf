@@ -36,12 +36,25 @@ function doPost(e){
   return ok_();
 }
 
-// ====== A: CHỦ ĐỘNG NHẮN MỖI NGÀY (chỉ bật nếu muốn Tâm An lo phần này) ======
-// Cách bật: menu Trigger (đồng hồ) -> Add Trigger -> chọn hàm sendDaily, theo giờ, mỗi ngày.
+// ====== A: CHỦ ĐỘNG NHẮN MỖI NGÀY theo buổi (sáng/trưa/tối) ======
 function sendDaily(){
-  var prompt = 'Viết một tin nhắn ngắn (3-5 câu) chào buổi sáng và động viên anh Tân cho ngày làm việc ở tiệm PPF. ' +
-    'Gợi ý 1 việc nhỏ nên làm hôm nay (quay 1 video, nhắn hỏi khách cũ, đăng 1 bài...). Ấm áp, có 1-2 emoji.';
+  var h = new Date().getHours();
+  var goi;
+  if(h < 10){ goi = 'chào buổi sáng, động viên anh bắt đầu ngày làm việc, gợi ý 1 việc nên làm hôm nay (quay video, đăng bài, nhắn khách cũ...)'; }
+  else if(h < 15){ goi = 'hỏi thăm buổi trưa, nhắc anh nghỉ ngơi ăn uống, điểm nhanh 1 việc nên ưu tiên buổi chiều'; }
+  else { goi = 'tổng kết nhẹ nhàng cuối ngày, ghi nhận nỗ lực của anh, gợi ý 1 việc chuẩn bị cho ngày mai'; }
+  var prompt = 'Viết tin nhắn ngắn (3-4 câu) cho anh Tân, chủ tiệm PPF. Nội dung: ' + goi + '. Ấm áp, tích cực, có 1-2 emoji.';
   tg_(OWNER_CHAT_ID, gemini_(prompt));
+}
+
+// Chạy 1 LẦN để tạo 3 lịch/ngày: 6h sáng, 11h trưa, 18h tối (nhớ set Múi giờ = Asia/Ho Chi Minh)
+function setupTriggers(){
+  ScriptApp.getProjectTriggers().forEach(function(t){
+    if(t.getHandlerFunction() === 'sendDaily') ScriptApp.deleteTrigger(t);
+  });
+  [6, 11, 18].forEach(function(hour){
+    ScriptApp.newTrigger('sendDaily').timeBased().everyDays(1).atHour(hour).create();
+  });
 }
 
 // ====== GỌI AI GEMINI ======
