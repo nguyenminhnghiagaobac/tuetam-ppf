@@ -1,0 +1,161 @@
+/*** TRỢ LÝ TELEGRAM "HOÀNG DUNG" — thư ký riêng của anh Tân (Tuệ Tâm PPF) ***/
+/*** Bot: @HoangDung8888_Bot ***/
+/*** B: trả lời khi anh nhắn (AI Gemini) + A: chủ động nhắn MỖI SÁNG 1 LẦN. Chạy 24/7 miễn phí. ***/
+/*** Dán toàn bộ file này vào Google Apps Script (Mã.gs) → Deploy PHIÊN BẢN MỚI. ***/
+
+// ====== ĐIỀN 2 KHÓA NÀY ======
+var BOT_TOKEN  = 'DAN_TOKEN_BOT_TELEGRAM';   // lấy từ @BotFather (bot Hoàng Dung)
+var GEMINI_KEY = 'DAN_GEMINI_API_KEY';       // FREE: https://aistudio.google.com/apikey
+var OWNER_CHAT_ID = '7968339842';            // Anh Tân (chat id đã biết)
+
+// ====== CHỐNG SPAM: giờ nhắn chủ động trong ngày ======
+// [7]        = 1 tin/ngày lúc 7h sáng  (MẶC ĐỊNH - ít spam nhất)
+// [7,18]     = 2 tin/ngày sáng + tối
+// []         = KHÔNG tự nhắn, chỉ trả lời khi anh nhắn trước
+var GIO_NHAN = [7];
+
+// ====== TÍNH CÁCH TRỢ LÝ (sửa tùy ý) ======
+var PERSONA =
+  'Bạn tên là Hoàng Dung — thư ký riêng của anh Tân, chủ tiệm "Tuệ Tâm PPF CNC Cần Thơ" ' +
+  '(dán film PPF bảo vệ điện thoại, tablet, laptop, camera, đồng hồ, ô tô, tai nghe, giấy tờ; ' +
+  'cắt máy CNC chuẩn model; bảo hành trầy xước; Zalo 0778.968.738; web tuetamppf.vercel.app). ' +
+  'Xưng "em", gọi "anh". Giọng nữ miền Nam thân thiện, lễ phép, tích cực, ngắn gọn, thực tế. ' +
+  'Nhiệm vụ: hỗ trợ anh Tân kinh doanh — nghĩ ý tưởng content/video, soạn bài đăng & tin nhắn, ' +
+  'tư vấn bán hàng và chăm khách, nhắc việc, động viên, giải đáp thắc mắc. ' +
+  'Luôn trả lời bằng tiếng Việt, đi thẳng vấn đề. Không chắc thì hỏi lại anh.';
+
+// ====== B: TRẢ LỜI KHI ANH NHẮN (webhook) ======
+function doPost(e){
+  try{
+    var u = JSON.parse(e.postData.contents);
+    var m = u.message;
+    if(!m || !m.text) return ok_();
+
+    // CHỐNG TRẢ LỜI TRÙNG: Telegram gửi lại update khi script trả lời chậm.
+    // Mỗi update_id chỉ xử lý đúng 1 lần trong 6 tiếng.
+    // Khoá lại lúc kiểm tra để 2 bản gửi lại cùng lúc không lọt cả hai.
+    var cache = CacheService.getScriptCache();
+    var key = 'upd_' + u.update_id;
+    var lock = LockService.getScriptLock();
+    if(!lock.tryLock(15000)) return ok_();
+    try{
+      if(cache.get(key)) return ok_();
+      cache.put(key, '1', 21600);
+    } finally { lock.releaseLock(); }   // thả khoá NGAY, đừng giữ khi gọi AI
+
+    var chatId = String(m.chat.id);
+    if(chatId !== OWNER_CHAT_ID){ tg_(chatId,'Dạ em là thư ký riêng nên chỉ hỗ trợ chủ tiệm thôi ạ.'); return ok_(); }
+    var text = m.text.trim();
+    var lenh = text.toLowerCase();
+
+    if(lenh === '/start'){
+      tg_(chatId,'Dạ em chào anh Tân! Em là Hoàng Dung — thư ký của anh đây ạ 💕 ' +
+        'Anh cần gì cứ nhắn em nha: ý tưởng content, soạn bài đăng, nhắc việc, tư vấn bán hàng...\n\n' +
+        'Lệnh nhanh: /tat = em ngưng tự nhắn mỗi sáng · /bat = nhắn lại · /trangthai = xem đang bật hay tắt');
+      return ok_();
+    }
+    // TẮT/BẬT tin nhắn chủ động ngay trong Telegram (không cần vào Apps Script)
+    if(lenh === '/tat' || lenh === '/off'){
+      PropertiesService.getScriptProperties().setProperty('TAT_NHAN_CHU_DONG','1');
+      tg_(chatId,'Dạ rồi, em ngưng tự nhắn mỗi sáng nha anh. Anh nhắn em lúc nào em vẫn trả lời ạ 🤍 (mở lại: /bat)');
+      return ok_();
+    }
+    if(lenh === '/bat' || lenh === '/on'){
+      PropertiesService.getScriptProperties().deleteProperty('TAT_NHAN_CHU_DONG');
+      tg_(chatId,'Dạ em bật lại tin nhắn mỗi sáng rồi anh nha ☀️');
+      return ok_();
+    }
+    if(lenh === '/trangthai'){
+      var tat = PropertiesService.getScriptProperties().getProperty('TAT_NHAN_CHU_DONG');
+      var sl = ScriptApp.getProjectTriggers().filter(function(t){
+        return t.getHandlerFunction() === 'sendDaily'; }).length;
+      tg_(chatId, (tat ? 'Đang TẮT tin nhắn chủ động ạ.' : 'Đang BẬT tin nhắn chủ động ạ.') +
+        ' Số lịch nhắn đang chạy: ' + sl + '.');
+      return ok_();
+    }
+
+    tg_(chatId, gemini_(text));
+  }catch(err){}
+  return ok_();
+}
+
+// ====== A: CHỦ ĐỘNG NHẮN MỖI NGÀY (có khoá chống trùng) ======
+function sendDaily(){
+  // 1) Anh đã /tat thì im lặng
+  if(PropertiesService.getScriptProperties().getProperty('TAT_NHAN_CHU_DONG')) return;
+
+  // 2) CHỐNG TRÙNG: nếu lỡ còn nhiều trigger cũ, mỗi khung giờ chỉ gửi 1 tin
+  var now = new Date();
+  var moc = Utilities.formatDate(now, 'Asia/Ho_Chi_Minh', 'yyyyMMdd-HH');
+  var props = PropertiesService.getScriptProperties();
+  if(props.getProperty('DA_GUI_' + moc)) return;
+  props.setProperty('DA_GUI_' + moc, '1');
+  donDepMoc_(props);
+
+  var h = Number(Utilities.formatDate(now, 'Asia/Ho_Chi_Minh', 'H'));
+  var goi;
+  if(h < 10){ goi = 'chào buổi sáng, động viên anh bắt đầu ngày làm việc, gợi ý 1 việc nên làm hôm nay (quay video, đăng bài, nhắn khách cũ...)'; }
+  else if(h < 15){ goi = 'hỏi thăm buổi trưa, nhắc anh nghỉ ngơi ăn uống, điểm nhanh 1 việc nên ưu tiên buổi chiều'; }
+  else { goi = 'tổng kết nhẹ nhàng cuối ngày, ghi nhận nỗ lực của anh, gợi ý 1 việc chuẩn bị cho ngày mai'; }
+  var prompt = 'Viết tin nhắn ngắn (3-4 câu) cho anh Tân, chủ tiệm PPF. Nội dung: ' + goi + '. Ấm áp, tích cực, có 1-2 emoji.';
+  tg_(OWNER_CHAT_ID, gemini_(prompt));
+}
+
+// Xoá mốc cũ hơn 2 ngày cho sạch Properties
+function donDepMoc_(props){
+  var gioiHan = Utilities.formatDate(new Date(Date.now() - 2*86400000), 'Asia/Ho_Chi_Minh', 'yyyyMMdd');
+  Object.keys(props.getProperties()).forEach(function(k){
+    if(k.indexOf('DA_GUI_') === 0 && k.substring(7,15) < gioiHan) props.deleteProperty(k);
+  });
+}
+
+// ====== DỌN LỊCH: chạy hàm này để bật/sửa lịch nhắn ======
+// XOÁ SẠCH mọi lịch rồi tạo lại đúng theo GIO_NHAN ở trên.
+function setupTriggers(){
+  ScriptApp.getProjectTriggers().forEach(function(t){ ScriptApp.deleteTrigger(t); });
+  GIO_NHAN.forEach(function(hour){
+    ScriptApp.newTrigger('sendDaily').timeBased().everyDays(1).atHour(hour).create();
+  });
+  Logger.log('Đã dọn sạch. Số lịch còn lại: ' + ScriptApp.getProjectTriggers().length);
+}
+
+// DỪNG KHẨN CẤP: xoá HẾT lịch, bot chỉ còn trả lời khi anh nhắn.
+function xoaHetLich(){
+  ScriptApp.getProjectTriggers().forEach(function(t){ ScriptApp.deleteTrigger(t); });
+  Logger.log('Đã xoá hết lịch nhắn.');
+}
+
+// GỬI THỬ NGAY 1 TIN (bấm Chạy hàm này để test, không cần chờ tới sáng)
+function guiThuNgay(){
+  PropertiesService.getScriptProperties().deleteProperty('TAT_NHAN_CHU_DONG');
+  tg_(OWNER_CHAT_ID, gemini_('Viết tin nhắn ngắn (3-4 câu) chào buổi sáng anh Tân, chủ tiệm PPF, ' +
+    'động viên và gợi ý 1 việc nên làm hôm nay. Ấm áp, tích cực, có 1-2 emoji.'));
+}
+
+// ====== GỌI AI GEMINI ======
+function gemini_(userText){
+  var url='https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key='+GEMINI_KEY;
+  var payload={ system_instruction:{parts:[{text:PERSONA}]},
+    contents:[{role:'user',parts:[{text:userText}]}],
+    generationConfig:{temperature:0.85,maxOutputTokens:800} };
+  var res=UrlFetchApp.fetch(url,{method:'post',contentType:'application/json',
+    payload:JSON.stringify(payload),muteHttpExceptions:true});
+  try{ return JSON.parse(res.getContentText()).candidates[0].content.parts[0].text; }
+  catch(e){ return 'Dạ em đang bận xíu, anh nhắn lại giúp em nha 🙏'; }
+}
+
+// ====== GỬI TIN TELEGRAM ======
+function tg_(chatId,text){
+  UrlFetchApp.fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage',
+    {method:'post',contentType:'application/json',
+     payload:JSON.stringify({chat_id:chatId,text:text}),muteHttpExceptions:true});
+}
+function ok_(){ return ContentService.createTextOutput('ok'); }
+
+// ====== CHẠY 1 LẦN sau khi Deploy: đăng ký webhook ======
+// Chỉ cần chạy khi ĐỔI TOKEN hoặc tạo bản triển khai MỚI (URL /exec đổi).
+function setWebhook(){
+  var WEBAPP_URL='DAN_URL_exec_SAU_KHI_DEPLOY';
+  Logger.log(UrlFetchApp.fetch('https://api.telegram.org/bot'+BOT_TOKEN+
+    '/setWebhook?url='+encodeURIComponent(WEBAPP_URL)).getContentText());
+}
