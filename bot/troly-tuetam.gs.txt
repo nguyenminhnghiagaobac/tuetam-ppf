@@ -1,0 +1,189 @@
+/*** TRỢ LÝ TELEGRAM "TUỆ TÂM" — bot chính thức của tiệm Tuệ Tâm PPF CNC Cần Thơ ***/
+/*** Bot: @TueTamPPF_bot  (t.me/TueTamPPF_bot) ***/
+/*** B: TRẢ LỜI tin nhắn khách + anh Tân (AI Gemini) · A: CHỦ ĐỘNG nhắn anh Tân MỖI NGÀY 1 LẦN. ***/
+/*** Chống spam sẵn. Chạy 24/7 miễn phí trên Google Apps Script. ***/
+/*** Dán toàn bộ file này vào Google Apps Script (Mã.gs) → Deploy PHIÊN BẢN MỚI. ***/
+
+// ====== ĐIỀN 2 KHÓA NÀY ======
+var BOT_TOKEN  = 'DAN_TOKEN_BOT_TueTamPPF';   // lấy từ @BotFather (bot @TueTamPPF_bot)
+var GEMINI_KEY = 'DAN_GEMINI_API_KEY';        // FREE: https://aistudio.google.com/apikey
+var OWNER_CHAT_ID = '7968339842';             // Anh Tân (chủ tiệm) — nhận tin chủ động & lệnh quản trị
+
+// ====== CHỐNG SPAM ======
+// GIO_NHAN: giờ bot TỰ nhắn cho anh Tân trong ngày (giờ VN).
+//   [8]     = 1 tin/ngày lúc 8h sáng  (MẶC ĐỊNH - ít spam nhất)
+//   [8,18]  = 2 tin/ngày sáng + tối
+//   []      = KHÔNG tự nhắn, chỉ trả lời khi có người nhắn tới
+var GIO_NHAN = [8];
+// Mỗi khách chỉ được bot trả lời tối đa 1 lần / KHACH_GIAN_CACH giây (chặn khách bấm dồn dập).
+var KHACH_GIAN_CACH = 4;
+
+// ====== TÍNH CÁCH TRỢ LÝ (sửa tùy ý) ======
+var PERSONA =
+  'Bạn tên là Tuệ Tâm — trợ lý tư vấn của tiệm "Tuệ Tâm PPF CNC Cần Thơ". ' +
+  'Tiệm dán film PPF bảo vệ điện thoại, tablet, laptop, camera, đồng hồ, tai nghe, ô tô, giấy tờ; ' +
+  'cắt bằng máy CNC rập khuôn chính xác từng dòng máy; bảo hành trầy xước; dán màn hình miễn phí. ' +
+  'THÔNG TIN TIỆM (dùng khi khách hỏi): ' +
+  'Địa chỉ: 71 đường số 2, khu CBGV, P. Tân An, Cần Thơ. ' +
+  'Giờ mở cửa: 8h sáng – 9h tối mỗi ngày. ' +
+  'Zalo/điện thoại: 0778.968.738. Web: tuetamppf.vercel.app. TikTok: @tu.tm.ppf.cnc.cn. ' +
+  'Cách xưng hô: xưng "em", gọi khách là "anh/chị". Giọng nữ miền Nam thân thiện, lễ phép, ngắn gọn, thật lòng. ' +
+  'Nhiệm vụ: tư vấn khách về PPF (loại nào hợp máy, khác gì cường lực, có đẹp không, bảo hành sao), ' +
+  'báo là qua tiệm hoặc nhắn Zalo 0778.968.738 để em coi máy và báo giá chính xác, mời khách ghé tiệm. ' +
+  'KHÔNG bịa giá cụ thể — giá tùy dòng máy nên mời khách nhắn Zalo hoặc ghé tiệm để báo đúng. ' +
+  'Luôn trả lời bằng tiếng Việt, đi thẳng vấn đề, không lan man. Không chắc thì hỏi lại khách.';
+
+// ====== B: TRẢ LỜI TIN NHẮN (webhook) ======
+function doPost(e){
+  try{
+    var u = JSON.parse(e.postData.contents);
+    var m = u.message;
+    if(!m || !m.text) return ok_();
+
+    // CHỐNG TRẢ LỜI TRÙNG: Telegram gửi lại update khi script trả lời chậm.
+    // Mỗi update_id chỉ xử lý đúng 1 lần trong 6 tiếng. Khoá lúc kiểm tra để 2 bản gửi lại không lọt cả hai.
+    var cache = CacheService.getScriptCache();
+    var key = 'upd_' + u.update_id;
+    var lock = LockService.getScriptLock();
+    if(!lock.tryLock(15000)) return ok_();
+    try{
+      if(cache.get(key)) return ok_();
+      cache.put(key, '1', 21600);
+    } finally { lock.releaseLock(); }   // thả khoá NGAY, đừng giữ khi gọi AI
+
+    var chatId = String(m.chat.id);
+    var text = m.text.trim();
+    var lenh = text.toLowerCase();
+    var laChu = (chatId === OWNER_CHAT_ID);
+
+    // ---- Lệnh QUẢN TRỊ (chỉ anh Tân) ----
+    if(laChu){
+      if(lenh === '/tat' || lenh === '/off'){
+        PropertiesService.getScriptProperties().setProperty('TAT_NHAN_CHU_DONG','1');
+        tg_(chatId,'Dạ rồi, em ngưng tự nhắn anh mỗi ngày nha. Ai nhắn bot em vẫn trả lời bình thường ạ 🤍 (mở lại: /bat)');
+        return ok_();
+      }
+      if(lenh === '/bat' || lenh === '/on'){
+        PropertiesService.getScriptProperties().deleteProperty('TAT_NHAN_CHU_DONG');
+        tg_(chatId,'Dạ em bật lại tin nhắn mỗi ngày rồi anh nha ☀️');
+        return ok_();
+      }
+      if(lenh === '/trangthai'){
+        var tat = PropertiesService.getScriptProperties().getProperty('TAT_NHAN_CHU_DONG');
+        var sl = ScriptApp.getProjectTriggers().filter(function(t){
+          return t.getHandlerFunction() === 'sendDaily'; }).length;
+        tg_(chatId, (tat ? 'Đang TẮT tin nhắn chủ động ạ.' : 'Đang BẬT tin nhắn chủ động ạ.') +
+          ' Số lịch nhắn đang chạy: ' + sl + '.');
+        return ok_();
+      }
+      if(lenh === '/start'){
+        tg_(chatId,'Dạ em chào anh Tân! Đây là bot chính thức @TueTamPPF_bot của tiệm mình. ' +
+          'Em vừa tư vấn khách, vừa là trợ lý riêng của anh: cần ý tưởng content, soạn bài, nhắc việc cứ nhắn em.\n\n' +
+          'Lệnh nhanh: /tat = ngưng tự nhắn mỗi sáng · /bat = nhắn lại · /trangthai = xem trạng thái');
+        return ok_();
+      }
+    } else {
+      // ---- Khách lạ ----
+      if(lenh === '/start'){
+        tg_(chatId,'Dạ em chào anh/chị 💕 Em là trợ lý của tiệm Tuệ Tâm PPF CNC Cần Thơ. ' +
+          'Anh/chị cần dán PPF cho máy nào, hay muốn hỏi giá – bảo hành – địa chỉ thì nhắn em nha. ' +
+          'Zalo tiệm: 0778.968.738 · Địa chỉ: 71 đường số 2, khu CBGV, P. Tân An, Cần Thơ.');
+        return ok_();
+      }
+      // Chặn khách bấm gửi dồn dập (mỗi khách 1 câu / KHACH_GIAN_CACH giây)
+      var kkey = 'khach_' + chatId;
+      if(cache.get(kkey)){ return ok_(); }
+      cache.put(kkey, '1', KHACH_GIAN_CACH);
+    }
+
+    // Trả lời bằng AI (cả khách lẫn anh Tân)
+    tg_(chatId, gemini_(text, laChu));
+  }catch(err){}
+  return ok_();
+}
+
+// ====== A: CHỦ ĐỘNG NHẮN ANH TÂN MỖI NGÀY (có khoá chống trùng) ======
+// Tin chủ động CHỈ gửi cho anh Tân — KHÔNG broadcast cho khách để tránh spam.
+function sendDaily(){
+  // 1) Anh đã /tat thì im lặng
+  if(PropertiesService.getScriptProperties().getProperty('TAT_NHAN_CHU_DONG')) return;
+
+  // 2) CHỐNG TRÙNG: nếu lỡ còn nhiều trigger cũ, mỗi khung giờ chỉ gửi 1 tin
+  var now = new Date();
+  var moc = Utilities.formatDate(now, 'Asia/Ho_Chi_Minh', 'yyyyMMdd-HH');
+  var props = PropertiesService.getScriptProperties();
+  if(props.getProperty('DA_GUI_' + moc)) return;
+  props.setProperty('DA_GUI_' + moc, '1');
+  donDepMoc_(props);
+
+  var h = Number(Utilities.formatDate(now, 'Asia/Ho_Chi_Minh', 'H'));
+  var goi;
+  if(h < 10){ goi = 'chào buổi sáng, động viên anh bắt đầu ngày làm việc, gợi ý 1 việc nên làm cho tiệm hôm nay (quay video PPF, đăng bài, nhắn khách cũ hỏi thăm...)'; }
+  else if(h < 15){ goi = 'hỏi thăm buổi trưa, nhắc anh nghỉ ngơi ăn uống, điểm nhanh 1 việc nên ưu tiên buổi chiều cho tiệm'; }
+  else { goi = 'tổng kết nhẹ nhàng cuối ngày, ghi nhận nỗ lực của anh, gợi ý 1 việc chuẩn bị cho ngày mai'; }
+  var prompt = 'Viết tin nhắn ngắn (3-4 câu) cho anh Tân, chủ tiệm Tuệ Tâm PPF. Nội dung: ' + goi + '. Ấm áp, tích cực, có 1-2 emoji.';
+  tg_(OWNER_CHAT_ID, gemini_(prompt, true));
+}
+
+// Xoá mốc cũ hơn 2 ngày cho sạch Properties
+function donDepMoc_(props){
+  var gioiHan = Utilities.formatDate(new Date(Date.now() - 2*86400000), 'Asia/Ho_Chi_Minh', 'yyyyMMdd');
+  Object.keys(props.getProperties()).forEach(function(k){
+    if(k.indexOf('DA_GUI_') === 0 && k.substring(7,15) < gioiHan) props.deleteProperty(k);
+  });
+}
+
+// ====== DỌN LỊCH: chạy hàm này để bật/sửa lịch nhắn ======
+// XOÁ SẠCH mọi lịch rồi tạo lại đúng theo GIO_NHAN ở trên.
+function setupTriggers(){
+  ScriptApp.getProjectTriggers().forEach(function(t){ ScriptApp.deleteTrigger(t); });
+  GIO_NHAN.forEach(function(hour){
+    ScriptApp.newTrigger('sendDaily').timeBased().everyDays(1).atHour(hour).create();
+  });
+  Logger.log('Đã dọn sạch. Số lịch còn lại: ' + ScriptApp.getProjectTriggers().length);
+}
+
+// DỪNG KHẨN CẤP: xoá HẾT lịch, bot chỉ còn trả lời khi có người nhắn.
+function xoaHetLich(){
+  ScriptApp.getProjectTriggers().forEach(function(t){ ScriptApp.deleteTrigger(t); });
+  Logger.log('Đã xoá hết lịch nhắn.');
+}
+
+// GỬI THỬ NGAY 1 TIN (bấm Chạy hàm này để test, không cần chờ tới sáng)
+function guiThuNgay(){
+  PropertiesService.getScriptProperties().deleteProperty('TAT_NHAN_CHU_DONG');
+  tg_(OWNER_CHAT_ID, gemini_('Viết tin nhắn ngắn (3-4 câu) chào buổi sáng anh Tân, chủ tiệm Tuệ Tâm PPF, ' +
+    'động viên và gợi ý 1 việc nên làm cho tiệm hôm nay. Ấm áp, tích cực, có 1-2 emoji.', true));
+}
+
+// ====== GỌI AI GEMINI ======
+// laChu = true: giọng trợ lý riêng của anh Tân · false: giọng tư vấn khách.
+function gemini_(userText, laChu){
+  var persona = PERSONA + (laChu
+    ? ' (Người đang nhắn là anh Tân — chủ tiệm. Hỗ trợ anh việc kinh doanh: ý tưởng content, soạn bài, nhắc việc, tư vấn bán hàng.)'
+    : ' (Người đang nhắn là KHÁCH. Tư vấn nhiệt tình, mời ghé tiệm hoặc nhắn Zalo 0778.968.738 để báo giá chính xác.)');
+  var url='https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key='+GEMINI_KEY;
+  var payload={ system_instruction:{parts:[{text:persona}]},
+    contents:[{role:'user',parts:[{text:userText}]}],
+    generationConfig:{temperature:0.85,maxOutputTokens:800} };
+  var res=UrlFetchApp.fetch(url,{method:'post',contentType:'application/json',
+    payload:JSON.stringify(payload),muteHttpExceptions:true});
+  try{ return JSON.parse(res.getContentText()).candidates[0].content.parts[0].text; }
+  catch(e){ return 'Dạ em đang bận xíu, anh/chị nhắn lại giúp em nha 🙏 (hoặc gọi Zalo 0778.968.738)'; }
+}
+
+// ====== GỬI TIN TELEGRAM ======
+function tg_(chatId,text){
+  UrlFetchApp.fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage',
+    {method:'post',contentType:'application/json',
+     payload:JSON.stringify({chat_id:chatId,text:text}),muteHttpExceptions:true});
+}
+function ok_(){ return ContentService.createTextOutput('ok'); }
+
+// ====== CHẠY 1 LẦN sau khi Deploy: đăng ký webhook ======
+// Chỉ cần chạy khi ĐỔI TOKEN hoặc tạo bản triển khai MỚI (URL /exec đổi).
+function setWebhook(){
+  var WEBAPP_URL='DAN_URL_exec_SAU_KHI_DEPLOY';
+  Logger.log(UrlFetchApp.fetch('https://api.telegram.org/bot'+BOT_TOKEN+
+    '/setWebhook?url='+encodeURIComponent(WEBAPP_URL)).getContentText());
+}
