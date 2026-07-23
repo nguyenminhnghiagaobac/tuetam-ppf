@@ -17,11 +17,27 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 REPO = Path(__file__).resolve().parent.parent
+THU_MUC_LICH = REPO / "media" / "lich"
+WEBSITE = "https://tuetamppf.vercel.app/"
 MARKDOWN_MAC_DINH = (
     REPO.parent.parent
     / "04_LICH_NOI_DUNG"
     / "Content-30-bai-TueTam-PPF-9h-17h.md"
 )
+
+
+def them_website(caption: str) -> str:
+    """Chen dong website vao truoc cum hashtag, hoac cuoi bai neu khong co hashtag."""
+    if WEBSITE in caption:
+        return caption
+    dong = caption.split("\n")
+    vi_tri_hashtag = next(
+        (i for i, d in enumerate(dong) if d.strip().startswith("#")), len(dong)
+    )
+    dong.insert(vi_tri_hashtag, f"🌐 {WEBSITE}")
+    if vi_tri_hashtag < len(dong) - 1:
+        dong.insert(vi_tri_hashtag + 1, "")
+    return "\n".join(dong).strip()
 
 # Bat dau mot ngay:  "## NGAY 12"
 RE_NGAY = re.compile(r"^##\s+NG[ÀA]Y\s+(\d+)\s*$", re.IGNORECASE)
@@ -86,23 +102,30 @@ def main():
 
     noi_dung = [b["noi_dung"] for b in bai_viet]
 
-    # Lich tra cuu theo ngay trong thang (1..31), lap vong lai khi het bai.
-    # Make chi can:  lich[ngay_hom_nay].sang  hoac  .chieu  — khong phai tinh toan gi.
+    # Lich tra cuu theo ngay trong thang (1..31).
+    # Uu tien caption di kem anh trong media/lich/ppf-dNN-am|pm.txt — de anh va chu
+    # noi cung mot chuyen. Khong co file txt thi lay tam bai dai trong markdown.
     lich = {}
+    so_khop_anh = 0
     for ngay in range(1, 32):
-        vi_tri_sang = ((ngay - 1) * 2) % len(noi_dung)
-        vi_tri_chieu = (vi_tri_sang + 1) % len(noi_dung)
-        lich[str(ngay)] = {
-            "sang": noi_dung[vi_tri_sang],
-            "chieu": noi_dung[vi_tri_chieu],
-        }
+        muc = {}
+        for buoi, hau_to, lech in (("sang", "am", 0), ("chieu", "pm", 1)):
+            duong_dan_txt = THU_MUC_LICH / f"ppf-d{ngay:02d}-{hau_to}.txt"
+            if duong_dan_txt.exists():
+                muc[buoi] = them_website(duong_dan_txt.read_text(encoding="utf-8").strip())
+                so_khop_anh += 1
+            else:
+                muc[buoi] = noi_dung[(((ngay - 1) * 2) + lech) % len(noi_dung)]
+        lich[str(ngay)] = muc
 
     ket_qua = {
         "cap_nhat": "sinh tu " + nguon.name,
         "tong_so_bai": len(noi_dung),
-        "website": "https://tuetamppf.vercel.app/",
+        "so_caption_khop_anh": so_khop_anh,
+        "website": WEBSITE,
+        "anh_mau": "https://tuetamppf.vercel.app/media/lich/ppf-d{NN}-{am|pm}.png",
         "lich": lich,
-        "posts": noi_dung,
+        "bai_dai": noi_dung,
     }
 
     dich = REPO / "posts.json"
