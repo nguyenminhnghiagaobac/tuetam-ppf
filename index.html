@@ -33,6 +33,13 @@ a{color:inherit;text-decoration:none}
   font-weight:800;animation:gradient-shine 4s linear infinite;
 }
 @keyframes gradient-shine{0%{background-position:200% center}100%{background-position:0% center}}
+/* biến thể glossy màu ấm (cam→hồng→tím→xanh) — dùng cho dòng phụ hero */
+.glossy-warm{
+  color:transparent;
+  background-image:linear-gradient(90deg,#f59e0b 0%,#ec0868 30%,#7c1fe0 60%,#0ea5e9 100%,#f59e0b 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  font-weight:800;animation:gradient-shine 4s linear infinite}
 
 /* ---- NAV ---- */
 nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
@@ -40,7 +47,8 @@ nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-f
 nav .wrap{display:flex;align-items:center;gap:14px;height:64px}
 .logo{font-weight:800;font-size:20px}
 .logo .glossy{font-size:20px}
-nav .links{margin-left:auto;display:flex;gap:20px;font-size:15px;color:var(--muted)}
+nav .links{margin-left:auto;display:flex;gap:22px;font-size:15.5px;letter-spacing:.2px;color:#334155}
+nav .links a{font-family:'Nunito Sans',"Segoe UI",system-ui,sans-serif;font-weight:700}
 nav .links a:hover{color:var(--accent)}
 .btn{display:inline-block;padding:13px 24px;border-radius:12px;font-weight:700;transition:.2s;text-align:center}
 .btn-primary{background:linear-gradient(90deg,#0284c7,#0ea5e9);color:#fff;box-shadow:0 8px 24px rgba(14,165,233,.35)}
@@ -227,7 +235,8 @@ section{scroll-margin-top:80px}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   html{scroll-behavior:auto}
-  .glossy{animation:none;background-position:0 center}
+  /* Giữ hiệu ứng tráng gương chạy ở MỌI máy (kể cả khi hệ điều hành bật "giảm chuyển động") */
+  .glossy,.glossy-warm{animation:gradient-shine 4s linear infinite !important}
   .card:hover,.btn-primary:hover{transform:none}
   .reveal{opacity:1 !important;transform:none !important}
 }
@@ -318,7 +327,7 @@ section{scroll-margin-top:80px}
   <div class="wrap" style="position:relative;z-index:1">
     <span class="kicker">📍 CẦN THƠ · DÁN TẠI CHỖ LẤY LIỀN</span>
     <h1><span class="glossy">TUỆ TÂM PPF</span><br><span class="glossy">CẮT MÁY CNC</span></h1>
-    <h2>Bảo vệ thiết bị — chuẩn từng milimet</h2>
+    <h2><span class="glossy-warm">Bảo vệ thiết bị — chuẩn từng milimet</span></h2>
     <p>PPF cắt bằng máy CNC rập khuôn chính xác theo từng dòng máy: ôm khít viền, không hở mép,
       không bọt khí. Điện thoại · Tablet · Laptop · Camera · Đồng hồ.</p>
     <div class="cta">
