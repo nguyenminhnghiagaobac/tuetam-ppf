@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo App Nhân Viên Số Hoá — Huệ Lộc</title>
+<style>
+  :root{
+    --primary:#1e5fa8;
+    --primary-dark:#164a84;
+    --primary-soft:#e8f1fb;
+    --accent:#f59e0b;
+    --accent-soft:#fef3c7;
+    --green:#16a34a;
+    --green-soft:#dcfce7;
+    --red:#dc2626;
+    --red-soft:#fee2e2;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --line:#e2e8f0;
+    --bg:#f1f5f9;
+    --card:#ffffff;
+    --shadow:0 10px 30px rgba(15,23,42,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(160deg,#0b2545 0%,#134074 45%,#1e5fa8 100%);
+    min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:28px 16px 60px;
+  }
+
+  /* ---------- Presentation header ---------- */
+  .pres{max-width:520px;text-align:center;color:#fff;margin-bottom:22px;}
+  .pres .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    padding:5px 12px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.3px;
+    margin-bottom:12px;
+  }
+  .pres h1{font-size:23px;font-weight:800;line-height:1.25;}
+  .pres p{font-size:13.5px;color:#c7d8ee;margin-top:8px;line-height:1.5;}
+
+  /* ---------- Role tabs ---------- */
+  .roles{display:flex;gap:8px;background:rgba(255,255,255,.1);padding:6px;border-radius:16px;margin-bottom:20px;border:1px solid rgba(255,255,255,.16);}
+  .role-tab{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:9px 18px;border-radius:11px;cursor:pointer;color:#cdddf0;
+    font-size:12.5px;font-weight:600;transition:.18s;border:none;background:none;
+  }
+  .role-tab svg{width:19px;height:19px;stroke:currentColor;}
+  .role-tab.active{background:#fff;color:var(--primary);box-shadow:var(--shadow);}
+
+  /* ---------- Phone frame ---------- */
+  .phone{
+    width:390px;max-width:100%;height:800px;background:#000;border-radius:44px;
+    padding:11px;box-shadow:0 40px 80px rgba(0,0,0,.45), 0 0 0 2px rgba(255,255,255,.06);
+    position:relative;
+  }
+  .screen{
+    width:100%;height:100%;background:var(--bg);border-radius:34px;overflow:hidden;
+    position:relative;display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:130px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:60;}
+
+  /* status bar */
+  .statusbar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 24px;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+  .statusbar.dark{color:var(--ink);}
+  .sb-right{display:flex;align-items:center;gap:6px;font-size:12px;}
+
+  /* app header */
+  .appbar{background:var(--primary);color:#fff;padding:2px 18px 16px;flex-shrink:0;}
+  .appbar.grad{background:linear-gradient(135deg,var(--primary),var(--primary-dark));}
+  .appbar-top{display:flex;align-items:center;justify-content:space-between;}
+  .appbar h2{font-size:18px;font-weight:700;}
+  .appbar .sub{font-size:12px;color:#d7e6f7;margin-top:2px;}
+  .avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;border:1.5px solid rgba(255,255,255,.4);}
+
+  /* scroll body */
+  .body{flex:1;overflow-y:auto;padding:16px 16px 90px;}
+  .body::-webkit-scrollbar{width:0;}
+
+  /* generic */
+  .card{background:var(--card);border-radius:16px;padding:15px;box-shadow:0 2px 10px rgba(15,23,42,.05);border:1px solid var(--line);}
+  .card+.card{margin-top:12px;}
+  .section-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:20px 4px 10px;}
+  .row{display:flex;align-items:center;gap:12px;}
+  .between{justify-content:space-between;}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;}
+  .chip.g{background:var(--green-soft);color:var(--green);}
+  .chip.a{background:var(--accent-soft);color:#b45309;}
+  .chip.r{background:var(--red-soft);color:var(--red);}
+  .chip.b{background:var(--primary-soft);color:var(--primary);}
+  .muted{color:var(--muted);}
+  .big{font-size:26px;font-weight:800;letter-spacing:-.5px;}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--primary);color:#fff;border:none;padding:13px;border-radius:13px;font-size:14.5px;font-weight:700;width:100%;cursor:pointer;}
+  .btn.accent{background:var(--accent);color:#3b2606;}
+  .btn.ghost{background:var(--primary-soft);color:var(--primary);}
+
+  /* KPI card */
+  .kpi{background:linear-gradient(135deg,var(--primary),#2b7fd4);color:#fff;border-radius:18px;padding:18px;box-shadow:var(--shadow);}
+  .kpi .label{font-size:12.5px;color:#d7e6f7;}
+  .kpi .amount{font-size:29px;font-weight:800;margin:6px 0 12px;letter-spacing:-.5px;}
+  .progress{height:8px;background:rgba(255,255,255,.25);border-radius:100px;overflow:hidden;}
+  .progress > i{display:block;height:100%;background:var(--accent);border-radius:100px;}
+  .kpi .foot{display:flex;justify-content:space-between;font-size:12px;margin-top:8px;color:#eaf2fc;}
+
+  /* quick actions */
+  .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .qa{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 6px;text-align:center;cursor:pointer;}
+  .qa .ic{width:40px;height:40px;border-radius:12px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 7px;}
+  .qa .ic svg{width:20px;height:20px;stroke:var(--primary);}
+  .qa span{font-size:11.5px;font-weight:600;color:var(--ink);}
+
+  /* product / list item */
+  .item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .thumb{width:52px;height:52px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;}
+  .t-tile{background:linear-gradient(135deg,#cbd5e1,#94a3b8);}
+  .t-wc{background:linear-gradient(135deg,#bae6fd,#38bdf8);}
+  .t-cement{background:linear-gradient(135deg,#e5e7eb,#9ca3af);}
+  .t-paint{background:linear-gradient(135deg,#fde68a,#f59e0b);}
+  .item .name{font-size:14px;font-weight:600;line-height:1.3;}
+  .item .meta{font-size:12px;color:var(--muted);margin-top:3px;}
+  .item .price{font-size:14px;font-weight:800;color:var(--primary);}
+
+  /* search + chips */
+  .search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:13px;color:var(--muted);}
+  .cats{display:flex;gap:8px;overflow-x:auto;margin:12px 0;padding-bottom:4px;}
+  .cats::-webkit-scrollbar{height:0;}
+  .cat{white-space:nowrap;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:100px;background:#fff;border:1px solid var(--line);color:var(--muted);cursor:pointer;}
+  .cat.on{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+  /* customer avatar circle */
+  .circ{width:44px;height:44px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;}
+
+  /* map placeholder */
+  .map{height:150px;border-radius:14px;background:
+      linear-gradient(0deg,rgba(30,95,168,.06),rgba(30,95,168,.06)),
+      repeating-linear-gradient(0deg,#e2e8f0 0 1px,transparent 1px 26px),
+      repeating-linear-gradient(90deg,#e2e8f0 0 1px,transparent 1px 26px),
+      #f8fafc;position:relative;overflow:hidden;border:1px solid var(--line);}
+  .map .road{position:absolute;background:#cbd5e1;}
+  .pin{position:absolute;transform:translate(-50%,-100%);font-size:24px;}
+  .pin small{position:absolute;top:-4px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:100px;}
+
+  /* delivery bars chart */
+  .bars{display:flex;align-items:flex-end;gap:9px;height:110px;padding-top:8px;}
+  .bars .bar{flex:1;background:var(--primary-soft);border-radius:6px 6px 0 0;position:relative;}
+  .bars .bar > i{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#2b7fd4,var(--primary));border-radius:6px 6px 0 0;}
+  .bars .bar.hi > i{background:linear-gradient(180deg,#f59e0b,#d97706);}
+  .bars-x{display:flex;gap:9px;margin-top:6px;}
+  .bars-x span{flex:1;text-align:center;font-size:10px;color:var(--muted);}
+
+  /* bottom nav */
+  .nav{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;padding:8px 6px 22px;z-index:40;}
+  .nav button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:10.5px;font-weight:600;cursor:pointer;}
+  .nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;}
+  .nav button.on{color:var(--primary);}
+  .nav button.on svg{stroke:var(--primary);}
+
+  .pane{display:none;}
+  .pane.on{display:block;}
+  .role-view{display:none;}
+  .role-view.on{display:block;height:100%;}
+
+  .fab{position:absolute;right:16px;bottom:82px;width:54px;height:54px;border-radius:50%;background:var(--accent);box-shadow:0 8px 20px rgba(245,158,11,.5);display:flex;align-items:center;justify-content:center;z-index:45;border:none;cursor:pointer;}
+  .fab svg{width:26px;height:26px;stroke:#3b2606;}
+
+  .caption{color:#c7d8ee;font-size:12.5px;text-align:center;margin-top:20px;max-width:360px;line-height:1.6;}
+  .caption b{color:#fff;}
+
+  @media(max-width:430px){
+    body{padding:16px 8px 40px;}
+    .phone{height:88vh;border-radius:36px;}
+    .roles{width:100%;}
+    .role-tab{flex:1;padding:9px 4px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="pres">
+  <span class="badge">● BẢN DEMO · dữ liệu minh hoạ</span>
+  <h1>App Nhân Viên Số Hoá — Huệ Lộc</h1>
+  <p>VLXD · Gạch men · Thiết bị vệ sinh. Chọn vai trò để xem app hoạt động như thế nào cho từng nhóm nhân viên.</p>
+</div>
+
+<div class="roles">
+  <button class="role-tab active" data-role="sale" onclick="setRole('sale')">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 4h12"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+    Sale
+  </button>
+  <button class="role-tab" data-role="driver" onclick="setRole('driver')">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M1 8h11v9H1zM12 11h5l3 3v3h-8z"/><circle cx="5" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg>
+    Tài xế
+  </button>
+  <button class="role-tab" data-role="boss" onclick="setRole('boss')">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 2 4-6"/></svg>
+    Chủ
+  </button>
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen">
+    <!-- status bar changes color per role via JS -->
+    <div class="statusbar" id="statusbar">
+      <span>9:41</span>
+      <span class="sb-right">📶 5G &nbsp;🔋 84%</span>
+    </div>
+
+    <!-- ============ SALE ============ -->
+    <div class="role-view on" id="view-sale">
+      <div class="appbar grad" id="appbar-sale">
+        <div class="appbar-top">
+          <div>
+            <div id="sale-title"><h2>Chào, Minh Trí 👋</h2><div class="sub">Nhân viên kinh doanh</div></div>
+          </div>
+          <div class="avatar">MT</div>
+        </div>
+      </div>
+
+      <div class="body">
+        <!-- HOME -->
+        <div class="pane on" data-s="sale-home">
+          <div class="kpi">
+            <div class="label">Doanh số tháng 7 · KPI 300 triệu</div>
+            <div class="amount">248.500.000đ</div>
+            <div class="progress"><i style="width:82%"></i></div>
+            <div class="foot"><span>Đạt 82%</span><span>Còn 51.5tr</span></div>
+          </div>
+
+          <div class="stat-grid" style="margin-top:12px">
+            <div class="card"><div class="muted" style="font-size:12px">Đơn hôm nay</div><div class="big">5</div><span class="chip g">+2 so với hqua</span></div>
+            <div class="card"><div class="muted" style="font-size:12px">Công nợ cần thu</div><div class="big" style="color:var(--red)">34.2tr</div><span class="chip r">3 khách</span></div>
+          </div>
+
+          <div class="section-title">Thao tác nhanh</div>
+          <div class="quick">
+            <div class="qa" onclick="setScreen('sale','sale-order')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div><span>Tạo đơn</span></div>
+            <div class="qa" onclick="setScreen('sale','sale-order')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v4H4zM4 12h16M4 12v8h16v-8"/></svg></div><span>Báo giá</span></div>
+            <div class="qa" onclick="setScreen('sale','sale-products')"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg></div><span>Kiểm tồn</span></div>
+          </div>
+
+          <div class="section-title">Đơn gần đây</div>
+          <div class="card" style="padding:6px 15px">
+            <div class="item"><div class="thumb t-tile">🧱</div><div style="flex:1"><div class="name">Anh Tuấn (Thầu XD)</div><div class="meta">Gạch lát 60x60 · 40 hộp</div></div><div style="text-align:right"><div class="price">8.240.000đ</div><span class="chip a">Đang giao</span></div></div>
+            <div class="item"><div class="thumb t-wc">🚽</div><div style="flex:1"><div class="name">Chị Lan</div><div class="meta">Bồn cầu Inax x2</div></div><div style="text-align:right"><div class="price">9.700.000đ</div><span class="chip g">Hoàn tất</span></div></div>
+            <div class="item"><div class="thumb t-cement">🏗️</div><div style="flex:1"><div class="name">CH Hưng Phú</div><div class="meta">Xi măng Hà Tiên · 200 bao</div></div><div style="text-align:right"><div class="price">18.400.000đ</div><span class="chip g">Hoàn tất</span></div></div>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="pane" data-s="sale-products">
+          <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg> Tìm gạch, thiết bị, xi măng…</div>
+          <div class="cats">
+            <div class="cat on">Tất cả</div><div class="cat">Gạch men</div><div class="cat">Thiết bị VS</div><div class="cat">Xi măng</div><div class="cat">Sơn</div>
+          </div>
+          <div class="card" style="padding:6px 15px">
+            <div class="item"><div class="thumb t-tile">🧱</div><div style="flex:1"><div class="name">Gạch lát nền Viglacera 60x60</div><div class="meta">Tồn: <b>420 m²</b></div></div><div style="text-align:right"><div class="price">185.000đ</div><div class="meta">/m²</div></div></div>
+            <div class="item"><div class="thumb t-tile">🧱</div><div style="flex:1"><div class="name">Gạch ốp tường Prime 30x60</div><div class="meta">Tồn: <b style="color:var(--accent)">88 hộp</b> <span class="chip a">Sắp hết</span></div></div><div style="text-align:right"><div class="price">145.000đ</div><div class="meta">/hộp</div></div></div>
+            <div class="item"><div class="thumb t-wc">🚽</div><div style="flex:1"><div class="name">Bồn cầu Inax AC-902</div><div class="meta">Tồn: <b>12 cái</b></div></div><div style="text-align:right"><div class="price">4.850.000đ</div></div></div>
+            <div class="item"><div class="thumb t-wc">🚰</div><div style="flex:1"><div class="name">Lavabo Toto LT236</div><div class="meta">Tồn: <b style="color:var(--red)">Hết hàng</b> <span class="chip r">0</span></div></div><div style="text-align:right"><div class="price">1.250.000đ</div></div></div>
+            <div class="item"><div class="thumb t-cement">🏗️</div><div style="flex:1"><div class="name">Xi măng Hà Tiên PCB40</div><div class="meta">Tồn: <b>1.500 bao</b></div></div><div style="text-align:right"><div class="price">92.000đ</div><div class="meta">/bao</div></div></div>
+            <div class="item"><div class="thumb t-paint">🪣</div><div style="flex:1"><div class="name">Sơn Dulux ngoại thất 18L</div><div class="meta">Tồn: <b>64 thùng</b></div></div><div style="text-align:right"><div class="price">1.980.000đ</div></div></div>
+          </div>
+        </div>
+
+        <!-- ORDER -->
+        <div class="pane" data-s="sale-order">
+          <div class="card">
+            <div class="row between"><b>Đơn hàng mới #1029</b><span class="chip b">Nháp</span></div>
+            <div class="row between" style="margin-top:12px"><span class="muted">Khách hàng</span><b>Anh Tuấn — Thầu XD</b></div>
+            <div style="border-top:1px dashed var(--line);margin:12px 0"></div>
+            <div class="item" style="padding:8px 0"><div class="thumb t-tile" style="width:40px;height:40px;font-size:17px">🧱</div><div style="flex:1"><div class="name" style="font-size:13px">Gạch lát 60x60 Viglacera</div><div class="meta">40 hộp × 185.000đ</div></div><b>7.400.000đ</b></div>
+            <div class="item" style="padding:8px 0"><div class="thumb t-cement" style="width:40px;height:40px;font-size:17px">🏗️</div><div style="flex:1"><div class="name" style="font-size:13px">Keo dán gạch Weber</div><div class="meta">12 bao × 165.000đ</div></div><b>1.980.000đ</b></div>
+          </div>
+          <div class="card">
+            <div class="row between"><span class="muted">Tạm tính</span><span>9.380.000đ</span></div>
+            <div class="row between" style="margin-top:8px"><span class="muted">Chiết khấu thầu (5%)</span><span style="color:var(--green)">-469.000đ</span></div>
+            <div class="row between" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line)"><b>Tổng cộng</b><b class="big" style="font-size:20px;color:var(--primary)">8.911.000đ</b></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn ghost" style="flex:1">Gửi báo giá Zalo</button>
+            <button class="btn accent" style="flex:1.4">Chốt đơn ✓</button>
+          </div>
+        </div>
+
+        <!-- CUSTOMERS -->
+        <div class="pane" data-s="sale-cust">
+          <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg> Tìm khách hàng…</div>
+          <div class="section-title">Khách cần chăm sóc</div>
+          <div class="card" style="padding:6px 15px">
+            <div class="item"><div class="circ" style="background:#1e5fa8">T</div><div style="flex:1"><div class="name">Anh Tuấn — Thầu xây dựng</div><div class="meta">Mua gần nhất: 3 ngày trước</div></div><div style="text-align:right"><span class="chip r">Nợ 18.5tr</span></div></div>
+            <div class="item"><div class="circ" style="background:#16a34a">H</div><div style="flex:1"><div class="name">Chị Hoa — CH VLXD Ninh Kiều</div><div class="meta">Mua gần nhất: hôm nay</div></div><div style="text-align:right"><span class="chip g">Nợ 0đ</span></div></div>
+            <div class="item"><div class="circ" style="background:#f59e0b">M</div><div style="flex:1"><div class="name">Anh Minh — Nhà thầu Cái Răng</div><div class="meta">Mua gần nhất: 12 ngày trước</div></div><div style="text-align:right"><span class="chip a">Lâu chưa mua</span></div></div>
+            <div class="item"><div class="circ" style="background:#8b5cf6">L</div><div style="flex:1"><div class="name">Chị Lan</div><div class="meta">Mua gần nhất: hôm qua</div></div><div style="text-align:right"><span class="chip r">Nợ 9.7tr</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="fab" onclick="setScreen('sale','sale-order')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+
+      <div class="nav">
+        <button class="on" data-s="sale-home" onclick="setScreen('sale','sale-home')"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Trang chủ</button>
+        <button data-s="sale-products" onclick="setScreen('sale','sale-products')"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg>Sản phẩm</button>
+        <button data-s="sale-order" onclick="setScreen('sale','sale-order')"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>Đơn hàng</button>
+        <button data-s="sale-cust" onclick="setScreen('sale','sale-cust')"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 14a4 4 0 0 0 5 5"/></svg>Khách</button>
+      </div>
+    </div>
+
+    <!-- ============ DRIVER ============ -->
+    <div class="role-view" id="view-driver">
+      <div class="appbar grad">
+        <div class="appbar-top">
+          <div><h2>Lộ trình hôm nay</h2><div class="sub">Tài xế · Xe tải 51C-234.56</div></div>
+          <div class="avatar">HD</div>
+        </div>
+      </div>
+      <div class="body">
+        <!-- TODAY -->
+        <div class="pane on" data-s="driver-today">
+          <div class="stat-grid">
+            <div class="card"><div class="muted" style="font-size:12px">Đơn cần giao</div><div class="big">6</div><span class="chip b">2 đang giao</span></div>
+            <div class="card"><div class="muted" style="font-size:12px">Tiền COD thu hộ</div><div class="big" style="font-size:22px">42.6tr</div><span class="chip a">Chưa nộp</span></div>
+          </div>
+
+          <div class="section-title">Danh sách giao — theo lộ trình</div>
+          <div class="card" style="padding:6px 15px">
+            <div class="item" onclick="setScreen('driver','driver-detail')" style="cursor:pointer">
+              <div class="circ" style="background:#f59e0b;width:34px;height:34px;font-size:13px">1</div>
+              <div style="flex:1"><div class="name">Anh Tuấn · 12 Trần Phú, Ninh Kiều</div><div class="meta">Gạch lát 40 hộp · COD 8.24tr</div></div>
+              <span class="chip a">Đang giao</span>
+            </div>
+            <div class="item" style="cursor:pointer">
+              <div class="circ" style="background:#94a3b8;width:34px;height:34px;font-size:13px">2</div>
+              <div style="flex:1"><div class="name">Chị Lan · KDC Hưng Phú</div><div class="meta">Bồn cầu Inax x2 · COD 9.7tr</div></div>
+              <span class="chip b">Chờ</span>
+            </div>
+            <div class="item" style="cursor:pointer">
+              <div class="circ" style="background:#94a3b8;width:34px;height:34px;font-size:13px">3</div>
+              <div style="flex:1"><div class="name">CH Hưng Phú · Q. Cái Răng</div><div class="meta">Xi măng 200 bao · Đã T.Toán</div></div>
+              <span class="chip b">Chờ</span>
+            </div>
+            <div class="item"><div class="circ" style="background:#16a34a;width:34px;height:34px;font-size:13px">✓</div><div style="flex:1"><div class="name">Anh Bình · Bến Ninh Kiều</div><div class="meta">Sơn Dulux 10 thùng</div></div><span class="chip g">Đã giao</span></div>
+          </div>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="pane" data-s="driver-detail">
+          <div class="map">
+            <div class="road" style="top:60px;left:0;right:0;height:12px"></div>
+            <div class="road" style="top:0;bottom:0;left:120px;width:12px"></div>
+            <div class="pin" style="top:66px;left:70px">🚚</div>
+            <div class="pin" style="top:60px;left:230px">📍<small>Đơn</small></div>
+          </div>
+          <div class="card" style="margin-top:12px">
+            <div class="row between"><b>Đơn #1024 · Anh Tuấn</b><span class="chip a">Đang giao</span></div>
+            <div class="meta" style="margin-top:6px">📍 12 Trần Phú, P. Tân An, Ninh Kiều · <b>2,4 km</b></div>
+            <div style="border-top:1px dashed var(--line);margin:12px 0"></div>
+            <div class="item" style="padding:6px 0"><div class="thumb t-tile" style="width:38px;height:38px;font-size:16px">🧱</div><div style="flex:1"><div class="name" style="font-size:13px">Gạch lát 60x60 Viglacera</div><div class="meta">40 hộp</div></div></div>
+            <div class="row between" style="margin-top:8px;padding-top:10px;border-top:1px solid var(--line)"><span>Thu hộ COD</span><b class="big" style="font-size:20px;color:var(--red)">8.240.000đ</b></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn ghost" style="flex:1">📞 Gọi khách</button>
+            <button class="btn" style="flex:1.4" onclick="setScreen('driver','driver-pod')">Đã giao ✓</button>
+          </div>
+        </div>
+
+        <!-- PROOF OF DELIVERY -->
+        <div class="pane" data-s="driver-pod">
+          <div class="card">
+            <b>Xác nhận giao hàng · #1024</b>
+            <div class="section-title" style="margin:14px 4px 8px">Ảnh chứng từ</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="height:90px;border-radius:12px;background:linear-gradient(135deg,#cbd5e1,#94a3b8);display:flex;align-items:center;justify-content:center;font-size:26px">📦</div>
+              <div style="height:90px;border-radius:12px;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:12px">📷<br>Thêm ảnh</div>
+            </div>
+            <div class="section-title" style="margin:16px 4px 8px">Chữ ký người nhận</div>
+            <div style="height:80px;border-radius:12px;background:#f8fafc;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Segoe Script',cursive;font-size:26px;color:#334155">Tuấn ✍️</div>
+            <div class="row between" style="margin-top:14px"><span>Đã thu COD</span><b style="color:var(--green)">8.240.000đ ✓</b></div>
+          </div>
+          <button class="btn" style="margin-top:14px;background:var(--green)" onclick="setScreen('driver','driver-today')">Hoàn tất & đơn tiếp theo →</button>
+        </div>
+
+        <!-- COD -->
+        <div class="pane" data-s="driver-cod">
+          <div class="kpi" style="background:linear-gradient(135deg,#b45309,#f59e0b)">
+            <div class="label">Tổng COD cần nộp về cửa hàng</div>
+            <div class="amount">42.600.000đ</div>
+            <div class="foot"><span>4 đơn đã thu</span><span>Cuối ca nộp kế toán</span></div>
+          </div>
+          <div class="card" style="padding:6px 15px;margin-top:12px">
+            <div class="item"><div style="flex:1"><div class="name">#1020 · Anh Bình</div><div class="meta">Đã thu 08:40</div></div><b class="price">6.500.000đ</b></div>
+            <div class="item"><div style="flex:1"><div class="name">#1022 · Chị Hoa</div><div class="meta">Đã thu 09:15</div></div><b class="price">12.160.000đ</b></div>
+            <div class="item"><div style="flex:1"><div class="name">#1024 · Anh Tuấn</div><div class="meta">Đã thu 10:05</div></div><b class="price">8.240.000đ</b></div>
+            <div class="item"><div style="flex:1"><div class="name">#1026 · Anh Phát</div><div class="meta">Đã thu 10:50</div></div><b class="price">15.700.000đ</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="on" data-s="driver-today" onclick="setScreen('driver','driver-today')"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Đơn giao</button>
+        <button data-s="driver-detail" onclick="setScreen('driver','driver-detail')"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>Lộ trình</button>
+        <button data-s="driver-cod" onclick="setScreen('driver','driver-cod')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.3 1.1-2 2.5-2s2.5.7 2.5 2-1.1 2-2.5 2-2.5.7-2.5 2 1.1 2 2.5 2 2.5-.7 2.5-2"/></svg>Thu COD</button>
+      </div>
+    </div>
+
+    <!-- ============ BOSS ============ -->
+    <div class="role-view" id="view-boss">
+      <div class="appbar grad">
+        <div class="appbar-top">
+          <div><h2>Bảng điều khiển</h2><div class="sub">Cửa hàng Huệ Lộc · Hôm nay 25/07</div></div>
+          <div class="avatar">HL</div>
+        </div>
+      </div>
+      <div class="body" style="padding-bottom:24px">
+        <div class="kpi">
+          <div class="label">Doanh số hôm nay</div>
+          <div class="amount">47.800.000đ</div>
+          <div class="foot"><span>▲ 12% so với hôm qua</span><span>Tháng: 248,5tr</span></div>
+        </div>
+
+        <div class="stat-grid" style="margin-top:12px">
+          <div class="card"><div class="muted" style="font-size:12px">Đơn mới</div><div class="big">12</div></div>
+          <div class="card"><div class="muted" style="font-size:12px">Đang giao</div><div class="big" style="color:var(--accent)">6</div></div>
+        </div>
+
+        <div class="section-title">Doanh số 7 ngày</div>
+        <div class="card">
+          <div class="bars">
+            <div class="bar"><i style="height:52%"></i></div>
+            <div class="bar"><i style="height:68%"></i></div>
+            <div class="bar"><i style="height:44%"></i></div>
+            <div class="bar"><i style="height:80%"></i></div>
+            <div class="bar"><i style="height:60%"></i></div>
+            <div class="bar"><i style="height:72%"></i></div>
+            <div class="bar hi"><i style="height:92%"></i></div>
+          </div>
+          <div class="bars-x"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div>
+        </div>
+
+        <div class="section-title">Cần chú ý</div>
+        <div class="card" style="padding:6px 15px">
+          <div class="item"><div class="thumb" style="background:var(--red-soft);width:40px;height:40px;font-size:18px">⚠️</div><div style="flex:1"><div class="name">Tồn kho sắp hết</div><div class="meta">Gạch Prime 30x60, Lavabo Toto…</div></div><span class="chip r">3 SP</span></div>
+          <div class="item"><div class="thumb" style="background:var(--accent-soft);width:40px;height:40px;font-size:18px">💰</div><div style="flex:1"><div class="name">Công nợ toàn cửa hàng</div><div class="meta">18 khách đang nợ</div></div><b style="color:var(--red)">156tr</b></div>
+          <div class="item"><div class="thumb" style="background:var(--green-soft);width:40px;height:40px;font-size:18px">🚚</div><div style="flex:1"><div class="name">Xe đang giao hàng</div><div class="meta">51C-234.56 · 51D-889.01</div></div><span class="chip g">2 xe</span></div>
+        </div>
+
+        <div class="section-title">Top nhân viên tháng</div>
+        <div class="card" style="padding:6px 15px">
+          <div class="item"><div class="circ" style="background:#f59e0b;width:36px;height:36px;font-size:13px">1</div><div style="flex:1"><div class="name">Minh Trí</div><div class="meta">32 đơn</div></div><b class="price">248,5tr</b></div>
+          <div class="item"><div class="circ" style="background:#94a3b8;width:36px;height:36px;font-size:13px">2</div><div style="flex:1"><div class="name">Thu Hà</div><div class="meta">28 đơn</div></div><b class="price">201,2tr</b></div>
+          <div class="item"><div class="circ" style="background:#b45309;width:36px;height:36px;font-size:13px">3</div><div style="flex:1"><div class="name">Quốc Anh</div><div class="meta">21 đơn</div></div><b class="price">167,8tr</b></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="caption" id="caption"><b>Đang xem: vai trò Sale.</b> Bấm vào các mục ở thanh dưới đáy điện thoại để xem từng màn hình. Chuyển vai trò ở 3 nút phía trên.</div>
+
+<script>
+  const captions = {
+    sale:  '<b>Vai trò Sale.</b> Xem doanh số/KPI, tra tồn kho realtime, tạo đơn & báo giá tại chỗ, quản lý công nợ khách. Bấm thanh dưới để đổi màn hình.',
+    driver:'<b>Vai trò Tài xế.</b> Nhận danh sách giao theo lộ trình, xác nhận giao bằng ảnh + chữ ký, thu và đối soát tiền COD.',
+    boss:  '<b>Vai trò Chủ / Quản lý.</b> Theo dõi doanh số realtime, cảnh báo tồn kho & công nợ, biết xe nào đang giao, xếp hạng nhân viên.'
+  };
+  const statusColors = { sale:'#1e5fa8', driver:'#1e5fa8', boss:'#1e5fa8' };
+
+  function setRole(role){
+    document.querySelectorAll('.role-view').forEach(v=>v.classList.remove('on'));
+    document.getElementById('view-'+role).classList.add('on');
+    document.querySelectorAll('.role-tab').forEach(t=>t.classList.toggle('active', t.dataset.role===role));
+    document.getElementById('caption').innerHTML = captions[role];
+    // reset each role to its first pane already default; ensure status bar text light
+    document.getElementById('statusbar').classList.remove('dark');
+  }
+
+  function setScreen(role, screen){
+    const view = document.getElementById('view-'+role);
+    view.querySelectorAll('.pane').forEach(p=>p.classList.toggle('on', p.dataset.s===screen));
+    view.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.s===screen));
+    view.querySelector('.body').scrollTop = 0;
+  }
+</script>
+</body>
+</html>
