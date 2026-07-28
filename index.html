@@ -538,6 +538,16 @@ section{scroll-margin-top:80px}
         <div class="fx vn" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇻🇳 Việt Nam — Campuchia 🇰🇭</span></div>
         <div class="fx" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇸🇬 Singapore — Indonesia 🇮🇩</span></div>
       </div>
+
+      <!-- 🏆 VÒNG KNOCK-OUT: tự hiện khi vòng bảng đá xong. Có lịch thật thì điền data-date="2026-08-14" cho thẻ .md và data-time="20:00" cho từng dòng .fx là auto chạy trạng thái Sắp tới/Đang diễn ra/Đã đá xong -->
+      <div class="md ko" data-date="" hidden>
+        <div class="md-head"><b>🏆 Bán kết</b><span class="md-tag soon">Cập nhật sau</span></div>
+        <div class="fx"><span class="teams">2 đội đầu bảng vào bán kết — cặp đấu &amp; lịch cập nhật ngay sau vòng bảng</span></div>
+      </div>
+      <div class="md ko" data-date="" hidden>
+        <div class="md-head"><b>🏆 Chung kết</b><span class="md-tag soon">Cập nhật sau</span></div>
+        <div class="fx"><span class="teams">Lịch &amp; cặp đấu cập nhật ngay sau bán kết</span></div>
+      </div>
     </div>
     <p class="sched-note">🕗 Giờ Việt Nam · vòng bảng — 2 đội đầu bảng vào bán kết. Ô xanh là trận của Việt Nam 🇻🇳</p>
 
@@ -775,23 +785,28 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
 /* ====== LỊCH THI ĐẤU TỰ CẬP NHẬT (theo ngày giờ thật, giờ VN) ====== */
 (function autoSchedule(){
   var MATCH_MIN=110; // 1 trận ~110 phút coi như đã đá xong
-  var rounds=[].slice.call(document.querySelectorAll('.sched .md'));
-  if(!rounds.length) return;
   var now=Date.now();
-  var data=rounds.map(function(md){
-    var date=md.getAttribute('data-date'); // 2026-07-24
-    var fixtures=[].slice.call(md.querySelectorAll('.fx')).map(function(fx){
-      var t=(fx.getAttribute('data-time')||'00:00').split(':');
-      var dt=new Date(date+'T'+(fx.getAttribute('data-time')||'00:00')+':00');
+  // build: đọc 1 thẻ .md -> danh sách trận có ngày giờ hợp lệ
+  function build(md){
+    var date=md.getAttribute('data-date');
+    var fixtures=[].slice.call(md.querySelectorAll('.fx[data-time]')).map(function(fx){
+      var dt=new Date(date+'T'+fx.getAttribute('data-time')+':00');
       return {el:fx,start:dt.getTime(),end:dt.getTime()+MATCH_MIN*60000};
-    });
-    var start=Math.min.apply(null,fixtures.map(function(f){return f.start;}));
-    var end=Math.max.apply(null,fixtures.map(function(f){return f.end;}));
-    return {md:md,tag:md.querySelector('.md-tag'),fixtures:fixtures,start:start,end:end};
-  });
-  // Lượt "sắp tới" = lượt tương lai gần nhất (chưa đá xong hết)
-  var nextRound=data.filter(function(r){return r.end>now;}).sort(function(a,b){return a.start-b.start;})[0];
-  data.forEach(function(r){
+    }).filter(function(f){return isFinite(f.start);});
+    var hasDate=!!(date&&fixtures.length);
+    return {md:md,tag:md.querySelector('.md-tag'),fixtures:fixtures,hasDate:hasDate,
+      start:hasDate?Math.min.apply(null,fixtures.map(function(f){return f.start;})):Infinity,
+      end:hasDate?Math.max.apply(null,fixtures.map(function(f){return f.end;})):Infinity};
+  }
+  var data=[].slice.call(document.querySelectorAll('.sched .md:not(.ko)')).map(build);
+  var koData=[].slice.call(document.querySelectorAll('.sched .md.ko')).map(build);
+  if(!data.length) return;
+  var groupDone=data.every(function(r){return now>=r.end;});
+  // "Sắp tới" = trận tương lai gần nhất trên TOÀN GIẢI (vòng bảng + knock-out đã có lịch)
+  var globalNext=data.concat(koData).filter(function(r){return r.hasDate&&r.end>now;})
+                     .sort(function(a,b){return a.start-b.start;})[0];
+  // tô trạng thái cho 1 thẻ (dùng chung cho vòng bảng & knock-out)
+  function paint(r){
     var anyLive=false;
     r.fixtures.forEach(function(f){
       f.el.classList.remove('now','done');
@@ -799,16 +814,21 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
       if(now>=f.start && now<f.end){
         anyLive=true; f.el.classList.add('now');
         var s=f.el.querySelector('.teams'); if(s){ s.insertAdjacentHTML('beforeend',' <span class="livenow">● LIVE</span>'); }
-      } else if(now>=f.end){
-        f.el.classList.add('done');
-      }
+      } else if(now>=f.end){ f.el.classList.add('done'); }
     });
     r.md.classList.remove('live','done');
     r.tag.className='md-tag';
+    if(!r.hasDate){ r.tag.classList.add('soon'); r.tag.textContent='Cập nhật sau'; return; }
     if(anyLive){ r.md.classList.add('live'); r.tag.classList.add('live'); r.tag.textContent='Đang diễn ra'; }
     else if(now>=r.end){ r.md.classList.add('done'); r.tag.classList.add('done'); r.tag.textContent='Đã đá xong'; }
-    else if(r===nextRound){ r.tag.classList.add('next'); r.tag.textContent='Sắp tới'; }
+    else if(r===globalNext){ r.tag.classList.add('next'); r.tag.textContent='Sắp tới'; }
     else { r.tag.classList.add('soon'); r.tag.textContent='Sắp tới'; }
+  }
+  data.forEach(paint);
+  // Knock-out: tự hiện ra khi vòng bảng đá xong hết, rồi tô trạng thái
+  koData.forEach(function(k){
+    if(groupDone) k.md.removeAttribute('hidden'); else k.md.setAttribute('hidden','');
+    paint(k);
   });
 
   /* ---- Khối MINIGAME tự nhảy theo trận Việt Nam gần nhất ---- */
@@ -836,6 +856,10 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
              :(mday.getTime()===today.getTime()?'TỐI NAY':THU[pick.date.getDay()]+', '+pick.date.getDate()+'/'+(pick.date.getMonth()+1));
       mgLbl.textContent='🎁 MINIGAME · '+when+' '+pick.time;
       mgTitle.textContent=pick.teams;
+    } else if(groupDone && koData.length){
+      // vòng bảng xong: chuyển sang cổ vũ vòng knock-out
+      mgLbl.textContent='🏆 MINIGAME · VÒNG KNOCK-OUT';
+      mgTitle.textContent='Cổ vũ Việt Nam vào bán kết — lịch cập nhật sau!';
     } else {
       // hết giải: giữ trận VN cuối, đổi nhãn
       var last=vns[vns.length-1];
