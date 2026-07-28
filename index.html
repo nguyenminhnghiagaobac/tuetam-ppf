@@ -119,6 +119,9 @@ a.price:hover{color:#be123c;text-decoration:underline;transform:translateX(2px)}
 .md-tag.live{background:#16a34a;color:#fff}
 .md-tag.next{background:#e0f2fe;color:var(--accent-d)}
 .md-tag.soon{background:#f1f5f9;color:var(--muted)}
+.md-tag.done{background:#f1f5f9;color:#94a3b8}
+.md.done{opacity:.62}
+.fx.done .teams{color:#94a3b8}
 .fx{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px}
 .fx:last-child{border-bottom:none}
 .fx .clock{font-weight:800;color:var(--accent-d);font-size:13px;min-width:44px}
@@ -508,32 +511,32 @@ section{scroll-margin-top:80px}
     <h2 class="sec-title">⚽ ASEAN Cup 2026 <span class="glossy">cùng Tuệ Tâm</span></h2>
     <p class="sec-sub">Bảng A: Việt Nam · Indonesia · Singapore · Campuchia · Timor-Leste — xem đá hết mình, máy đã có PPF lo!</p>
 
-    <!-- 🗓️ CHỦ TIỆM: cập nhật tỉ số/nổi bật trận đang đá tại đây theo lịch bên dưới -->
+    <!-- 🗓️ TỰ ĐỘNG: trạng thái (Đang diễn ra / Sắp tới / Đã đá xong) do JS tính theo ngày giờ thật, không cần sửa tay -->
     <div class="sched">
-      <div class="md live">
-        <div class="md-head"><b>🗓️ Lượt 1 · Thứ 6, 24/7</b><span class="md-tag live">Đang diễn ra</span></div>
-        <div class="fx now"><span class="clock">19:00</span><span class="teams">🇰🇭 Campuchia — Singapore 🇸🇬 <span class="livenow">● LIVE</span></span></div>
-        <div class="fx vn"><span class="clock">20:30</span><span class="teams">🇹🇱 Timor-Leste — Việt Nam 🇻🇳</span></div>
+      <div class="md" data-date="2026-07-24">
+        <div class="md-head"><b>🗓️ Lượt 1 · Thứ 6, 24/7</b><span class="md-tag soon">Sắp tới</span></div>
+        <div class="fx" data-time="19:00"><span class="clock">19:00</span><span class="teams">🇰🇭 Campuchia — Singapore 🇸🇬</span></div>
+        <div class="fx vn" data-time="20:30"><span class="clock">20:30</span><span class="teams">🇹🇱 Timor-Leste — Việt Nam 🇻🇳</span></div>
       </div>
-      <div class="md">
-        <div class="md-head"><b>🗓️ Lượt 2 · Thứ 2, 27/7</b><span class="md-tag next">Sắp tới</span></div>
-        <div class="fx"><span class="clock">18:00</span><span class="teams">🇸🇬 Singapore — Timor-Leste 🇹🇱</span></div>
-        <div class="fx"><span class="clock">20:30</span><span class="teams">🇮🇩 Indonesia — Campuchia 🇰🇭</span></div>
+      <div class="md" data-date="2026-07-27">
+        <div class="md-head"><b>🗓️ Lượt 2 · Thứ 2, 27/7</b><span class="md-tag soon">Sắp tới</span></div>
+        <div class="fx" data-time="18:00"><span class="clock">18:00</span><span class="teams">🇸🇬 Singapore — Timor-Leste 🇹🇱</span></div>
+        <div class="fx" data-time="20:30"><span class="clock">20:30</span><span class="teams">🇮🇩 Indonesia — Campuchia 🇰🇭</span></div>
       </div>
-      <div class="md">
+      <div class="md" data-date="2026-07-31">
         <div class="md-head"><b>🗓️ Lượt 3 · Thứ 6, 31/7</b><span class="md-tag soon">Sắp tới</span></div>
-        <div class="fx"><span class="clock">17:00</span><span class="teams">🇹🇱 Timor-Leste — Indonesia 🇮🇩</span></div>
-        <div class="fx vn"><span class="clock">20:00</span><span class="teams">🇻🇳 Việt Nam — Singapore 🇸🇬</span></div>
+        <div class="fx" data-time="17:00"><span class="clock">17:00</span><span class="teams">🇹🇱 Timor-Leste — Indonesia 🇮🇩</span></div>
+        <div class="fx vn" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇻🇳 Việt Nam — Singapore 🇸🇬</span></div>
       </div>
-      <div class="md">
+      <div class="md" data-date="2026-08-03">
         <div class="md-head"><b>🗓️ Lượt 4 · Thứ 2, 3/8</b><span class="md-tag soon">Sắp tới</span></div>
-        <div class="fx"><span class="clock">17:30</span><span class="teams">🇰🇭 Campuchia — Timor-Leste 🇹🇱</span></div>
-        <div class="fx vn"><span class="clock">20:30</span><span class="teams">🇮🇩 Indonesia — Việt Nam 🇻🇳</span></div>
+        <div class="fx" data-time="17:30"><span class="clock">17:30</span><span class="teams">🇰🇭 Campuchia — Timor-Leste 🇹🇱</span></div>
+        <div class="fx vn" data-time="20:30"><span class="clock">20:30</span><span class="teams">🇮🇩 Indonesia — Việt Nam 🇻🇳</span></div>
       </div>
-      <div class="md">
+      <div class="md" data-date="2026-08-07">
         <div class="md-head"><b>🗓️ Lượt 5 · Thứ 6, 7/8</b><span class="md-tag soon">Sắp tới</span></div>
-        <div class="fx vn"><span class="clock">20:00</span><span class="teams">🇻🇳 Việt Nam — Campuchia 🇰🇭</span></div>
-        <div class="fx"><span class="clock">20:00</span><span class="teams">🇸🇬 Singapore — Indonesia 🇮🇩</span></div>
+        <div class="fx vn" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇻🇳 Việt Nam — Campuchia 🇰🇭</span></div>
+        <div class="fx" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇸🇬 Singapore — Indonesia 🇮🇩</span></div>
       </div>
     </div>
     <p class="sched-note">🕗 Giờ Việt Nam · vòng bảng — 2 đội đầu bảng vào bán kết. Ô xanh là trận của Việt Nam 🇻🇳</p>
@@ -767,6 +770,46 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   targets.forEach(function(s){ io.observe(s); });
+})();
+
+/* ====== LỊCH THI ĐẤU TỰ CẬP NHẬT (theo ngày giờ thật, giờ VN) ====== */
+(function autoSchedule(){
+  var MATCH_MIN=110; // 1 trận ~110 phút coi như đã đá xong
+  var rounds=[].slice.call(document.querySelectorAll('.sched .md'));
+  if(!rounds.length) return;
+  var now=Date.now();
+  var data=rounds.map(function(md){
+    var date=md.getAttribute('data-date'); // 2026-07-24
+    var fixtures=[].slice.call(md.querySelectorAll('.fx')).map(function(fx){
+      var t=(fx.getAttribute('data-time')||'00:00').split(':');
+      var dt=new Date(date+'T'+(fx.getAttribute('data-time')||'00:00')+':00');
+      return {el:fx,start:dt.getTime(),end:dt.getTime()+MATCH_MIN*60000};
+    });
+    var start=Math.min.apply(null,fixtures.map(function(f){return f.start;}));
+    var end=Math.max.apply(null,fixtures.map(function(f){return f.end;}));
+    return {md:md,tag:md.querySelector('.md-tag'),fixtures:fixtures,start:start,end:end};
+  });
+  // Lượt "sắp tới" = lượt tương lai gần nhất (chưa đá xong hết)
+  var nextRound=data.filter(function(r){return r.end>now;}).sort(function(a,b){return a.start-b.start;})[0];
+  data.forEach(function(r){
+    var anyLive=false;
+    r.fixtures.forEach(function(f){
+      f.el.classList.remove('now','done');
+      var badge=f.el.querySelector('.livenow'); if(badge) badge.remove();
+      if(now>=f.start && now<f.end){
+        anyLive=true; f.el.classList.add('now');
+        var s=f.el.querySelector('.teams'); if(s){ s.insertAdjacentHTML('beforeend',' <span class="livenow">● LIVE</span>'); }
+      } else if(now>=f.end){
+        f.el.classList.add('done');
+      }
+    });
+    r.md.classList.remove('live','done');
+    r.tag.className='md-tag';
+    if(anyLive){ r.md.classList.add('live'); r.tag.classList.add('live'); r.tag.textContent='Đang diễn ra'; }
+    else if(now>=r.end){ r.md.classList.add('done'); r.tag.classList.add('done'); r.tag.textContent='Đã đá xong'; }
+    else if(r===nextRound){ r.tag.classList.add('next'); r.tag.textContent='Sắp tới'; }
+    else { r.tag.classList.add('soon'); r.tag.textContent='Sắp tới'; }
+  });
 })();
 </script>
 
