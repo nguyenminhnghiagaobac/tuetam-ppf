@@ -130,6 +130,7 @@ a.price:hover{color:#be123c;text-decoration:underline;transform:translateX(2px)}
 .fx.vn .teams{color:#15803d;font-weight:800}
 .fx.now .clock{color:#16a34a}
 .fx .livenow{display:inline-block;background:#16a34a;color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.fx .ftscore{display:inline-block;background:#e2e8f0;color:#334155;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;letter-spacing:.3px}
 .sched-note{text-align:center;color:var(--muted);font-size:13.5px;margin:-14px 0 30px}
 
 /* ---- DINH DƯỠNG ---- */
@@ -511,7 +512,9 @@ section{scroll-margin-top:80px}
     <h2 class="sec-title">⚽ ASEAN Cup 2026 <span class="glossy">cùng Tuệ Tâm</span></h2>
     <p class="sec-sub">Bảng A: Việt Nam · Indonesia · Singapore · Campuchia · Timor-Leste — xem đá hết mình, máy đã có PPF lo!</p>
 
-    <!-- 🗓️ TỰ ĐỘNG: trạng thái (Đang diễn ra / Sắp tới / Đã đá xong) do JS tính theo ngày giờ thật, không cần sửa tay -->
+    <!-- 🗓️ TỰ ĐỘNG: trạng thái (Đang diễn ra / Sắp tới / Đã đá xong) do JS tính theo ngày giờ thật, không cần sửa tay.
+         ⚽ TỈ SỐ: muốn hiện tỉ số thì thêm data-score="X-Y" vào dòng trận (X-Y theo đúng thứ tự đội trái—phải), ví dụ:
+         <div class="fx vn" data-time="20:30" data-score="1-2">...  → trận đang đá hiện "● LIVE 1–2", đá xong hiện "KT 1–2". -->
     <div class="sched">
       <div class="md" data-date="2026-07-24">
         <div class="md-head"><b>🗓️ Lượt 1 · Thứ 6, 24/7</b><span class="md-tag soon">Sắp tới</span></div>
@@ -814,11 +817,16 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
     var anyLive=false;
     r.fixtures.forEach(function(f){
       f.el.classList.remove('now','done');
-      var badge=f.el.querySelector('.livenow'); if(badge) badge.remove();
+      [].forEach.call(f.el.querySelectorAll('.livenow,.ftscore'),function(x){x.remove();});
+      var teamsEl=f.el.querySelector('.teams');
+      var score=(f.el.getAttribute('data-score')||'').trim().replace(/\s*[-–]\s*/,'–'); // "2-1" -> "2–1"
       if(now>=f.start && now<f.end){
         anyLive=true; f.el.classList.add('now');
-        var s=f.el.querySelector('.teams'); if(s){ s.insertAdjacentHTML('beforeend',' <span class="livenow">● LIVE</span>'); }
-      } else if(now>=f.end){ f.el.classList.add('done'); }
+        if(teamsEl){ teamsEl.insertAdjacentHTML('beforeend',' <span class="livenow">● LIVE'+(score?' '+score:'')+'</span>'); }
+      } else if(now>=f.end){
+        f.el.classList.add('done');
+        if(teamsEl && score){ teamsEl.insertAdjacentHTML('beforeend',' <span class="ftscore">KT '+score+'</span>'); }
+      }
     });
     r.md.classList.remove('live','done');
     r.tag.className='md-tag';
@@ -843,9 +851,12 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
     data.forEach(function(r){
       r.fixtures.forEach(function(f){
         if(f.el.classList.contains('vn')){
-          var teams=(f.el.querySelector('.teams').textContent||'').replace(/●\s*LIVE/i,'').trim();
+          var tc=f.el.querySelector('.teams').cloneNode(true);
+          [].forEach.call(tc.querySelectorAll('.livenow,.ftscore'),function(x){x.remove();});
+          var teams=(tc.textContent||'').trim();
+          var sc=(f.el.getAttribute('data-score')||'').trim().replace(/\s*[-–]\s*/,'–');
           var d=new Date(f.start),time=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
-          vns.push({start:f.start,end:f.end,teams:teams,date:d,time:time});
+          vns.push({start:f.start,end:f.end,teams:teams,date:d,time:time,score:sc});
         }
       });
     });
@@ -858,7 +869,7 @@ document.getElementById('wrInput').addEventListener('keydown',function(e){if(e.k
       var mday=new Date(pick.date); mday.setHours(0,0,0,0);
       var when=isLive?'ĐANG ĐÁ'
              :(mday.getTime()===today.getTime()?'TỐI NAY':THU[pick.date.getDay()]+', '+pick.date.getDate()+'/'+(pick.date.getMonth()+1));
-      mgLbl.textContent='🎁 MINIGAME · '+when+' '+pick.time;
+      mgLbl.textContent='🎁 MINIGAME · '+when+' '+pick.time+(isLive&&pick.score?' · '+pick.score:'');
       mgTitle.textContent=pick.teams;
     } else if(groupDone && koData.length){
       // vòng bảng xong: chuyển sang cổ vũ vòng knock-out
