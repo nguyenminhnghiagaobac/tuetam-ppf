@@ -539,10 +539,14 @@ section{scroll-margin-top:80px}
         <div class="fx" data-time="20:00"><span class="clock">20:00</span><span class="teams">🇸🇬 Singapore — Indonesia 🇮🇩</span></div>
       </div>
 
-      <!-- 🏆 VÒNG KNOCK-OUT: tự hiện khi vòng bảng đá xong. Có lịch thật thì điền data-date="2026-08-14" cho thẻ .md và data-time="20:00" cho từng dòng .fx là auto chạy trạng thái Sắp tới/Đang diễn ra/Đã đá xong -->
+      <!-- 🏆 VÒNG KNOCK-OUT: tự hiện khi vòng bảng đá xong. Khi có lịch chính thức: điền data-date="2026-08-14" cho thẻ .md và, với mỗi trận, thêm dòng <div class="fx" data-time="20:00"><span class="clock">20:00</span><span class="teams">Đội A — Đội B</span></div> là auto chạy trạng thái Sắp tới/Đang diễn ra/Đã đá xong. Ô trận Việt Nam thêm class "vn" để tô xanh + vào minigame. -->
       <div class="md ko" data-date="" hidden>
-        <div class="md-head"><b>🏆 Bán kết</b><span class="md-tag soon">Cập nhật sau</span></div>
-        <div class="fx"><span class="teams">2 đội đầu bảng vào bán kết — cặp đấu &amp; lịch cập nhật ngay sau vòng bảng</span></div>
+        <div class="md-head"><b>🏆 Bán kết · Lượt đi</b><span class="md-tag soon">Cập nhật sau</span></div>
+        <div class="fx"><span class="teams">Cặp đấu &amp; lịch cập nhật ngay sau vòng bảng</span></div>
+      </div>
+      <div class="md ko" data-date="" hidden>
+        <div class="md-head"><b>🏆 Bán kết · Lượt về</b><span class="md-tag soon">Cập nhật sau</span></div>
+        <div class="fx"><span class="teams">Cặp đấu &amp; lịch cập nhật ngay sau vòng bảng</span></div>
       </div>
       <div class="md ko" data-date="" hidden>
         <div class="md-head"><b>🏆 Chung kết</b><span class="md-tag soon">Cập nhật sau</span></div>
