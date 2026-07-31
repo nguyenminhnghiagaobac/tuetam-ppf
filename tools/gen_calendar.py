@@ -36,11 +36,11 @@ CAPS = {
 "Xước rồi là hết đường quay lại ạ. Đánh bóng cũng không về như cũ được.\n\nCách duy nhất là đừng để nó xước ngay từ đầu.\n\n" + Z + "\n\n" + TAG,
 "Máy mới mua về, nâng niu được đúng một tuần 😅\n\nRồi để chung túi với chìa khoá, đặt xuống bàn đá, rớt nhẹ một cái... lưng máy bắt đầu có vết.\n\nDán PPF từ đầu là yên tâm luôn.\n\n" + Z + "\n\n" + TAG,
 "Đừng đợi máy trầy rồi mới đi dán ạ. Lúc đó film chỉ che được vết cũ chứ không xoá được.\n\nDán sớm ngày nào lời ngày đó.\n\n" + Z + "\n\n" + TAG],
-5: [  # bao hanh
-"Dán xong mà lỡ trầy film thì sao ạ?\n\nDạ tiệm em có bảo hành trầy xước. Trong thời gian bảo hành, anh chị cứ mang máy ra em xử lý.\n\nNói rõ ràng từ đầu để anh chị yên tâm 🤍\n\n" + Z + "\n\n" + TAG,
-"Em không hứa film không bao giờ trầy — nói vậy là xạo ạ.\n\nEm hứa cái khác: trầy thì có bảo hành, mang ra tiệm em lo.\n\nCam kết được cái gì thì nói cái đó.\n\n" + Z + "\n\n" + TAG,
-"Trước khi dán ở bất kỳ đâu, anh chị nhớ hỏi kỹ: bảo hành thế nào, bao lâu, gồm những gì?\n\nChỗ nào nói vòng vo là nên cân nhắc ạ.\n\nTiệm em nói rõ ngay từ đầu.\n\n" + Z + "\n\n" + TAG,
-"Có bảo hành trầy xước nên anh chị cứ dùng máy thoải mái.\n\nBỏ túi chung chìa khoá, để bàn, đưa con nít cầm — có gì mang ra em.\n\n" + Z + "\n\n" + TAG,
+5: [  # bao hanh (chi bao hanh loi thi cong: bong troc, bot khi — KHONG bao hanh tray xuoc do su dung)
+"Dán PPF rồi film có bị trầy không ạ?\n\nDạ có chứ — nhưng đó là film chịu trầy thay cho máy. Trầy trên film thì máy bên dưới vẫn nguyên vẹn.\n\nCòn nếu film bong tróc hay nổi bọt khí do lỗi thi công, anh chị cứ mang ra tiệm em bảo hành nha 🤍\n\n" + Z + "\n\n" + TAG,
+"Em không hứa film không bao giờ trầy — nói vậy là xạo ạ.\n\nFilm sinh ra để chịu trầy thay cho máy mà. Trầy trên film là bình thường, máy bên dưới vẫn đẹp.\n\nCái em bảo hành là lỗi thi công: film bong tróc, nổi bọt khí. Gặp là mang ra em làm lại.\n\n" + Z + "\n\n" + TAG,
+"Trước khi dán ở bất kỳ đâu, anh chị nhớ hỏi kỹ: bảo hành thế nào, bao lâu, gồm những gì?\n\nChỗ nào nói vòng vo là nên cân nhắc ạ.\n\nTiệm em nói rõ ngay từ đầu: bảo hành film bong tróc, nổi bọt do lỗi thi công.\n\n" + Z + "\n\n" + TAG,
+"Có PPF rồi anh chị cứ dùng máy thoải mái.\n\nBỏ túi chung chìa khoá, để bàn, đưa con nít cầm — trầy thì trầy trên film, máy bên dưới vẫn đẹp.\n\nFilm bong tróc hay nổi bọt do lỗi thi công thì mang ra em bảo hành nha.\n\n" + Z + "\n\n" + TAG,
 "Dán PPF ở tiệm em xong, anh chị giữ lại thông tin để tra bảo hành nha.\n\nCần gì cứ nhắn " + Z + " em kiểm tra giúp.\n\n" + TAG],
 6: [  # gio mo cua
 "Tiệm em mở 8h sáng tới 9h tối mỗi ngày ạ ☀️🌙\n\nAnh chị đi làm về ghé vẫn kịp. Nhắn Zalo trước một tiếng thì em chuẩn bị sẵn, khỏi ngồi chờ lâu.\n\n" + Z + "\n" + DC + "\n\n" + TAG,
@@ -85,14 +85,14 @@ CAPS = {
 "Hai chỗ khách hay tiếc nhất khi trầy: cụm camera và 4 góc viền.\n\nHai chỗ đó tiệm em dán kỹ nhất.\n\n" + Z + "\n\n" + TAG,
 "Máy anh chị lật lên coi cụm camera thử ạ. Có vết xước nhỏ nào chưa?\n\nNếu có rồi thì nên dán ngay để nó đừng lan thêm.\n\n" + Z + "\n\n" + TAG],
 13: [ # checklist chon tiem
-"Trước khi dán ở đâu, anh chị hỏi 3 câu này là biết chỗ đó có ngon không:\n\n1. Có cắt bằng máy CNC theo model không, hay cắt tay?\n2. Có rọc dao trực tiếp lên máy em không?\n3. Bảo hành ra sao nếu film bong hay trầy?\n\nChỗ nào trả lời rõ ràng thì yên tâm ạ.\n\n" + Z + "\n\n" + TAG,
+"Trước khi dán ở đâu, anh chị hỏi 3 câu này là biết chỗ đó có ngon không:\n\n1. Có cắt bằng máy CNC theo model không, hay cắt tay?\n2. Có rọc dao trực tiếp lên máy em không?\n3. Bảo hành ra sao nếu film bong tróc, nổi bọt?\n\nChỗ nào trả lời rõ ràng thì yên tâm ạ.\n\n" + Z + "\n\n" + TAG,
 "Em không sợ anh chị so sánh, em chỉ sợ anh chị dán nhầm chỗ rồi mất niềm tin với PPF luôn 😔\n\nCứ hỏi kỹ trước khi dán, ở đâu cũng vậy.\n\n" + Z + "\n\n" + TAG,
 "Đi dán PPF nhớ hỏi kỹ về bảo hành nha anh chị. Đây là thứ phân biệt tiệm làm ăn lâu dài với chỗ làm cho xong.\n\n" + Z + "\n\n" + TAG,
 "Tiệm nào cho anh chị coi khuôn cắt của đúng dòng máy mình trước khi dán thì đó là dấu hiệu tốt ạ 👍\n\n" + Z + "\n\n" + TAG,
 "Chọn chỗ dán PPF cũng như chọn thợ cắt tóc vậy — làm ẩu một lần là nhớ đời 😅\n\nHỏi kỹ, coi kỹ, rồi hãy giao máy.\n\n" + Z + "\n\n" + TAG],
 14: [ # tong hop
-"TUỆ TÂM PPF CNC CẦN THƠ 🤍\n\n• Cắt CNC chuẩn từng dòng máy\n• Điện thoại, tablet, laptop, đồng hồ\n• Không rọc dao lên máy khách\n• Có bảo hành trầy xước\n\n" + DC + "\n" + Z + "\n\n" + TAG,
-"Dán một lần, yên tâm dài lâu ạ.\n\nMáy cắt CNC chuẩn model, film ôm khít viền, có bảo hành trầy xước.\n\nNhắn " + Z + " để em tư vấn cho đúng máy của anh chị.\n\n" + TAG,
+"TUỆ TÂM PPF CNC CẦN THƠ 🤍\n\n• Cắt CNC chuẩn từng dòng máy\n• Điện thoại, tablet, laptop, đồng hồ\n• Không rọc dao lên máy khách\n• Bảo hành film bong tróc, bọt khí do lỗi thi công\n\n" + DC + "\n" + Z + "\n\n" + TAG,
+"Dán một lần, yên tâm dài lâu ạ.\n\nMáy cắt CNC chuẩn model, film ôm khít viền, bảo hành lỗi thi công (bong tróc, bọt khí).\n\nNhắn " + Z + " để em tư vấn cho đúng máy của anh chị.\n\n" + TAG,
 "Cảm ơn anh chị đã tin tiệm em thời gian qua 🤍\n\nEm vẫn ở đây mỗi ngày 8h-21h, máy nào cũng nhận, tư vấn thật lòng chứ không ép.\n\n" + DC + "\n\n" + TAG,
 "Chưa biết máy mình dán được kiểu nào? Nhắn tên máy qua " + Z + " em kiểm tra khuôn rồi tư vấn liền ạ.\n\nMiễn phí, không dán cũng không sao 😊\n\n" + TAG,
 "Bảo vệ máy không phải chuyện xa xỉ, là chuyện giữ tiền của mình ạ.\n\nTUỆ TÂM PPF CNC — " + DC + "\n" + Z + "\n\n" + TAG],
