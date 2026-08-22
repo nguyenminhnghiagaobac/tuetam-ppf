@@ -347,6 +347,10 @@ body{width:%(W)dpx;height:%(H)dpx;font-family:'BVP','Be Vietnam Pro',
     background:radial-gradient(circle at 50%% 50%%,%(soft)s6b,#ffffff00 70%%)}
 .b3{width:300px;height:300px;top:44%%;left:-140px;
     background:radial-gradient(circle,%(ac)s3d,#ffffff00 70%%)}
+.bgphoto{position:absolute;inset:0;background-size:cover;background-position:%(pos)s;
+          filter:saturate(1.05)}
+.scrim{position:absolute;inset:0;background:linear-gradient(180deg,
+       %(c1)sf0 0%%,%(c1)sd6 28%%,%(c2)s4a 52%%,%(c2)sb8 78%%,%(c2)sf5 100%%)}
 .dots{position:absolute;inset:0;opacity:.16;
       background-image:radial-gradient(#fff 2.4px,transparent 2.4px);
       background-size:38px 38px}
@@ -432,7 +436,7 @@ h1{margin-top:22px;font-size:%(tsize)dpx;line-height:1.08;font-weight:900;
 """
 
 TPL = """<meta charset="utf-8"><style>%(font)s%(css)s</style>
-<div class="bg"><div class="ray"></div><div class="dots"></div>
+<div class="bg">%(bgphoto)s<div class="ray"></div><div class="dots"></div>
 <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 <div class="card">
   <div class="top"><span class="dot"></span>TUỆ TÂM PPF CNC · CẦN THƠ</div>
@@ -475,19 +479,21 @@ def _panel(kind, title, items):
     )
 
 
-def build_body(post):
+def build_body(post, anh_nen=False):
+    """anh_nen=True nghia la tam nay da co anh that lam nen -> khong ve mockup."""
     lay = post["layout"]
-    photo = anh_that(post["id"])
 
     if lay in ("hero", "cta"):
-        if photo:
-            visual = '<div class="stage"><img class="photo" src="%s"></div>' % photo
+        if anh_nen:
+            visual = ""
         elif lay == "cta":
             visual = '<div class="stage">%s</div>' % DEVICES["combo"]()
         else:
             visual = '<div class="stage">%s</div>' % DEVICES[post["device"]]()
         extra = ('<div class="zbox"><div class="lbl">NHẮN ZALO</div>'
                  '<div class="num2">%s</div></div>' % ZALO) if lay == "cta" else ""
+        if anh_nen and lay == "hero":
+            extra = '<div class="stage"></div>'  # chua cho anh nen tho ra
         return _lines(post) + visual + extra
 
     if lay in ("compare", "policy"):
@@ -507,10 +513,9 @@ def build_body(post):
         return '<div class="items">%s</div>' % items
 
     if lay in ("hours", "address"):
-        src = photo or data_uri(REPO / "media" / "mat-tien.jpg")
-        big = '<div class="big">18h – 21h</div>' if lay == "hours" else ""
-        return (_lines(post) + big +
-                '<div class="stage"><img class="photo" src="%s"></div>' % src)
+        # Co anh nen thi bo dong gio khong lo di cho khoi de len bang hieu.
+        big = '<div class="big">18h – 21h</div>' if lay == "hours" and not anh_nen else ""
+        return _lines(post) + big + '<div class="stage"></div>' 
 
     raise ValueError("layout la: " + lay)
 
@@ -520,12 +525,18 @@ def main():
     manifest = []
     for p in POSTS:
         th = THEMES[p["theme"]]
+        src = anh_that(p["id"])
+        if not src and p["layout"] in ("hours", "address"):
+            src = data_uri(REPO / "media" / "mat-tien.jpg")
+        bgphoto = ('<div class="bgphoto"></div><div class="scrim"></div>') if src else ""
         longest = max(len(_plain(l)) for l in p["title"].split("\n"))
         tsize = 92 if longest <= 18 else (82 if longest <= 24 else 72)
-        css = CSS % dict(W=W, H=H, tsize=tsize, **th)
+        css = CSS % dict(W=W, H=H, tsize=tsize, pos=p.get("photo_pos", "center"), **th)
+        if src:
+            css += ".bgphoto{background-image:url(%s)}" % src
         html = TPL % dict(
-            font=font, css=css, emoji=p["emoji"], kicker=p["kicker"],
-            title=_hl(p["title"]), body=build_body(p), chips=_chips(p),
+            font=font, css=css, emoji=p["emoji"], kicker=p["kicker"], bgphoto=bgphoto,
+            title=_hl(p["title"]), body=build_body(p, bool(src)), chips=_chips(p),
             zalo=ZALO, hours=HOURS, addr=ADDR,
         )
         name = "ppf-%s" % p["id"]
