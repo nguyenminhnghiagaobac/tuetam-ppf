@@ -1,0 +1,26 @@
+BỎ ẢNH THẬT VÀO ĐÂY ĐỂ THAY HÌNH VẼ MINH HOẠ
+=============================================
+
+Đặt tên file trùng số thứ tự bài (coi media/auto/manifest.json):
+
+  01.jpg  Cường lực KHÔNG cứu nổi lưng máy
+  03.jpg  Máy nào ở nhà cũng dán được   (ảnh nhiều thiết bị)
+  04.jpg  Laptop trầy nắp là rớt giá     (ảnh dán laptop thật)
+  05.jpg  Lưng nhôm trầy hết đường cứu   (ảnh dán máy tính bảng)
+  06.jpg  Lưng trầy vài vết, bán lại bị ép giá
+  08.jpg  Giờ mở cửa 18h - 21h           (ảnh tiệm buổi tối)
+  11.jpg  Dán xong vẫn như máy trần
+  12.jpg  Địa chỉ tiệm                   (ảnh mặt tiền)
+  14.jpg  Cụm camera và 4 góc viền
+  16.jpg  Nhắn tên máy, em báo giá liền
+
+Nhận .jpg .jpeg .png .webp — ảnh dọc hoặc vuông, càng nét càng đẹp.
+Ảnh nào có thì generator tự lấy ảnh thật, ảnh nào chưa có thì vẫn vẽ
+mockup thiết bị như hiện tại.
+
+Bỏ ảnh xong chạy lại 3 lệnh:
+  python tools/gen_infographics.py media/auto
+  python tools/render_png.py       media/auto
+  python tools/gen_calendar.py     media/auto media/lich
+  python tools/build_posts_json.py
+rồi push lên GitHub là fanpage đăng ảnh mới.
