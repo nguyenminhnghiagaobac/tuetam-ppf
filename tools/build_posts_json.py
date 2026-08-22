@@ -26,6 +26,18 @@ MARKDOWN_MAC_DINH = (
 )
 
 
+# Gio mo cua moi cua tiem: 18h - 21h (truoc day la 8h - 21h).
+RE_GIO_CU = re.compile(r"(?<!1)8h\s*[-–—]\s*21h")
+
+
+def chuan_hoa_gio(caption: str) -> str:
+    """Doi moi cach viet gio mo cua cu (8h-21h) thanh gio moi 18h - 21h."""
+    caption = RE_GIO_CU.sub("18h – 21h", caption)
+    caption = caption.replace("8h sáng tới 9h tối", "6h tối tới 9h tối")
+    caption = caption.replace("8h sáng — 9h tối", "6h tối — 9h tối")
+    return caption
+
+
 def them_website(caption: str) -> str:
     """Chen dong website vao truoc cum hashtag, hoac cuoi bai neu khong co hashtag."""
     if WEBSITE in caption:
@@ -90,17 +102,24 @@ def doc_cac_bai(duong_dan: Path):
 
 def main():
     nguon = Path(sys.argv[1]) if len(sys.argv) > 1 else MARKDOWN_MAC_DINH
-    if not nguon.exists():
+    dich = REPO / "posts.json"
+    if nguon.exists():
+        bai_viet = doc_cac_bai(nguon)
+        if not bai_viet:
+            sys.exit("Khong doc duoc bai nao — kiem tra lai dinh dang tieu de trong file markdown.")
+        # sap xep: theo ngay, sang truoc chieu sau
+        bai_viet.sort(key=lambda b: (b["ngay"], b["gio"]))
+        ten_nguon = nguon.name
+    elif dich.exists():
+        # May khac khong co file markdown goc -> dung lai kho bai dai da luu.
+        cu = json.loads(dich.read_text(encoding="utf-8"))
+        bai_viet = [{"ngay": None, "gio": 0, "noi_dung": t} for t in cu.get("bai_dai", [])]
+        ten_nguon = cu.get("cap_nhat", "posts.json").replace("sinh tu ", "")
+        print(f"Khong thay {nguon.name} — dung lai bai_dai trong posts.json")
+    else:
         sys.exit(f"Khong tim thay file content: {nguon}")
 
-    bai_viet = doc_cac_bai(nguon)
-    if not bai_viet:
-        sys.exit("Khong doc duoc bai nao — kiem tra lai dinh dang tieu de trong file markdown.")
-
-    # sap xep: theo ngay, sang truoc chieu sau
-    bai_viet.sort(key=lambda b: (b["ngay"], b["gio"]))
-
-    noi_dung = [b["noi_dung"] for b in bai_viet]
+    noi_dung = [chuan_hoa_gio(b["noi_dung"]) for b in bai_viet]
 
     # Lich tra cuu theo ngay trong thang (1..31).
     # Uu tien caption di kem anh trong media/lich/ppf-dNN-am|pm.txt — de anh va chu
@@ -109,36 +128,32 @@ def main():
     so_khop_anh = 0
     for ngay in range(1, 32):
         muc = {}
-        for buoi, hau_to, lech in (("sang", "am", 0), ("chieu", "pm", 1)):
+        for buoi, hau_to, lech in (("sang", "08", 0), ("chieu", "17", 1)):
             duong_dan_txt = THU_MUC_LICH / f"ppf-d{ngay:02d}-{hau_to}.txt"
             if duong_dan_txt.exists():
-                muc[buoi] = them_website(duong_dan_txt.read_text(encoding="utf-8").strip())
+                muc[buoi] = them_website(
+                    chuan_hoa_gio(duong_dan_txt.read_text(encoding="utf-8").strip()))
                 so_khop_anh += 1
             else:
-                muc[buoi] = noi_dung[(((ngay - 1) * 2) + lech) % len(noi_dung)]
+                muc[buoi] = chuan_hoa_gio(noi_dung[(((ngay - 1) * 2) + lech) % len(noi_dung)])
         lich[str(ngay)] = muc
 
     ket_qua = {
-        "cap_nhat": "sinh tu " + nguon.name,
+        "cap_nhat": "sinh tu " + ten_nguon,
         "tong_so_bai": len(noi_dung),
         "so_caption_khop_anh": so_khop_anh,
         "website": WEBSITE,
-        "anh_mau": "https://tuetamppf.vercel.app/media/lich/ppf-d{NN}-{am|pm}.png",
+        "anh_mau": "https://tuetamppf.vercel.app/media/lich/ppf-d{NN}-{08|17}.png",
         "lich": lich,
         "bai_dai": noi_dung,
     }
 
-    dich = REPO / "posts.json"
     dich.write_text(
         json.dumps(ket_qua, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 
-    so_ngay = len({b["ngay"] for b in bai_viet})
     print(f"Da ghi {dich}")
-    print(f"  {len(bai_viet)} bai / {so_ngay} ngay")
-    thieu = [b["ngay"] for b in bai_viet if b["ngay"] is None]
-    if thieu:
-        print("  CANH BAO: co bai khong xac dinh duoc ngay")
+    print(f"  {len(bai_viet)} bai dai + {so_khop_anh} caption khop anh")
 
 
 if __name__ == "__main__":

@@ -2,85 +2,129 @@
  {
   "id": "01",
   "file": "ppf-01.png",
-  "kicker": "ĐỪNG NHẦM",
-  "title": "Cường lực và PPF KHÔNG giống nhau"
+  "kicker": "ĐỪNG NHẦM NỮA",
+  "title": "Cường lực KHÔNG cứu nổi lưng máy",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "02",
   "file": "ppf-02.png",
   "kicker": "ĐIỂM KHÁC BIỆT",
-  "title": "Cắt bằng máy CNC chuẩn từng dòng máy"
+  "title": "Khuôn CNC chuẩn từng dòng máy",
+  "layout": "compare",
+  "anh_that": false
  },
  {
   "id": "03",
   "file": "ppf-03.png",
   "kicker": "MỘT CHỖ LO HẾT",
-  "title": "Không riêng điện thoại đâu ạ"
+  "title": "Máy nào ở nhà cũng dán được",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "04",
   "file": "ppf-04.png",
-  "kicker": "THẬT LÒNG MÀ NÓI",
-  "title": "Máy trầy rồi bán lại bị ép giá"
+  "kicker": "DÂN VĂN PHÒNG ƠI",
+  "title": "Laptop trầy nắp là rớt giá thấy rõ",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "05",
   "file": "ppf-05.png",
-  "kicker": "YÊN TÂM",
-  "title": "Film chịu trầy thay cho máy"
+  "kicker": "MÁY TÍNH BẢNG",
+  "title": "Lưng nhôm trầy rồi hết đường cứu",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "06",
   "file": "ppf-06.png",
-  "kicker": "GIỜ MỞ CỬA",
-  "title": "8h sáng — 9h tối mỗi ngày"
+  "kicker": "TIỀN TƯƠI CHỨ ĐÂU",
+  "title": "Lưng trầy vài vết, bán lại bị ép giá",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "07",
   "file": "ppf-07.png",
-  "kicker": "COI CHỪNG",
-  "title": "Dán chỗ không uy tín là rước bực vào người"
+  "kicker": "NÓI RÕ TỪ ĐẦU",
+  "title": "Bảo hành lỗi kỹ thuật",
+  "layout": "policy",
+  "anh_that": false
  },
  {
   "id": "08",
   "file": "ppf-08.png",
-  "kicker": "KHI NÀO NÊN DÁN?",
-  "title": "4 lúc nên dán PPF ngay và luôn"
+  "kicker": "GIỜ MỞ CỬA MỚI",
+  "title": "Tối 18h – 21h mỗi ngày",
+  "layout": "hours",
+  "anh_that": false
  },
  {
   "id": "09",
   "file": "ppf-09.png",
-  "kicker": "ĐẸP TỰ NHIÊN",
-  "title": "Dán rồi vẫn như máy trần"
+  "kicker": "COI CHỪNG TIỀN MẤT",
+  "title": "Ham rẻ dán ẩu, gỡ ra còn cực hơn",
+  "layout": "compare",
+  "anh_that": false
  },
  {
   "id": "10",
   "file": "ppf-10.png",
-  "kicker": "GHÉ TIỆM EM",
-  "title": "71 đường số 2 khu CBGV, P. Tân An"
+  "kicker": "DÁN LÚC NÀO?",
+  "title": "4 thời điểm nên dán ngay",
+  "layout": "list",
+  "anh_that": false
  },
  {
   "id": "11",
   "file": "ppf-11.png",
-  "kicker": "ỐP LƯNG THÌ SAO?",
-  "title": "Ốp lưng che máy PPF cứu máy"
+  "kicker": "ĐẸP TỰ NHIÊN",
+  "title": "Dán xong vẫn như máy trần",
+  "layout": "hero",
+  "anh_that": false
  },
  {
   "id": "12",
   "file": "ppf-12.png",
-  "kicker": "CHỖ HAY TRẦY NHẤT",
-  "title": "Cụm camera và 4 góc viền"
+  "kicker": "GHÉ TIỆM EM NHA",
+  "title": "71 đường số 2, khu CBGV",
+  "layout": "address",
+  "anh_that": false
  },
  {
   "id": "13",
   "file": "ppf-13.png",
-  "kicker": "TRƯỚC KHI CHỌN TIỆM",
-  "title": "Hỏi 3 câu này là biết chỗ ngon"
+  "kicker": "ỐP HAY PPF?",
+  "title": "Ốp chỉ che máy, PPF cứu máy",
+  "layout": "compare",
+  "anh_that": false
  },
  {
   "id": "14",
   "file": "ppf-14.png",
-  "kicker": "TUỆ TÂM PPF CNC",
-  "title": "Dán một lần yên tâm cả năm"
+  "kicker": "CHỖ TRẦY SỚM NHẤT",
+  "title": "Cụm camera và 4 góc viền",
+  "layout": "hero",
+  "anh_that": false
+ },
+ {
+  "id": "15",
+  "file": "ppf-15.png",
+  "kicker": "TRƯỚC KHI GIAO MÁY",
+  "title": "Hỏi 3 câu này là biết tiệm ngon",
+  "layout": "list",
+  "anh_that": false
+ },
+ {
+  "id": "16",
+  "file": "ppf-16.png",
+  "kicker": "BÁO GIÁ NHANH",
+  "title": "Nhắn tên máy, em báo giá liền",
+  "layout": "cta",
+  "anh_that": false
  }
 ]
