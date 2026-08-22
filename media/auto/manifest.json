@@ -29,7 +29,7 @@
   "kicker": "DÂN VĂN PHÒNG ƠI",
   "title": "Laptop trầy nắp là rớt giá thấy rõ",
   "layout": "hero",
-  "anh_that": false
+  "anh_that": true
  },
  {
   "id": "05",
@@ -85,7 +85,7 @@
   "kicker": "ĐẸP TỰ NHIÊN",
   "title": "Dán xong vẫn như máy trần",
   "layout": "hero",
-  "anh_that": false
+  "anh_that": true
  },
  {
   "id": "12",
@@ -125,6 +125,6 @@
   "kicker": "BÁO GIÁ NHANH",
   "title": "Nhắn tên máy, em báo giá liền",
   "layout": "cta",
-  "anh_that": false
+  "anh_that": true
  }
 ]

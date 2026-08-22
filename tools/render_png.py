@@ -31,7 +31,17 @@ def chrome():
     sys.exit("Khong tim thay Chrome/Chromium — dat bien moi truong CHROME=...")
 
 
-def nen(path):
+# Mac dinh ha bang mau 256 (file nhe gap ~6 lan, len Facebook nhin nhu nhau).
+# Muon giu mau goc cho tam co anh chup that thi chay them co --net-cao.
+NET_CAO = "--net-cao" in sys.argv
+
+
+def co_anh_that(html_path):
+    """Tam nao dung anh chup that lam nen (de chon che do nen anh)."""
+    return "bgphoto{background-image" in html_path.read_text(encoding="utf-8")
+
+
+def nen(path, giu_mau_that=False):
     """Giam dung luong anh xuong con ~1/6 ma mat thuong khong thay khac.
 
     Anh infographic it mau nen ha ve bang mau 256 mau la du dep, file nhe
@@ -42,12 +52,16 @@ def nen(path):
     except ImportError:
         return
     im = Image.open(path).convert("RGB")
+    if giu_mau_that:
+        im.save(path, optimize=True)
+        return
     im.quantize(colors=256, method=Image.MEDIANCUT,
                 dither=Image.FLOYDSTEINBERG).save(path, optimize=True)
 
 
 def main():
-    src = Path(sys.argv[1] if len(sys.argv) > 1 else "media/auto")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    src = Path(args[0] if args else "media/auto")
     exe = chrome()
     files = sorted(src.glob("*.html"))
     with tempfile.TemporaryDirectory() as profile:
@@ -63,7 +77,7 @@ def main():
                 "--window-size=%d,%d" % (W, H),
                 "--screenshot=" + str(out), f.resolve().as_uri(),
             ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            nen(out)
+            nen(out, NET_CAO and co_anh_that(f))
             print("  ->", out.name, "%d KB" % (out.stat().st_size // 1024))
     print("Da render %d anh" % len(files))
 
